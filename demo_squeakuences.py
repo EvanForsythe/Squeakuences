@@ -37,12 +37,13 @@ count = 0
 idDict = {}
 
 for line in fasta_handle:
-  if line.startswith('>'):
+  if line.startswith('>') and count < 50:
     count += 1
     #print(line)
     line = line.strip('>')
     line = line.strip('\n')
-    id = removeSpaces(line)
+    camelCaseName = line.title()
+    id = removeSpaces(camelCaseName)
     id = removeNonAlphanumeric(id)
     
     idDict.update({line: id})
