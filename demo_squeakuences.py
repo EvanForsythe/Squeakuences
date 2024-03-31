@@ -37,7 +37,7 @@ count = 0
 idDict = {}
 
 for line in fasta_handle:
-  if line.startswith('>') and count < 50:
+  if line.startswith('>'):
     count += 1
     #print(line)
     line = line.strip('>')
