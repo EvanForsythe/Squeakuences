@@ -1,11 +1,16 @@
 #!/usr/bin/env python3
 import argparse
+import re
 import csv
 
 def removeSpaces(seqName):
   modifiedName = seqName.strip()
   modifiedName = modifiedName.replace(' ', '')
   modifiedName = modifiedName.replace('\t', '')
+  return modifiedName
+
+def removeNonAlphanumeric(seqName):
+  modifiedName = re.sub(r'[\W_]+', '', seqName)
   return modifiedName
 
 def writeModIDFile(idDictInput):
@@ -38,6 +43,7 @@ for line in fasta_handle:
     line = line.strip('>')
     line = line.strip('\n')
     id = removeSpaces(line)
+    id = removeNonAlphanumeric(id)
     
     idDict.update({line: id})
 
