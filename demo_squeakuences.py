@@ -23,6 +23,11 @@ def writeModIDFile(faFileName, idDictInput):
       writer.writerow([k, v])
   tsvfile.close()
 
+def writeSqueakyID(faFile, id):
+  with open(faFile, 'a') as file:
+    file.write('>' + id + '\n')
+  file.close()
+
 #Set up an argumanet parser
 parser = argparse.ArgumentParser(description='Quick and Dirty Squeakuences Model')
 
@@ -39,6 +44,14 @@ fasta_handle = open(fasta, 'r')
 count = 0
 idDict = {}
 
+faFile = os.path.basename(fasta)
+faFileName = os.path.splitext(faFile)
+squeakyFileName = faFileName[0] + '_squeak.fa'
+
+if os.path.exists(squeakyFileName):
+  os.remove(squeakyFileName)
+  print('Previous squeaky fa file deleted.')
+
 for line in fasta_handle:
   if line.startswith('>'):
     count += 1
@@ -51,8 +64,8 @@ for line in fasta_handle:
     
     idDict.update({line: id})
 
+    writeSqueakyID(squeakyFileName, id)
 
-faFile = os.path.basename(fasta)
 print(idDict)
 writeModIDFile(faFile, idDict)
 print(count)
