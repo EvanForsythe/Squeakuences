@@ -2,6 +2,7 @@
 import argparse
 import re
 import csv
+import os
 
 def removeSpaces(seqName):
   modifiedName = seqName.strip()
@@ -13,8 +14,10 @@ def removeNonAlphanumeric(seqName):
   modifiedName = re.sub(r'[\W_]+', '', seqName)
   return modifiedName
 
-def writeModIDFile(idDictInput):
-  with open('ids.csv', 'w') as tsvfile:
+def writeModIDFile(faFileName, idDictInput):
+  fileExtension = os.path.splitext(faFileName)
+  newFileName = fileExtension[0] + '_squeakMods.tsv'
+  with open(newFileName, 'w') as tsvfile:
     writer = csv.writer(tsvfile, delimiter='\t')
     for k, v in idDictInput.items():
       writer.writerow([k, v])
@@ -48,6 +51,8 @@ for line in fasta_handle:
     
     idDict.update({line: id})
 
+
+faFile = os.path.basename(fasta)
 print(idDict)
-writeModIDFile(idDict)
+writeModIDFile(faFile, idDict)
 print(count)
