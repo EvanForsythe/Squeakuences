@@ -65,9 +65,12 @@ for line in fasta_handle:
     idDict.update({line: id})
 
     writeSqueakyID(squeakyFileName, id)
+  
+  else:
+    with open(squeakyFileName, 'a') as file:
+      file.write(line)
+    file.close()
 
-#print(idDict)
 writeModIDFile(faFile, idDict)
-print('Ta-da! Squeaky clean sequences ids!')
+print('Ta-da! Squeaky clean sequence ids!')
 print('File(s) processed: ' + faFile)
-#print(count)
