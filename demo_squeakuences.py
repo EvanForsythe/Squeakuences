@@ -134,6 +134,6 @@ elif os.path.isdir(userPath):
   for file in filesList:
     print("Cleaning " + file)
     squeakify(userPath + '/' + file)
-    print(file + 'Complete')
+    print(file + ' Complete')
   print('Ta-da! Squeaky clean sequence ids!')
   print('Files processed in ' + userPath + ': ' + str(filesList))
