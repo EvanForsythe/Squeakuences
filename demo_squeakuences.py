@@ -4,6 +4,13 @@ import re
 import csv
 import os
 
+def collectFiles(path):
+  files = []
+  for file in os.listdir(path):
+    files.append(file)
+  files.sort()
+  return files
+
 def removeSpaces(seqName):
   modifiedName = seqName.strip()
   modifiedName = modifiedName.replace(' ', '')
@@ -61,50 +68,67 @@ def writeSqueakyID(faFile, id):
     file.write('>' + id + '\n')
   file.close()
 
+def squeakify(file):
+  fasta_handle = open(file, 'r')
+
+  count = 0
+  idDict = {}
+
+  faFile = os.path.basename(file)
+  faFileName = os.path.splitext(faFile)
+  squeakyFileName = faFileName[0] + '_squeak.fa'
+
+  if os.path.exists(squeakyFileName):
+    os.remove(squeakyFileName)
+    print('Previous squeaky fa file deleted.')
+
+  for line in fasta_handle:
+    if line.startswith('>'):
+      count += 1
+      line = line.strip('>')
+      line = line.strip('\n')
+      camelCaseName = line.title()
+      id = removeSpaces(camelCaseName)
+      id = removeNonAlphanumeric(id)
+      if len(id) > 70:
+        id = shortenID(id)
+      
+      idDict.update({line: id})
+
+      writeSqueakyID(squeakyFileName, id)
+    
+    else:
+      with open(squeakyFileName, 'a') as file:
+        file.write(line)
+      file.close()
+
+  writeModIDFile(faFile, idDict)
+
 #Set up an argumanet parser
 parser = argparse.ArgumentParser(description='Quick and Dirty Squeakuences Model')
 
-parser.add_argument('-f', '--file', type=str, metavar='', required=True, help='Full path to fasta file to clean') 
+parser.add_argument('-p', '--path', type=str, required=True, help='Full path to fasta file(s) to clean') 
 
 #Define the parser
 args = parser.parse_args()
 
 #Store arguments
-fasta=args.file
+userPath = args.path
 
-fasta_handle = open(fasta, 'r')
+if os.path.isfile(userPath):
+  print("You've input a file")
+  squeakify(userPath)
+  print('Ta-da! Squeaky clean sequence ids!')
+  print('File processed: ' + os.path.basename(userPath))
 
-count = 0
-idDict = {}
+elif os.path.isdir(userPath):
+  print("You've input a directory")
+  filesList = collectFiles(userPath)
+  for file in filesList:
+    print("Cleaning " + file)
+    squeakify(userPath + '/' + file)
+    print(file + 'Complete')
 
-faFile = os.path.basename(fasta)
-faFileName = os.path.splitext(faFile)
-squeakyFileName = faFileName[0] + '_squeak.fa'
 
-if os.path.exists(squeakyFileName):
-  os.remove(squeakyFileName)
-  print('Previous squeaky fa file deleted.')
-
-for line in fasta_handle:
-  if line.startswith('>'):
-    count += 1
-    line = line.strip('>')
-    line = line.strip('\n')
-    camelCaseName = line.title()
-    id = removeSpaces(camelCaseName)
-    id = removeNonAlphanumeric(id)
-    if len(id) > 70:
-      id = shortenID(id)
-    
-    idDict.update({line: id})
-
-    writeSqueakyID(squeakyFileName, id)
-  
-  else:
-    with open(squeakyFileName, 'a') as file:
-      file.write(line)
-    file.close()
-
-writeModIDFile(faFile, idDict)
-print('Ta-da! Squeaky clean sequence ids!')
-print('File(s) processed: ' + faFile)
+  print('Ta-da! Squeaky clean sequence ids!')
+  print('Files processed in ' + userPath + ': ' + str(filesList))
