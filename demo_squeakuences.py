@@ -92,7 +92,7 @@ for line in fasta_handle:
     id = removeNonAlphanumeric(id)
     if len(id) > 70:
       print(line)
-      shortenID(id)
+      id = shortenID(id)
     
     idDict.update({line: id})
 
