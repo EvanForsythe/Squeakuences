@@ -66,6 +66,8 @@ for line in fasta_handle:
 
     writeSqueakyID(squeakyFileName, id)
 
-print(idDict)
+#print(idDict)
 writeModIDFile(faFile, idDict)
-print(count)
+print('Ta-da! Squeaky clean sequences ids!')
+print('File(s) processed: ' + faFile)
+#print(count)
