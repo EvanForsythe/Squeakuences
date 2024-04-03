@@ -6,9 +6,11 @@ import os
 
 def collectFiles(path):
   files = []
+
   for file in os.listdir(path):
     files.append(file)
   files.sort()
+  
   return files
 
 def removeSpaces(seqName):
@@ -39,24 +41,29 @@ def shortenID(seqName):
   del nameComponents[middle-amount:middle+amount]
   nameComponents.insert(middle-amount, '___')
   newName = ''.join(nameComponents)
+
   while len(newName) > 70:
     newName = newName.replace('_', '')
     newName = chopMiddle(newName)
+
   return newName
 
 def chopMiddle(seqName):
   length = len(seqName)
   nameComponents = []
+
   nameComponents = re.findall(r'[A-Z][^A-Z]*', seqName)
   middle = len(nameComponents) // 2
   del nameComponents[middle:middle+1]
   nameComponents.insert(middle, '___')
   newName = ''.join(nameComponents)
+  
   return newName
 
 def writeModIDFile(faFileName, idDictInput):
   fileExtension = os.path.splitext(faFileName)
   newFileName = fileExtension[0] + '_squeakMods.tsv'
+  
   with open(newFileName, 'w') as tsvfile:
     writer = csv.writer(tsvfile, delimiter='\t')
     for k, v in idDictInput.items():
@@ -128,7 +135,5 @@ elif os.path.isdir(userPath):
     print("Cleaning " + file)
     squeakify(userPath + '/' + file)
     print(file + 'Complete')
-
-
   print('Ta-da! Squeaky clean sequence ids!')
   print('Files processed in ' + userPath + ': ' + str(filesList))
