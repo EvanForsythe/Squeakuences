@@ -14,6 +14,35 @@ def removeNonAlphanumeric(seqName):
   modifiedName = re.sub(r'[\W_]+', '', seqName)
   return modifiedName
 
+def shortenID(seqName):
+  length = len(seqName)
+  print(seqName + ' is too long')
+  print('name is ' + str(length) + ' characters')
+  nameComponents = []
+  nameComponents = re.findall(r'[A-Z][^A-Z]*', id)
+  print(nameComponents)
+  middle = len(nameComponents) // 2
+  print('middle ' + str(middle))
+  
+  if length > 100:
+    amount = 4
+  elif length > 90:
+    amount = 3
+  elif length > 80:
+    amount = 2
+  elif length > 70:
+    amount = 1
+
+  print('amount: ' + str(amount))
+  del nameComponents[middle-amount:middle+amount]
+  nameComponents.insert(middle-amount, '___')
+  print(nameComponents)
+  newName = ''.join(nameComponents)
+  print(newName)
+  print('new length is ' + str(len(newName)))
+  return newName
+ 
+
 def writeModIDFile(faFileName, idDictInput):
   fileExtension = os.path.splitext(faFileName)
   newFileName = fileExtension[0] + '_squeakMods.tsv'
@@ -61,6 +90,9 @@ for line in fasta_handle:
     camelCaseName = line.title()
     id = removeSpaces(camelCaseName)
     id = removeNonAlphanumeric(id)
+    if len(id) > 70:
+      print(line)
+      shortenID(id)
     
     idDict.update({line: id})
 
