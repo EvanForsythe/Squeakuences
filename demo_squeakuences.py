@@ -16,32 +16,36 @@ def removeNonAlphanumeric(seqName):
 
 def shortenID(seqName):
   length = len(seqName)
-  print(seqName + ' is too long')
-  print('name is ' + str(length) + ' characters')
   nameComponents = []
-  nameComponents = re.findall(r'[A-Z][^A-Z]*', id)
-  print(nameComponents)
+  nameComponents = re.findall(r'[A-Z][^A-Z]*', seqName)
   middle = len(nameComponents) // 2
-  print('middle ' + str(middle))
-  
-  if length > 100:
-    amount = 4
-  elif length > 90:
-    amount = 3
-  elif length > 80:
-    amount = 2
-  elif length > 70:
-    amount = 1
 
-  print('amount: ' + str(amount))
+  if length > 100:
+    amount = 5
+  elif length > 90:
+    amount = 4
+  elif length > 80:
+    amount = 3
+  elif length > 70:
+    amount = 2
+
   del nameComponents[middle-amount:middle+amount]
   nameComponents.insert(middle-amount, '___')
-  print(nameComponents)
   newName = ''.join(nameComponents)
-  print(newName)
-  print('new length is ' + str(len(newName)))
+  while len(newName) > 70:
+    newName = newName.replace('_', '')
+    newName = chopMiddle(newName)
   return newName
- 
+
+def chopMiddle(seqName):
+  length = len(seqName)
+  nameComponents = []
+  nameComponents = re.findall(r'[A-Z][^A-Z]*', seqName)
+  middle = len(nameComponents) // 2
+  del nameComponents[middle:middle+1]
+  nameComponents.insert(middle, '___')
+  newName = ''.join(nameComponents)
+  return newName
 
 def writeModIDFile(faFileName, idDictInput):
   fileExtension = os.path.splitext(faFileName)
@@ -84,14 +88,12 @@ if os.path.exists(squeakyFileName):
 for line in fasta_handle:
   if line.startswith('>'):
     count += 1
-    #print(line)
     line = line.strip('>')
     line = line.strip('\n')
     camelCaseName = line.title()
     id = removeSpaces(camelCaseName)
     id = removeNonAlphanumeric(id)
     if len(id) > 70:
-      print(line)
       id = shortenID(id)
     
     idDict.update({line: id})
