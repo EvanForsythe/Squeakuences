@@ -82,8 +82,8 @@ def squeakify(file):
   idDict = {}
 
   faFile = os.path.basename(file)
-  faFileName = os.path.splitext(faFile)
-  squeakyFileName = faFileName[0] + '_squeak.fa'
+  faFileName = os.path.splitext(faFile)[0]
+  squeakyFileName = faFileName + '_squeak.fa'
 
   if os.path.exists(squeakyFileName):
     os.remove(squeakyFileName)
@@ -99,7 +99,11 @@ def squeakify(file):
       id = removeNonAlphanumeric(id)
       if len(id) > 70:
         id = shortenID(id)
-      
+
+      if id.startswith(faFileName):
+        underscoreindex = len(faFileName)
+        id = id[:underscoreindex] + '_' + id[underscoreindex:]
+
       idDict.update({line: id})
 
       writeSqueakyID(squeakyFileName, id)
