@@ -84,6 +84,11 @@ def squeakify(file):
   faFile = os.path.basename(file)
   faFileName = os.path.splitext(faFile)[0]
   squeakyFileName = faFileName + '_squeak.fa'
+  squeakyDictFile = faFileName + '_squeakMods.tsv'
+
+  if os.path.exists(squeakyDictFile):
+    os.remove(squeakyDictFile)
+    print('Previous squeaky dictionary file deleted.')
 
   if os.path.exists(squeakyFileName):
     os.remove(squeakyFileName)
