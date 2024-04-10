@@ -79,7 +79,7 @@ def resolveDuplicate(id, dupsList):
   existing = dupsList.count(id)
   #print("existing count " + str(existing))
   nextCount = existing + 1 
-  incID = id + str(nextCount)
+  incID = id + '_' + str(nextCount)
   dupsList.append(id)
   #print(incID)
   return incID
