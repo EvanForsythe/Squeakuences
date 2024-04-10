@@ -75,12 +75,24 @@ def writeSqueakyID(faFile, id):
     file.write('>' + id + '\n')
   file.close()
 
+def resolveDuplicate(id, dupsList):
+  existing = dupsList.count(id)
+  #print("existing count " + str(existing))
+  nextCount = existing + 1 
+  incID = id + str(nextCount)
+  dupsList.append(id)
+  #print(incID)
+  return incID
+
 def squeakify(file):
+  totalCount = 0
+  dupsCount = 0
+
   fasta_handle = open(file, 'r')
-
-  count = 0
+ 
+  idDuplicates = []
   idDict = {}
-
+  
   faFile = os.path.basename(file)
   faFileName = os.path.splitext(faFile)[0]
   squeakyFileName = faFileName + '_squeak.fa'
@@ -94,9 +106,11 @@ def squeakify(file):
     os.remove(squeakyFileName)
     print('Previous squeaky fa file deleted.')
 
+  print('...')
+
   for line in fasta_handle:
     if line.startswith('>'):
-      count += 1
+      totalCount += 1
       line = line.strip('>')
       line = line.strip('\n')
       camelCaseName = line.title()
@@ -109,6 +123,11 @@ def squeakify(file):
         underscoreindex = len(faFileName)
         id = id[:underscoreindex] + '_' + id[underscoreindex:]
 
+      if id in idDict.values():
+        #print("Duplicate found: " + id)
+        id = resolveDuplicate(id, idDuplicates)
+        dupsCount += 1
+
       idDict.update({line: id})
 
       writeSqueakyID(squeakyFileName, id)
@@ -119,6 +138,10 @@ def squeakify(file):
       file.close()
 
   writeModIDFile(faFile, idDict)
+
+  #print(str(dupsCount) + ' duplicates found')
+  #print(idDuplicates)
+  print(str(totalCount) + ' ids processed') 
 
 #Set up an argumanet parser
 parser = argparse.ArgumentParser(description='Quick and Dirty Squeakuences Model')
@@ -132,16 +155,18 @@ args = parser.parse_args()
 userPath = args.path
 
 if os.path.isfile(userPath):
+  fileName = os.path.basename(userPath)
   print("You've input a file")
+  print("Now processing " + fileName)
   squeakify(userPath)
   print('Ta-da! Squeaky clean sequence ids!')
-  print('File processed: ' + os.path.basename(userPath))
+  print('File processed: ' + fileName)
 
 elif os.path.isdir(userPath):
   print("You've input a directory")
   filesList = collectFiles(userPath)
   for file in filesList:
-    print("Cleaning " + file)
+    print("Now processing " + file)
     squeakify(userPath + '/' + file)
     print(file + ' Complete')
   print('Ta-da! Squeaky clean sequence ids!')
