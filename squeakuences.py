@@ -4,6 +4,8 @@ import argparse
 def main():
   parser = setup_parser()
   args = parse_arguments(parser)
+
+  load_file(args.input)
   
   print("implement")
 
@@ -43,6 +45,7 @@ def remove_non_english_characters(sequence_id):
 def setup_parser():
     parser = argparse.ArgumentParser()
     # Add parser arguments. ex: parser.add_argument('-l', '--long_name', help='What is it for?', required=True/False)
+    parser.add_argument('-i', '--input', help='Input file', required=True/False)
     return parser
   
 def parse_arguments(parser):
