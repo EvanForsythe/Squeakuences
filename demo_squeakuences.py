@@ -3,6 +3,7 @@ import argparse
 import re
 import csv
 import os
+import glob
 
 def collectFiles(path):
   files = []
@@ -91,12 +92,13 @@ def squeakify(file, write):
   totalCount = 0
   dupsCount = 0
 
+  faFile = os.path.basename(file)
   fasta_handle = open(file, 'r')
  
   idDuplicates = []
   idDict = {}
   
-  faFile = os.path.basename(file)
+  
   faFileName = os.path.splitext(faFile)[0]
   squeakyFileName = write + '/' + faFileName + '_squeak.fa'
   squeakyDictFile = write + '/' + faFileName + '_squeakMods.tsv'
@@ -173,12 +175,16 @@ if os.path.isfile(userPath):
 
 elif os.path.isdir(userPath):
   print("You've input a directory")
-  filesList = collectFiles(userPath)
-  for file in filesList:
-    print("Now processing " + file)
-    squeakify(userPath + '/' + file, writePath)
-    print(file + ' Complete')
-  print('Ta-da! Squeaky clean sequence ids!')
-  print('Files processed in ' + userPath + ': ' + str(filesList))
-  print('New squeaky clean files can be found in: ' + writePath)
+  filesList = glob.glob(userPath + '/*.fa*')
+  print("File retrival sucessful!")
+  print('----------')
 
+  for file in filesList:
+    print('Now processing ' + file)
+    squeakify(file, writePath)
+    print(file + ' Complete')
+    print('----------')
+  
+  print('Ta-da! Squeaky clean sequence ids!')
+  print('Files processed: ' + str(filesList))
+  print('New squeaky clean files can be found in: ' + writePath)
