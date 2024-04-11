@@ -145,8 +145,8 @@ def squeakify(file):
 
   writeModIDFile(faFile, idDict)
 
-  print(str(dupsCount) + ' duplicates found')
-  print(idDuplicates)
+  #print(str(dupsCount) + ' duplicates found')
+  #print(idDuplicates)
   print(str(totalCount) + ' ids processed') 
 
 #Set up an argumanet parser
