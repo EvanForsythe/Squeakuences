@@ -5,15 +5,6 @@ import csv
 import os
 import glob
 
-def collectFiles(path):
-  files = []
-
-  for file in os.listdir(path):
-    files.append(file)
-  files.sort()
-  
-  return files
-
 def removeSpaces(seqName):
   modifiedName = seqName.strip()
   modifiedName = modifiedName.replace(' ', '')
@@ -25,7 +16,6 @@ def removeNonAlphanumeric(seqName):
   return modifiedName
 
 def shortenID(seqName):
-  
   length = len(seqName)
   nameComponents = []
   nameComponents = re.findall(r'[A-Z][^A-Z]*', seqName)
@@ -105,11 +95,11 @@ def squeakify(file, write):
 
   if os.path.exists(squeakyDictFile):
     os.remove(squeakyDictFile)
-    print('Previous squeaky dictionary file deleted.')
+    print('Existing squeaky dictionary file deleted.')
 
   if os.path.exists(squeakyFileName):
     os.remove(squeakyFileName)
-    print('Previous squeaky fa file deleted.')
+    print('Existing squeaky fa file deleted.')
 
   print('...')
 
@@ -176,7 +166,7 @@ if os.path.isfile(userPath):
 elif os.path.isdir(userPath):
   print("You've input a directory")
   filesList = glob.glob(userPath + '/*.fa*')
-  print("File retrival sucessful!")
+  print("File retrival successful!")
   print('----------')
 
   for file in filesList:
