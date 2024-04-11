@@ -24,9 +24,11 @@ def removeNonAlphanumeric(seqName):
   return modifiedName
 
 def shortenID(seqName):
+  
   length = len(seqName)
   nameComponents = []
   nameComponents = re.findall(r'[A-Z][^A-Z]*', seqName)
+  #print('before shorten: ' + str(nameComponents))
   middle = len(nameComponents) // 2
 
   if length > 100:
@@ -41,6 +43,7 @@ def shortenID(seqName):
   del nameComponents[middle-amount:middle+amount]
   nameComponents.insert(middle-amount, '___')
   newName = ''.join(nameComponents)
+  #print('after shorten: ' + str(nameComponents))
 
   while len(newName) > 70:
     newName = newName.replace('_', '')
@@ -117,11 +120,14 @@ def squeakify(file):
       id = removeSpaces(camelCaseName)
       id = removeNonAlphanumeric(id)
       if len(id) > 70:
+        #print('ID to be shortened: ' + id)
         id = shortenID(id)
 
       if id.startswith(faFileName):
         underscoreindex = len(faFileName)
         id = id[:underscoreindex] + '_' + id[underscoreindex:]
+      else:
+        id = faFileName + '_' + id
 
       if id in idDict.values():
         #print("Duplicate found: " + id)
@@ -139,8 +145,8 @@ def squeakify(file):
 
   writeModIDFile(faFile, idDict)
 
-  #print(str(dupsCount) + ' duplicates found')
-  #print(idDuplicates)
+  print(str(dupsCount) + ' duplicates found')
+  print(idDuplicates)
   print(str(totalCount) + ' ids processed') 
 
 #Set up an argumanet parser
