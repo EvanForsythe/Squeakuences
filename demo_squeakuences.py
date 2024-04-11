@@ -87,7 +87,7 @@ def resolveDuplicate(id, dupsList):
   #print(incID)
   return incID
 
-def squeakify(file):
+def squeakify(file, write):
   totalCount = 0
   dupsCount = 0
 
@@ -98,8 +98,8 @@ def squeakify(file):
   
   faFile = os.path.basename(file)
   faFileName = os.path.splitext(faFile)[0]
-  squeakyFileName = faFileName + '_squeak.fa'
-  squeakyDictFile = faFileName + '_squeakMods.tsv'
+  squeakyFileName = write + '/' + faFileName + '_squeak.fa'
+  squeakyDictFile = write + '/' + faFileName + '_squeakMods.tsv'
 
   if os.path.exists(squeakyDictFile):
     os.remove(squeakyDictFile)
@@ -143,7 +143,7 @@ def squeakify(file):
         file.write(line)
       file.close()
 
-  writeModIDFile(faFile, idDict)
+  writeModIDFile(write + '/' + faFile, idDict)
 
   #print(str(dupsCount) + ' duplicates found')
   #print(idDuplicates)
@@ -152,28 +152,33 @@ def squeakify(file):
 #Set up an argumanet parser
 parser = argparse.ArgumentParser(description='Quick and Dirty Squeakuences Model')
 
-parser.add_argument('-p', '--path', type=str, required=True, help='Full path to fasta file(s) to clean') 
+parser.add_argument('-i', '--input', type=str, required=True, help='Full path to fasta file(s) to clean') 
+parser.add_argument('-o', '--output', type=str, required=True, help='Full path to write location of squeaky clean files') 
 
 #Define the parser
 args = parser.parse_args()
 
 #Store arguments
-userPath = args.path
+userPath = args.input
+writePath = args.output
 
 if os.path.isfile(userPath):
   fileName = os.path.basename(userPath)
   print("You've input a file")
   print("Now processing " + fileName)
-  squeakify(userPath)
+  squeakify(userPath, writePath)
   print('Ta-da! Squeaky clean sequence ids!')
   print('File processed: ' + fileName)
+  print('New squeaky clean files can be found in: ' + writePath)
 
 elif os.path.isdir(userPath):
   print("You've input a directory")
   filesList = collectFiles(userPath)
   for file in filesList:
     print("Now processing " + file)
-    squeakify(userPath + '/' + file)
+    squeakify(userPath + '/' + file, writePath)
     print(file + ' Complete')
   print('Ta-da! Squeaky clean sequence ids!')
   print('Files processed in ' + userPath + ': ' + str(filesList))
+  print('New squeaky clean files can be found in: ' + writePath)
+
