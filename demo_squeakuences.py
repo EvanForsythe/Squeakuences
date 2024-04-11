@@ -157,8 +157,11 @@ writePath = args.output
 if os.path.isfile(userPath):
   fileName = os.path.basename(userPath)
   print("You've input a file")
+  print('----------')
   print("Now processing " + fileName)
   squeakify(userPath, writePath)
+  print(fileName + ' Complete')
+  print('----------')
   print('Ta-da! Squeaky clean sequence ids!')
   print('File processed: ' + fileName)
   print('New squeaky clean files can be found in: ' + writePath)
@@ -166,13 +169,14 @@ if os.path.isfile(userPath):
 elif os.path.isdir(userPath):
   print("You've input a directory")
   filesList = glob.glob(userPath + '/*.fa*')
-  print("File retrival successful!")
+  print("File retrieval successful!")
   print('----------')
 
   for file in filesList:
-    print('Now processing ' + file)
+    fileName = os.path.basename(file)
+    print('Now processing ' + fileName)
     squeakify(file, writePath)
-    print(file + ' Complete')
+    print(fileName + ' Complete')
     print('----------')
   
   print('Ta-da! Squeaky clean sequence ids!')
