@@ -1,4 +1,11 @@
 #!/usr/bin/env python3
+import argparse
+
+def main():
+  parser = setup_parser()
+  args = parse_arguments(parser)
+  
+  print("implement")
 
 def hello_world():
   return "Hello world!"
@@ -31,3 +38,14 @@ def remove_non_english_characters(sequence_id):
   # TODO: Remove any non-english characters
   # Regex: /<-[a..zA..Z\s]>+/  <<< Do we need this to include numbers? This is saying anything that isn't an english alphabetic letter
   return
+
+# Create tests for these???
+def setup_parser():
+    parser = argparse.ArgumentParser()
+    # Add parser arguments. ex: parser.add_argument('-l', '--long_name', help='What is it for?', required=True/False)
+    return parser
+  
+def parse_arguments(parser):
+    args = parser.parse_args()
+    # Place any messages you may want
+    return args
