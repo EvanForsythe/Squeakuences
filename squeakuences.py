@@ -9,9 +9,6 @@ def main():
   
   print("implement")
 
-def hello_world():
-  return "Hello world!"
-
 def load_file(file):
   # TODO: Load in  the file that requires preprocessing
   return
