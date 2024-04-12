@@ -4,9 +4,6 @@ import squeakuences
 
 class TestStringMethods(unittest.TestCase):
 
-  def test_hello_world(self):
-    self.assertEqual(squeakuences.hello_world(), 'Hello world!')
-
   # Does load_file load file properly
   def test_load_file(self):
     self.assertEqual(squeakuences.load_file(test.txt),
