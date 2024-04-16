@@ -8,7 +8,7 @@ class TestStringMethods(unittest.TestCase):
   def testLoadFile(self):
     faFile, fastaHandle = squeakuences.loadFile(test.txt)
     self.assertEqual(faFile, 'test')
-    self.assertInstance(fastHandle, PyFile)
+    self.assertInstance(fastHandle, _io.TextIOWrappe)
 
   # Does is_squence_id identify a line begining with > as being true
   def testIsSequenceIdTrue(self):
