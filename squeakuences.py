@@ -30,7 +30,7 @@ def removeSpaces(seqName):
   return modifiedName
 
 def removeNonAlphanumeric(seqName):
-  modifiedName = re.sub(r'[\W_]+', '', seqName)
+  modifiedName = re.sub(r'[^a-zA-Z0-9]', '', seqName)
   return modifiedName
 
 # Optional?

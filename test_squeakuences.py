@@ -23,15 +23,15 @@ class TestStringMethods(unittest.TestCase):
 
   # Does remove_brackets remove brackets from a given line
   def test_remove_brackets(self):
-    self.assertEqual(squeakuences.removeNonAlphanumeric('Re(mov{e br[ack}]ets)'), 'Remove brackets')
+    self.assertEqual(squeakuences.removeNonAlphanumeric('Re(mov{e br[ack}]ets)'), 'Removebrackets')
 
   # Does remove_punctuation remove all puntuation from a given line
   def test_remove_punctuation(self):
-    self.assertEqual(squeakuences.removeNonAlphanumeric('.R`e=m+o:v_e. \p"u?n¿c!¡t:;u&a$t*i@*o%#n'), 'Remove punctuation')
+    self.assertEqual(squeakuences.removeNonAlphanumeric('.R`e=m+o:v_e. \p"u?n¿c!¡t:;u&a$t*i@*o%#n'), 'Removepunctuation')
 
   # Does remove_non_english_characters remove any non english characters
   def test_remove_non_english_characters(self):
-    self.assertEqual(squeakuences.removeNonAlphanumeric('R¥emÙove ÅnoĦn-engŧlish chaŸracters'), 'Remove non-english characters')
+    self.assertEqual(squeakuences.removeNonAlphanumeric('R¥emÙove ÅnoĦn-engŧlish chaŸracters'), 'Removenonenglishcharacters')
 
 if __name__ == '__main__':
   unittest.main()
