@@ -33,5 +33,15 @@ class TestStringMethods(unittest.TestCase):
   def test_remove_non_english_characters(self):
     self.assertEqual(squeakuences.removeNonAlphanumeric('R¥emÙove ÅnoĦn-engŧlish chaŸracters'), 'Removenonenglishcharacters')
 
+  # TODO: add test for chop function
+
+  # TODO: add test for adding to dictionary
+  
+  # TODO: add test for duplicates
+  
+  # TODO: add test for adding species name with underscore
+  
+  # TODO: add test for writing to file?
+
 if __name__ == '__main__':
   unittest.main()

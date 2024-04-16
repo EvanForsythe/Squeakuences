@@ -39,6 +39,14 @@ def remove_non_english_characters(sequence_id):
   # Regex: /<-[a..zA..Z\s]>+/  <<< Do we need this to include numbers? This is saying anything that isn't an english alphabetic letter
   return
 
+# TODO: add/write function for chopping seq IDs to a given length
+
+# TODO: add/write function for dealing with duplciates
+
+# TODO: add/write function/code for writing before-after file
+
+# TODO: add/write function/code for writing new squeaky clean file  
+
 # Create tests for these???
 def setup_parser():
     parser = argparse.ArgumentParser()
