@@ -15,44 +15,20 @@ def removeNonAlphanumeric(seqName):
   modifiedName = re.sub(r'[\W_]+', '', seqName)
   return modifiedName
 
-def shortenID(seqName):
+def chop(seqName, max = 70):
   length = len(seqName)
-  nameComponents = []
-  nameComponents = re.findall(r'[A-Z][^A-Z]*', seqName)
-  #print('before shorten: ' + str(nameComponents))
-  middle = len(nameComponents) // 2
 
-  if length > 100:
-    amount = 5
-  elif length > 90:
-    amount = 4
-  elif length > 80:
-    amount = 3
-  elif length > 70:
-    amount = 2
+  if length < max:
+    return seqName
 
-  del nameComponents[middle-amount:middle+amount]
-  nameComponents.insert(middle-amount, '___')
-  newName = ''.join(nameComponents)
-  #print('after shorten: ' + str(nameComponents))
-
-  while len(newName) > 70:
-    newName = newName.replace('_', '')
-    newName = chopMiddle(newName)
-
-  return newName
-
-def chopMiddle(seqName):
-  length = len(seqName)
-  nameComponents = []
-
-  nameComponents = re.findall(r'[A-Z][^A-Z]*', seqName)
-  middle = len(nameComponents) // 2
-  del nameComponents[middle:middle+1]
-  nameComponents.insert(middle, '___')
-  newName = ''.join(nameComponents)
-  
-  return newName
+  else:
+    nameComponents = []
+    nameComponents = re.findall(r'[A-Z][^A-Z]*', seqName)
+    middle = len(nameComponents) // 2
+    del nameComponents[middle:middle+1]
+    nameComponents.insert(middle, '___')
+    newName = ''.join(nameComponents)
+    return chop(newName)
 
 def writeModIDFile(faFileName, idDictInput):
   fileExtension = os.path.splitext(faFileName)
@@ -111,9 +87,6 @@ def squeakify(file, write):
       camelCaseName = line.title()
       id = removeSpaces(camelCaseName)
       id = removeNonAlphanumeric(id)
-      if len(id) > 70:
-        #print('ID to be shortened: ' + id)
-        id = shortenID(id)
 
       if id.startswith(faFileName):
         underscoreindex = len(faFileName)
@@ -121,10 +94,15 @@ def squeakify(file, write):
       else:
         id = faFileName + '_' + id
 
+      if len(id) > 65:
+        id = chop(id)
+
       if id in idDict.values():
         #print("Duplicate found: " + id)
         id = resolveDuplicate(id, idDuplicates)
         dupsCount += 1
+        if len(id) > 65:
+          id = chop(id)
 
       idDict.update({line: id})
 
