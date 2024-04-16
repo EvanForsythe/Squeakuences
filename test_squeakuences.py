@@ -1,14 +1,17 @@
 #!/usr/bin/env python3
+from io import TextIOWrapper
 import unittest
 import squeakuences
+import os
 
 class TestStringMethods(unittest.TestCase):
 
   # Does load_file load file properly
   def testLoadFile(self):
     faFile, fastaHandle = squeakuences.loadFile('test.txt')
-    self.assertEqual(faFile, 'test')
-    self.assertInstance(fastHandle, _io.TextIOWrappe)
+    self.assertEqual(faFile, 'test.txt')
+    self.assertIsInstance(fastaHandle, TextIOWrapper)
+    fastaHandle.close()
 
   # Does is_squence_id identify a line begining with > as being true
   def testIsSequenceIdTrue(self):
