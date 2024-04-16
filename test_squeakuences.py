@@ -5,9 +5,10 @@ import squeakuences
 class TestStringMethods(unittest.TestCase):
 
   # Does load_file load file properly
-  def test_load_file(self):
-    self.assertEqual(squeakuences.load_file(test.txt),
-                      'Hello, World\nWelcome to Squeakuences.')
+  def testLoadFile(self):
+    faFile, fastaHandle = squeakuences.loadFile(test.txt)
+    self.assertEqual(faFile, 'test')
+    self.assertInstance(fastHandle, PyFile)
 
   # Does is_squence_id identify a line begining with > as being true
   def test_is_squence_id_true(self):
