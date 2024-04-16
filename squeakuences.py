@@ -9,28 +9,27 @@ def main():
   
   print("implement")
 
-def load_file(file):
-  # TODO: Load in  the file that requires preprocessing
-  return
+def loadFile(file):
+  faFile = os.path.basename(file)
+  fasta_handle = open(file, 'r')
+  return faFile, fasta_handle
 
-def is_squence_id(line):
-  # TODO: Check if the line is a squence ID
-  return
+def isSequenceId(line):
+  return line.startswith('>')
 
 #######################################
 # Non Alpha-Numeric Removal Functions #
 #######################################
 
-def remove_brackets(sequence_id):
-  # TODO: Remove any brackets from the sequence ID
-  # Multiple regexes: /\(.*\)/, /\[.*\]/, /\{.*\}/, /\-.*/
-  return
+def removeSpaces(seqName):
+  modifiedName = seqName.strip()
+  modifiedName = modifiedName.replace(' ', '')
+  modifiedName = modifiedName.replace('\t', '')
+  return modifiedName
 
-def remove_punctuation(sequence_id):
-  # TODO: Remove any punctuation from the sequence ID.
-  # Be aware of the first >. How are we going to approach this?
-  # regex: /<[\`\=\+\:\_\.\\\"\?\¿\!\¡\.\;\:\&\$\*\@\%\#]>/
-  return
+def removeNonAlphanumeric(seqName):
+  modifiedName = re.sub(r'[\W_]+', '', seqName)
+  return modifiedName
 
 # Optional?
 def remove_non_english_characters(sequence_id):
