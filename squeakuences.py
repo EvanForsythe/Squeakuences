@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 import argparse
+import re
+import os
 
 def main():
   parser = setup_parser()
   args = parse_arguments(parser)
 
-  load_file(args.input)
+  loadFile(args.input)
   
   print("implement")
 
