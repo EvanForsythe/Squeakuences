@@ -11,12 +11,12 @@ class TestStringMethods(unittest.TestCase):
     self.assertInstance(fastHandle, PyFile)
 
   # Does is_squence_id identify a line begining with > as being true
-  def test_is_squence_id_true(self):
-    self.assertEqual(squeakuences.is_squence_id('> This line is true'), true)
+  def testIsSequenceIdTrue(self):
+    self.assertEqual(squeakuences.isSequenceId('> This line is true'), true)
 
   # Does is_squence_id identify a line not begining with > as being false
-  def test_is_squence_id_false(self):
-    self.assertEqual(squeakuences.is_squence_id('This line is false'), false)
+  def testIsSequenceIdFalse(self):
+    self.assertEqual(squeakuences.isSequenceId('This line is false'), false)
 
   # Does remove_brackets remove brackets from a given line
   def test_remove_brackets(self):
