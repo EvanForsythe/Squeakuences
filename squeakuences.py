@@ -22,14 +22,14 @@ def main():
   for line in fastHandle:
     if isSequenceId(line):
       sequenceIdCount += 1
-      id = stripSequenceId(line)
+      startId = stripSequenceId(line)
       #Linnea: revist camelCase situtation
-      id = removeSpaces(id)
-      id = removeNonAlphanumeric(id)
-      id = speciesName(id, faFileName)
-      id = chop(id)
+      endId = removeSpaces(startId)
+      endId = removeNonAlphanumeric(endId)
+      endId = speciesName(endId, faFileName)
+      endId = chop(endId)
 
-      idDict.update({line: id})
+      idDict.update({startId: endId})
 
   writeModIDFile(write + '/' + faFile, idDict)
 
