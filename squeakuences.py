@@ -9,6 +9,7 @@ def main():
   args = parseArguments(parser)
   write = args.write
 
+  sequenceIdCount = 0
   idDict = {}
 
   faFile, fastHandle, faFileName = loadFile(args.input)
@@ -25,7 +26,7 @@ def main():
       #Linnea: revist camelCase situtation
       id = removeSpaces(id)
       id = removeNonAlphanumeric(id)
-      id = speciesName(id)
+      id = speciesName(id, faFileName)
       id = chop(id)
 
       idDict.update({line: id})
@@ -128,3 +129,6 @@ def parseArguments(parser):
     args = parser.parse_args()
     # Place any messages you may want
     return args
+
+if __name__ == '__main__':
+  main()
