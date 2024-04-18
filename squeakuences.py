@@ -4,17 +4,17 @@ import re
 import os
 
 def main():
-  parser = setup_parser()
-  args = parse_arguments(parser)
+  parser = setupParser()
+  args = parseArguments(parser)
 
-  loadFile(args.input)
+  faFile, fastHandle = loadFile(args.input)
   
   print("implement")
 
 def loadFile(file):
   faFile = os.path.basename(file)
-  fasta_handle = open(file, 'r')
-  return faFile, fasta_handle
+  fastaHandle = open(file, 'r')
+  return faFile, fastaHandle
 
 def isSequenceId(line):
   return line.startswith('>')
@@ -67,13 +67,13 @@ def chop(sequenceID, max = 70):
 # TODO: add/write function/code for writing new squeaky clean file  
 
 # Create tests for these???
-def setup_parser():
+def setupParser():
     parser = argparse.ArgumentParser()
     # Add parser arguments. ex: parser.add_argument('-l', '--long_name', help='What is it for?', required=True/False)
     parser.add_argument('-i', '--input', help='Input file', required=True)
     return parser
   
-def parse_arguments(parser):
+def parseArguments(parser):
     args = parser.parse_args()
     # Place any messages you may want
     return args
