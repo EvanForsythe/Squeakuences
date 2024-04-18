@@ -27,7 +27,7 @@ class TestStringMethods(unittest.TestCase):
 
   # Does remove_punctuation remove all puntuation from a given line
   def test_remove_punctuation(self):
-    self.assertEqual(squeakuences.removeNonAlphanumeric('.R`e=m+o:v_e. \p"u?n¿c!¡t:;u&a$t*i@*o%#n'), 'Removepunctuation')
+    self.assertEqual(squeakuences.removeNonAlphanumeric('.R`e=m+o:v_e. /p"u?n¿c!¡t:;u&a$t*i@*o%#n'), 'Removepunctuation')
 
   # Does remove_non_english_characters remove any non english characters
   def test_remove_non_english_characters(self):
@@ -41,6 +41,12 @@ class TestStringMethods(unittest.TestCase):
   def test_speciesName(self):
     self.assertEqual(squeakuences.speciesName('AcachlArg8VasotocinReceptorLike', 'Acachl'), 'Acachl_Arg8VasotocinReceptorLike')
     self.assertEqual(squeakuences.speciesName('Arg8VasotocinReceptorLike', 'Acachl'), 'Acachl_Arg8VasotocinReceptorLike')
+
+  def test_chop(self):
+    self.assertEqual(squeakuences.chop('Acachl_PyruvateDehydrogenaseAcetylTransferringKinaseIsozyme1Mitochondrial'), 'Acachl_PyruvateDehydrogenaseAcetyl___KinaseIsozyme1Mitochondrial')
+    self.assertEqual(squeakuences.chop('Acachl_ADisintegrinAndMetalloproteinaseWithThrombospondinMotifs18Partial'), 'Acachl_ADisintegrinAnd___WithThrombospondinMotifs18Partial')
+    self.assertEqual(squeakuences.chop('Acachl_MembraneAssociatedGuanylateKinaseWwAndPdzDomainContainingProtein1', 40), 'Acachl_Membrane___ContainingProtein1')
+
 
   # TODO: add test for chop function
 

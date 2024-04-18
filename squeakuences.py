@@ -46,6 +46,20 @@ def speciesName(sequenceID, speciesName):
   return modifiedID
     
 # TODO: add/write function for chopping seq IDs to a given length
+def chop(sequenceID, max = 70):
+  length = len(sequenceID)
+
+  if length < max:
+    return sequenceID
+  else:
+    sequenceID = re.sub(r'___', '', sequenceID)
+    nameComponents = []
+    nameComponents = re.findall(r'[A-Z][^A-Z]*', sequenceID)
+    middle = len(nameComponents) // 2
+    del nameComponents[middle:middle+1]
+    nameComponents.insert(middle, '___')
+    newName = ''.join(nameComponents)
+    return chop(newName, max)
 
 # TODO: add/write function for dealing with duplciates
 
