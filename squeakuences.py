@@ -33,7 +33,6 @@ def main():
 
   writeModIDFile(write + '/' + faFile, idDict)
 
-  print("implement")
 
 def loadFile(file):
   faFile = os.path.basename(file)
