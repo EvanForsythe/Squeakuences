@@ -23,20 +23,28 @@ def isSequenceId(line):
 # Non Alpha-Numeric Removal Functions #
 #######################################
 
-def removeSpaces(seqName):
-  modifiedName = re.sub(r'\s', '', seqName)
-  return modifiedName
+def removeSpaces(sequenceID):
+  modifiedID = re.sub(r'\s', '', sequenceID)
+  return modifiedID
 
-def removeNonAlphanumeric(seqName):
-  modifiedName = re.sub(r'[^a-zA-Z0-9]', '', seqName)
-  return modifiedName
+def removeNonAlphanumeric(sequenceID):
+  modifiedID = re.sub(r'[^a-zA-Z0-9]', '', sequenceID)
+  return modifiedID
 
 # Optional?
-def remove_non_english_characters(sequence_id):
+def remove_non_english_characters(sequenceID):
   # TODO: Remove any non-english characters
   # Regex: /<-[a..zA..Z\s]>+/  <<< Do we need this to include numbers? This is saying anything that isn't an english alphabetic letter
   return
 
+def speciesName(sequenceID, speciesName):
+  if sequenceID.startswith(speciesName):
+    underscoreindex = len(speciesName)
+    modifiedID = sequenceID[:underscoreindex] + '_' + sequenceID[underscoreindex:]
+  else:
+    modifiedID = speciesName + '_' + sequenceID
+  return modifiedID
+    
 # TODO: add/write function for chopping seq IDs to a given length
 
 # TODO: add/write function for dealing with duplciates

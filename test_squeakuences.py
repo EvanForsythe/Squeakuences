@@ -38,6 +38,9 @@ class TestStringMethods(unittest.TestCase):
     self.assertEqual(squeakuences.removeSpaces('Remove Spaces '), 'RemoveSpaces')
     self.assertEqual(squeakuences.removeSpaces('Remove  Spaces'), 'RemoveSpaces')
 
+  def test_speciesName(self):
+    self.assertEqual(squeakuences.speciesName('AcachlArg8VasotocinReceptorLike', 'Acachl'), 'Acachl_Arg8VasotocinReceptorLike')
+    self.assertEqual(squeakuences.speciesName('Arg8VasotocinReceptorLike', 'Acachl'), 'Acachl_Arg8VasotocinReceptorLike')
 
   # TODO: add test for chop function
 
