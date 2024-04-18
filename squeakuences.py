@@ -24,9 +24,7 @@ def isSequenceId(line):
 #######################################
 
 def removeSpaces(seqName):
-  modifiedName = seqName.strip()
-  modifiedName = modifiedName.replace(' ', '')
-  modifiedName = modifiedName.replace('\t', '')
+  modifiedName = re.sub(r'\s', '', seqName)
   return modifiedName
 
 def removeNonAlphanumeric(seqName):

@@ -33,6 +33,12 @@ class TestStringMethods(unittest.TestCase):
   def test_remove_non_english_characters(self):
     self.assertEqual(squeakuences.removeNonAlphanumeric('R¥emÙove ÅnoĦn-engŧlish chaŸracters'), 'Removenonenglishcharacters')
 
+  # Does remove_non_english_characters remove any non english characters
+  def test_remove_non_english_characters(self):
+    self.assertEqual(squeakuences.removeSpaces('Remove Spaces '), 'RemoveSpaces')
+    self.assertEqual(squeakuences.removeSpaces('Remove  Spaces'), 'RemoveSpaces')
+
+
   # TODO: add test for chop function
 
   # TODO: add test for adding to dictionary
