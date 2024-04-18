@@ -46,6 +46,8 @@ class TestStringMethods(unittest.TestCase):
     self.assertEqual(squeakuences.chop('Acachl_ADisintegrinAndMetalloproteinaseWithThrombospondinMotifs18Partial'), 'Acachl_ADisintegrinAnd___WithThrombospondinMotifs18Partial')
     self.assertEqual(squeakuences.chop('Acachl_MembraneAssociatedGuanylateKinaseWwAndPdzDomainContainingProtein1', 40), 'Acachl_Membrane___ContainingProtein1')
 
+  # TODO: add test for checkExisting
+
   # TODO: add test for adding to dictionary?
   
   # TODO: add test for duplicates

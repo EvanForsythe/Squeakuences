@@ -2,10 +2,14 @@
 import argparse
 import re
 import os
+import csv
 
 def main():
   parser = setupParser()
   args = parseArguments(parser)
+  write = args.write
+
+  idDict = {}
 
   faFile, fastHandle, faFileName = loadFile(args.input)
   
@@ -14,6 +18,19 @@ def main():
 
   checkExisting(squeakyDictFile, squeakyFileName)
 
+  for line in fastHandle:
+    if isSequenceId(line):
+      sequenceIdCount += 1
+      id = stripSequenceId(line)
+      #Linnea: revist camelCase situtation
+      id = removeSpaces(id)
+      id = removeNonAlphanumeric(id)
+      id = speciesName(id)
+      id = chop(id)
+
+      idDict.update({line: id})
+
+  writeModIDFile(write + '/' + faFile, idDict)
 
   print("implement")
 
@@ -34,6 +51,11 @@ def checkExisting(squeakyDictFile, squeakyFileName):
 
 def isSequenceId(line):
   return line.startswith('>')
+
+def stripSequenceId(line):
+  line = line.strip('>')
+  line = line.strip('\n')
+  return line
 
 #######################################
 # Non Alpha-Numeric Removal Functions #
@@ -75,6 +97,16 @@ def chop(sequenceID, max = 70):
     nameComponents.insert(middle, '___')
     newName = ''.join(nameComponents)
     return chop(newName, max)
+  
+def writeModIDFile(faFileName, idDictInput):
+  fileExtension = os.path.splitext(faFileName)
+  newFileName = fileExtension[0] + '_squeakMods.tsv'
+  
+  with open(newFileName, 'w') as tsvfile:
+    writer = csv.writer(tsvfile, delimiter='\t')
+    for k, v in idDictInput.items():
+      writer.writerow([k, v])
+  tsvfile.close()
 
 # TODO: add/write function for dealing with duplciates
 
@@ -87,6 +119,9 @@ def setupParser():
     parser = argparse.ArgumentParser()
     # Add parser arguments. ex: parser.add_argument('-l', '--long_name', help='What is it for?', required=True/False)
     parser.add_argument('-i', '--input', help='Input file', required=True)
+    parser.add_argument('-w', '--write', help='Output Location', required=True)
+    # add arg for chop function length
+    # add arg for write location
     return parser
   
 def parseArguments(parser):
