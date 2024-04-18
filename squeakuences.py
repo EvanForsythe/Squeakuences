@@ -70,7 +70,7 @@ def chop(sequenceID, max = 70):
 def setup_parser():
     parser = argparse.ArgumentParser()
     # Add parser arguments. ex: parser.add_argument('-l', '--long_name', help='What is it for?', required=True/False)
-    parser.add_argument('-i', '--input', help='Input file', required=True/False)
+    parser.add_argument('-i', '--input', help='Input file', required=True)
     return parser
   
 def parse_arguments(parser):
