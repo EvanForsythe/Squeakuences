@@ -28,7 +28,7 @@ def removeSpaces(sequenceID):
   return modifiedID
 
 def removeNonAlphanumeric(sequenceID):
-  modifiedID = re.sub(r'[^a-zA-Z0-9]', '', sequenceID)
+  modifiedID = re.sub(r'[^a-zA-Z0-9\s]', '', sequenceID)
   return modifiedID
 
 # Optional?
@@ -45,7 +45,6 @@ def speciesName(sequenceID, speciesName):
     modifiedID = speciesName + '_' + sequenceID
   return modifiedID
     
-# TODO: add/write function for chopping seq IDs to a given length
 def chop(sequenceID, max = 70):
   length = len(sequenceID)
 
