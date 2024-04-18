@@ -7,14 +7,30 @@ def main():
   parser = setupParser()
   args = parseArguments(parser)
 
-  faFile, fastHandle = loadFile(args.input)
+  faFile, fastHandle, faFileName = loadFile(args.input)
   
+  squeakyFileName = write + '/' + faFileName + '_squeak.fa'
+  squeakyDictFile = write + '/' + faFileName + '_squeakMods.tsv'
+
+  checkExisting(squeakyDictFile, squeakyFileName)
+
+
   print("implement")
 
 def loadFile(file):
   faFile = os.path.basename(file)
   fastaHandle = open(file, 'r')
-  return faFile, fastaHandle
+  faFileName = os.path.splitext(faFile)[0]
+  return faFile, fastaHandle, faFileName
+
+def checkExisting(squeakyDictFile, squeakyFileName):
+  if os.path.exists(squeakyDictFile):
+    os.remove(squeakyDictFile)
+    print('Existing squeaky dictionary file deleted.')
+
+  if os.path.exists(squeakyFileName):
+    os.remove(squeakyFileName)
+    print('Existing squeaky fa file deleted.')
 
 def isSequenceId(line):
   return line.startswith('>')
