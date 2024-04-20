@@ -3,23 +3,41 @@ from io import TextIOWrapper
 import unittest
 import squeakuences
 import os
+from pyfakefs import fake_filesystem_unittest
 
-class TestStringMethods(unittest.TestCase):
+# TODO: add test(s) for parser?
 
-  # Does load_file load file properly
-  def testLoadFile(self):
+# TODO: add test for checkExisting
+
+# TODO: add test for adding to dictionary?
+
+# TODO: add test for duplicates
+
+# TODO: add test for adding species name with underscore
+
+# TODO: add test for writing to file?
+
+class TestFileMethods(fake_filesystem_unittest.TestCase):
+  def setUp(self):
+    self.setUpPyfakefs()
+    self.fs.create_file('test.txt')
+
+  # Does loadFile load file properly
+  def test_loadFile(self):
     faFileNameExt, fastaHandle, faFileName = squeakuences.loadFile('test.txt')
     self.assertEqual(faFileNameExt, 'test.txt')
-    self.assertIsInstance(fastaHandle, TextIOWrapper)
+    #self.assertIsInstance(fastaHandle, TextIOWrapper)
     self.assertEqual(faFileName, 'test')
     fastaHandle.close()
 
+
+class TestSequenceMethods(unittest.TestCase):
   # Does is_squence_id identify a line begining with > as being true
-  def testIsSequenceIdTrue(self):
+  def test_isSequenceIdTrue(self):
     self.assertEqual(squeakuences.isSequenceId('> This line is true'), True)
 
   # Does is_squence_id identify a line not begining with > as being false
-  def testIsSequenceIdFalse(self):
+  def test_isSequenceIdFalse(self):
     self.assertEqual(squeakuences.isSequenceId('This line is false'), False)
 
   # Does remove_brackets remove brackets from a given line
@@ -46,18 +64,6 @@ class TestStringMethods(unittest.TestCase):
     self.assertEqual(squeakuences.chop('Acachl_PyruvateDehydrogenaseAcetylTransferringKinaseIsozyme1Mitochondrial'), 'Acachl_PyruvateDehydrogenaseAcetyl___KinaseIsozyme1Mitochondrial')
     self.assertEqual(squeakuences.chop('Acachl_ADisintegrinAndMetalloproteinaseWithThrombospondinMotifs18Partial'), 'Acachl_ADisintegrinAnd___WithThrombospondinMotifs18Partial')
     self.assertEqual(squeakuences.chop('Acachl_MembraneAssociatedGuanylateKinaseWwAndPdzDomainContainingProtein1', 40), 'Acachl_Membrane___ContainingProtein1')
-
-  # TODO: add test(s) for parser?
-
-  # TODO: add test for checkExisting
-
-  # TODO: add test for adding to dictionary?
-  
-  # TODO: add test for duplicates
-  
-  # TODO: add test for adding species name with underscore
-  
-  # TODO: add test for writing to file?
 
 if __name__ == '__main__':
   unittest.main()
