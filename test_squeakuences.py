@@ -8,9 +8,10 @@ class TestStringMethods(unittest.TestCase):
 
   # Does load_file load file properly
   def testLoadFile(self):
-    faFile, fastaHandle = squeakuences.loadFile('test.txt')
-    self.assertEqual(faFile, 'test.txt')
+    faFileNameExt, fastaHandle, faFileName = squeakuences.loadFile('test.txt')
+    self.assertEqual(faFileNameExt, 'test.txt')
     self.assertIsInstance(fastaHandle, TextIOWrapper)
+    self.assertEqual(faFileName, 'test')
     fastaHandle.close()
 
   # Does is_squence_id identify a line begining with > as being true
@@ -45,6 +46,8 @@ class TestStringMethods(unittest.TestCase):
     self.assertEqual(squeakuences.chop('Acachl_PyruvateDehydrogenaseAcetylTransferringKinaseIsozyme1Mitochondrial'), 'Acachl_PyruvateDehydrogenaseAcetyl___KinaseIsozyme1Mitochondrial')
     self.assertEqual(squeakuences.chop('Acachl_ADisintegrinAndMetalloproteinaseWithThrombospondinMotifs18Partial'), 'Acachl_ADisintegrinAnd___WithThrombospondinMotifs18Partial')
     self.assertEqual(squeakuences.chop('Acachl_MembraneAssociatedGuanylateKinaseWwAndPdzDomainContainingProtein1', 40), 'Acachl_Membrane___ContainingProtein1')
+
+  # TODO: add test(s) for parser?
 
   # TODO: add test for checkExisting
 

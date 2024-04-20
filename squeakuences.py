@@ -12,14 +12,14 @@ def main():
   sequenceIdCount = 0
   idDict = {}
 
-  faFile, fastHandle, faFileName = loadFile(args.input)
+  faFileNameExt, fastaHandle, faFileName = loadFile(args.input)
   
   squeakyFileName = write + '/' + faFileName + '_squeak.fa'
   squeakyDictFile = write + '/' + faFileName + '_squeakMods.tsv'
 
   checkExisting(squeakyDictFile, squeakyFileName)
 
-  for line in fastHandle:
+  for line in fastaHandle:
     if isSequenceId(line):
       sequenceIdCount += 1
       startId = stripSequenceId(line)
@@ -31,14 +31,14 @@ def main():
 
       idDict.update({startId: endId})
 
-  writeModIDFile(write + '/' + faFile, idDict)
+  writeModIDFile(write + '/' + faFileName, idDict)
 
 
 def loadFile(file):
-  faFile = os.path.basename(file)
+  faFileNameExt = os.path.basename(file)
   fastaHandle = open(file, 'r')
-  faFileName = os.path.splitext(faFile)[0]
-  return faFile, fastaHandle, faFileName
+  faFileName = os.path.splitext(faFileNameExt)[0]
+  return faFileNameExt, fastaHandle, faFileName
 
 def checkExisting(squeakyDictFile, squeakyFileName):
   if os.path.exists(squeakyDictFile):
