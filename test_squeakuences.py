@@ -7,8 +7,6 @@ from pyfakefs import fake_filesystem_unittest
 
 # TODO: add test(s) for parser?
 
-# TODO: add test for checkExisting
-
 # TODO: add test for adding to dictionary?
 
 # TODO: add test for duplicates
@@ -20,15 +18,38 @@ from pyfakefs import fake_filesystem_unittest
 class TestFileMethods(fake_filesystem_unittest.TestCase):
   def setUp(self):
     self.setUpPyfakefs()
-    self.fs.create_file('test.txt')
+    self.fs.create_file('test.fa')
 
   # Does loadFile load file properly
   def test_loadFile(self):
-    faFileNameExt, fastaHandle, faFileName = squeakuences.loadFile('test.txt')
-    self.assertEqual(faFileNameExt, 'test.txt')
+    faFileNameExt, fastaHandle, faFileName = squeakuences.loadFile('test.fa')
+    self.assertEqual(faFileNameExt, 'test.fa')
     #self.assertIsInstance(fastaHandle, TextIOWrapper)
     self.assertEqual(faFileName, 'test')
     fastaHandle.close()
+
+  def test_checkExisting(self):
+    filePathTrue = 'test.fa'
+    filePathFalse = 'notThere.faa'
+    
+    #Test first parameter
+    self.assertTrue(os.path.exists(filePathTrue))
+    self.assertFalse(os.path.exists(filePathFalse))
+
+    squeakuences.checkExisting(filePathTrue, filePathFalse)
+
+    self.assertFalse(os.path.exists(filePathTrue))
+    self.assertFalse(os.path.exists(filePathFalse))
+
+    #Test second parameter
+    self.setUp()
+    self.assertTrue(os.path.exists(filePathTrue))
+    self.assertFalse(os.path.exists(filePathFalse))
+
+    squeakuences.checkExisting(filePathFalse, filePathTrue)
+
+    self.assertFalse(os.path.exists(filePathTrue))
+    self.assertFalse(os.path.exists(filePathFalse))
 
 
 class TestSequenceMethods(unittest.TestCase):
