@@ -72,6 +72,12 @@ class TestSequenceMethods(unittest.TestCase):
     funcOutput = 'Galgal_14-3-3 protein gamma'
     self.assertEqual(squeakuences.stripSequenceId(funcInput), funcOutput)
 
+  # Does removeSpaces remove whitespace
+  def test_removeSpaces(self):
+    self.assertEqual(squeakuences.removeSpaces('Remove Spaces '), 'RemoveSpaces')
+    self.assertEqual(squeakuences.removeSpaces('Remove  Spaces'), 'RemoveSpaces')
+    self.assertEqual(squeakuences.removeSpaces('Acachl_aminoacyl tRNA synthase complex-interacting multifunctional protein 1-like, partial'), 'Acachl_aminoacyltRNAsynthasecomplex-interactingmultifunctionalprotein1-like,partial')
+
   # Does removeNonAlphanumeric remove brackets from a given line
   def test_removeNonAlphanumeric(self):
     self.assertEqual(squeakuences.removeNonAlphanumeric('Re(mov{e br[ack}]ets)'), 'Remove brackets')
@@ -81,12 +87,6 @@ class TestSequenceMethods(unittest.TestCase):
   # Does removeNonAlphanumeric remove any non english characters
   def test_remove_non_english_characters(self):
     self.assertEqual(squeakuences.removeNonAlphanumeric('R¥emÙove ÅnoĦn-engŧlish chaŸracters'), 'Remove nonenglish characters')
-
-  # Does removeSpaces remove whitespace
-  def test_removeSpaces(self):
-    self.assertEqual(squeakuences.removeSpaces('Remove Spaces '), 'RemoveSpaces')
-    self.assertEqual(squeakuences.removeSpaces('Remove  Spaces'), 'RemoveSpaces')
-    self.assertEqual(squeakuences.removeSpaces('Acachl_aminoacyl tRNA synthase complex-interacting multifunctional protein 1-like, partial'), 'Acachl_aminoacyltRNAsynthasecomplex-interactingmultifunctionalprotein1-like,partial')
 
   # Does speciesName ensure that the sequence id always begins with the species name and an underscore
   def test_speciesName(self):
