@@ -18,10 +18,12 @@ from pyfakefs import fake_filesystem_unittest
 class TestFileMethods(fake_filesystem_unittest.TestCase):
   def setUp(self):
     self.setUpPyfakefs()
-    self.fs.create_file('test.fa')
+    if not os.path.exists('test.fa'):
+      self.fs.create_file('test.fa')
 
   # Does loadFile load file properly
   def test_loadFile(self):
+    self.setUp()
     faFileNameExt, fastaHandle, faFileName = squeakuences.loadFile('test.fa')
     self.assertEqual(faFileNameExt, 'test.fa')
     #self.assertIsInstance(fastaHandle, TextIOWrapper)
@@ -29,6 +31,7 @@ class TestFileMethods(fake_filesystem_unittest.TestCase):
     fastaHandle.close()
 
   def test_checkExisting(self):
+    self.setUp()
     filePathTrue = 'test.fa'
     filePathFalse = 'notThere.faa'
     
@@ -60,6 +63,11 @@ class TestSequenceMethods(unittest.TestCase):
   # Does is_squence_id identify a line not begining with > as being false
   def test_isSequenceIdFalse(self):
     self.assertEqual(squeakuences.isSequenceId('This line is false'), False)
+
+  def test_stripSequenceId(self):
+    funcInput = '>Galgal_14-3-3 protein gamma\n'
+    funcOutput = 'Galgal_14-3-3 protein gamma'
+    self.assertEqual(squeakuences.stripSequenceId(funcInput), funcOutput)
 
   # Does remove_brackets remove brackets from a given line
   def test_removeNonAlphanumeric(self):
