@@ -56,6 +56,23 @@ class TestFileMethods(fake_filesystem_unittest.TestCase):
     self.assertFalse(os.path.exists(filePathTrue))
     self.assertFalse(os.path.exists(filePathFalse))
 
+  def test_writeModIDFile(self):
+    self.setUp()
+    modIdFileName = 'my_sequences'
+    modIdDict = {
+      'Agepho_acid-sensing ion channel 5': 'Agepho_acidsensingionchannel5',
+      'Acachl_14-3-3 protein gamma': 'Acachl_1433ProteinGamma',
+      'Galgal_catenin alpha-1': 'Galgal_CateninAlpha1'
+    }
+    squeakuences.writeModIdFile(modIdFileName, modIdDict)
+
+    with open("my_sequences_squeakMods.tsv") as f:
+        contents = f.readlines()
+
+    self.assertIn('Agepho_acid-sensing ion channel 5\tAgepho_acidsensingionchannel5\n', contents)
+    self.assertIn('Acachl_14-3-3 protein gamma\tAcachl_1433ProteinGamma\n', contents)
+    self.assertIn('Galgal_catenin alpha-1\tGalgal_CateninAlpha1\n', contents)
+
 
 class TestSequenceMethods(unittest.TestCase):
   # Does isSequenceId identify a line begining with > as being true

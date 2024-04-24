@@ -31,7 +31,7 @@ def main():
 
       idDict.update({startId: endId})
 
-  writeModIDFile(write + '/' + faFileName, idDict)
+  writeModIdFile(write + '/' + faFileName, idDict)
 
 
 def loadFile(file):
@@ -98,7 +98,7 @@ def chop(sequenceID, max = 70):
     newName = ''.join(nameComponents)
     return chop(newName, max)
   
-def writeModIDFile(faFileName, idDictInput):
+def writeModIdFile(faFileName, idDictInput):
   fileExtension = os.path.splitext(faFileName)
   newFileName = fileExtension[0] + '_squeakMods.tsv'
   
