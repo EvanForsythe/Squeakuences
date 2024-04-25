@@ -6,6 +6,7 @@ import csv
 import string
 
 # TODO: add/write function for dealing with duplciates
+# TODO: add functionality for batch processing
 # TODO: do we need a separate remove non-alphanumeric function?
 
 def main():
