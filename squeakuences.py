@@ -3,6 +3,7 @@ import argparse
 import re
 import os
 import csv
+import string
 
 def main():
   parser = setupParser()
@@ -23,8 +24,8 @@ def main():
     if isSequenceId(line):
       sequenceIdCount += 1
       startId = stripSequenceId(line)
-      #Linnea: revist camelCase situtation
-      endId = removeSpaces(startId)
+      endId = camelCase(startId)
+      endId = removeSpaces(endId)
       endId = removeNonAlphanumeric(endId)
       endId = speciesName(endId, faFileName)
       endId = chop(endId)
@@ -61,37 +62,46 @@ def stripSequenceId(line):
 # Non Alpha-Numeric Removal Functions #
 #######################################
 
-def removeSpaces(sequenceID):
-  modifiedID = re.sub(r'\s', '', sequenceID)
-  return modifiedID
+def camelCase(sequenceId):
+  capList = []
+  wordList = re.split(r'[\s_-]', sequenceId)
+  for word in wordList:
+    capWord = word[:1].upper() + word[1:]
+    capList.append(capWord)
+  camelCaseSequence = ' '.join(capList)
+  return camelCaseSequence
 
-def removeNonAlphanumeric(sequenceID):
-  modifiedID = re.sub(r'[^a-zA-Z0-9\s]', '', sequenceID)
-  return modifiedID
+def removeSpaces(sequenceId):
+  modifiedId = re.sub(r'\s', '', sequenceId)
+  return modifiedId
+
+def removeNonAlphanumeric(sequenceId):
+  modifiedId = re.sub(r'[^a-zA-Z0-9\s]', '', sequenceId)
+  return modifiedId
 
 # Optional?
-def remove_non_english_characters(sequenceID):
+def remove_non_english_characters(sequenceId):
   # TODO: Remove any non-english characters
   # Regex: /<-[a..zA..Z\s]>+/  <<< Do we need this to include numbers? This is saying anything that isn't an english alphabetic letter
   return
 
-def speciesName(sequenceID, speciesName):
-  if sequenceID.startswith(speciesName):
+def speciesName(sequenceId, speciesName):
+  if sequenceId.startswith(speciesName):
     underscoreindex = len(speciesName)
-    modifiedID = sequenceID[:underscoreindex] + '_' + sequenceID[underscoreindex:]
+    modifiedId = sequenceId[:underscoreindex] + '_' + sequenceId[underscoreindex:]
   else:
-    modifiedID = speciesName + '_' + sequenceID
-  return modifiedID
+    modifiedId = speciesName + '_' + sequenceId
+  return modifiedId
     
-def chop(sequenceID, max = 70):
-  length = len(sequenceID)
+def chop(sequenceId, max = 70):
+  length = len(sequenceId)
 
   if length < max:
-    return sequenceID
+    return sequenceId
   else:
-    sequenceID = re.sub(r'___', '', sequenceID)
+    sequenceId = re.sub(r'___', '', sequenceId)
     nameComponents = []
-    nameComponents = re.findall(r'[A-Z][^A-Z]*', sequenceID)
+    nameComponents = re.findall(r'[A-Z][^A-Z]*', sequenceId)
     middle = len(nameComponents) // 2
     del nameComponents[middle:middle+1]
     nameComponents.insert(middle, '___')

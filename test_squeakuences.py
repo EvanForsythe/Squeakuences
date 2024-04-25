@@ -56,7 +56,8 @@ class TestFileMethods(fake_filesystem_unittest.TestCase):
     self.assertFalse(os.path.exists(filePathTrue))
     self.assertFalse(os.path.exists(filePathFalse))
 
-  def test_writeModIDFile(self):
+  # Does writeModIdFile write a new file with the dirty and clean sequence ids
+  def test_writeModIdFile(self):
     self.setUp()
     modIdFileName = 'my_sequences'
     modIdDict = {
@@ -88,6 +89,11 @@ class TestSequenceMethods(unittest.TestCase):
     funcInput = '>Galgal_14-3-3 protein gamma\n'
     funcOutput = 'Galgal_14-3-3 protein gamma'
     self.assertEqual(squeakuences.stripSequenceId(funcInput), funcOutput)
+
+  # Does camelCase captitalize all the words in a sequence id
+  def test_camelCase(self):
+    input_sequence = 'Galgal_BTB/POZ domain-containing protein KCTD12'
+    self.assertEqual(squeakuences.camelCase(input_sequence), 'Galgal BTB/POZ Domain Containing Protein KCTD12')
 
   # Does removeSpaces remove whitespace
   def test_removeSpaces(self):
