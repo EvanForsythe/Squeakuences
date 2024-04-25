@@ -58,10 +58,6 @@ def stripSequenceId(line):
   line = line.strip('\n')
   return line
 
-#######################################
-# Non Alpha-Numeric Removal Functions #
-#######################################
-
 def camelCase(sequenceId):
   capList = []
   wordList = re.split(r'[\s_-]', sequenceId)
@@ -119,8 +115,6 @@ def writeModIdFile(faFileName, idDictInput):
   tsvfile.close()
 
 # TODO: add/write function for dealing with duplciates
-
-# TODO: add/write function/code for writing before-after file
 
 # TODO: add/write function/code for writing new squeaky clean file  
 
