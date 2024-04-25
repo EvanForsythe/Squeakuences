@@ -9,6 +9,9 @@ import string
 # TODO: add functionality for batch processing
 # TODO: decide what we want our output to look like
 # TODO: do we need a separate remove non-alphanumeric function?
+# TODO: add arguments such as max length, allow underscores, species name, custom replace characters, custom regex. 
+# TODO: Make sure all arguements have defaults
+# TODO: make sure chop can't return ___ only
 
 def main():
   parser = setupParser()
