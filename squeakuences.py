@@ -7,6 +7,7 @@ import string
 
 # TODO: add/write function for dealing with duplciates
 # TODO: add functionality for batch processing
+# TODO: decide what we want our output to look like
 # TODO: do we need a separate remove non-alphanumeric function?
 
 def main():
