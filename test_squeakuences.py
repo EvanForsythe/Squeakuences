@@ -58,13 +58,13 @@ class TestFileMethods(fake_filesystem_unittest.TestCase):
 
   # Does writeModIdFile write a new file with the dirty and clean sequence ids
   def test_writeModIdFile(self):
-    self.setUp()
     modIdFileName = 'my_sequences'
     modIdDict = {
       'Agepho_acid-sensing ion channel 5': 'Agepho_acidsensingionchannel5',
       'Acachl_14-3-3 protein gamma': 'Acachl_1433ProteinGamma',
       'Galgal_catenin alpha-1': 'Galgal_CateninAlpha1'
     }
+
     squeakuences.writeModIdFile(modIdFileName, modIdDict)
 
     with open("my_sequences_squeakMods.tsv") as f:
