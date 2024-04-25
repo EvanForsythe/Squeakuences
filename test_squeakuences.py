@@ -13,8 +13,6 @@ from pyfakefs import fake_filesystem_unittest
 
 # TODO: add test for adding species name with underscore
 
-# TODO: add test for writing to file?
-
 class TestFileMethods(fake_filesystem_unittest.TestCase):
   # Set up the fake file system
   def setUp(self):
@@ -55,6 +53,23 @@ class TestFileMethods(fake_filesystem_unittest.TestCase):
 
     self.assertFalse(os.path.exists(filePathTrue))
     self.assertFalse(os.path.exists(filePathFalse))
+
+  # Does writeLine append a line to the file with > \n if needed
+  def test_writeLine(self):  
+    self.setUp()
+    squeakyFileName = 'test_squeaky.fa'
+    seqId = 'MySequenceID'
+    aaData = 'ABCD'
+    squeakuences.writeLine(squeakyFileName, seqId, True)
+    squeakuences.writeLine(squeakyFileName, aaData, False)
+
+    self.assertTrue(os.path.exists(squeakyFileName))
+
+    with open("test_squeaky.fa") as f:
+      contents = f.readlines()
+
+    self.assertIn('>MySequenceID\n', contents)
+    self.assertIn('ABCD', contents)
 
   # Does writeModIdFile write a new file with the dirty and clean sequence ids
   def test_writeModIdFile(self):

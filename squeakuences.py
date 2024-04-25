@@ -32,6 +32,11 @@ def main():
 
       idDict.update({startId: endId})
 
+      writeLine(squeakyFileName, endId, True)
+
+    else:
+      writeLine(squeakyFileName, line, False)
+
   writeModIdFile(write + '/' + faFileName, idDict)
 
 
@@ -104,6 +109,14 @@ def chop(sequenceId, max = 70):
     newName = ''.join(nameComponents)
     return chop(newName, max)
   
+def writeLine(faFile, line, sequence):
+  with open(faFile, 'a') as file:
+    if sequence is True:
+      file.write('>' + line + '\n')
+    else:
+      file.write(line)
+  file.close()
+  
 def writeModIdFile(faFileName, idDictInput):
   fileExtension = os.path.splitext(faFileName)
   newFileName = fileExtension[0] + '_squeakMods.tsv'
@@ -115,8 +128,6 @@ def writeModIdFile(faFileName, idDictInput):
   tsvfile.close()
 
 # TODO: add/write function for dealing with duplciates
-
-# TODO: add/write function/code for writing new squeaky clean file  
 
 # Create tests for these???
 def setupParser():
