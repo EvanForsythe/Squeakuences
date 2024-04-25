@@ -5,6 +5,9 @@ import os
 import csv
 import string
 
+# TODO: add/write function for dealing with duplciates
+# TODO: do we need a separate remove non-alphanumeric function?
+
 def main():
   parser = setupParser()
   args = parseArguments(parser)
@@ -127,9 +130,6 @@ def writeModIdFile(faFileName, idDictInput):
       writer.writerow([k, v])
   tsvfile.close()
 
-# TODO: add/write function for dealing with duplciates
-
-# Create tests for these???
 def setupParser():
     parser = argparse.ArgumentParser()
     # Add parser arguments. ex: parser.add_argument('-l', '--long_name', help='What is it for?', required=True/False)

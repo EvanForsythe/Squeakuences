@@ -6,12 +6,7 @@ import os
 from pyfakefs import fake_filesystem_unittest
 
 # TODO: add test(s) for parser?
-
-# TODO: add test for adding to dictionary?
-
 # TODO: add test for duplicates
-
-# TODO: add test for adding species name with underscore
 
 class TestFileMethods(fake_filesystem_unittest.TestCase):
   # Set up the fake file system
