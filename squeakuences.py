@@ -3,9 +3,7 @@ import argparse
 import re
 import os
 import csv
-import string
 
-# TODO: add/write function for dealing with duplciates
 # TODO: add functionality for batch processing
 # TODO: decide what we want our output to look like
 # TODO: do we need a separate remove non-alphanumeric function?
@@ -20,6 +18,7 @@ def main():
 
   sequenceIdCount = 0
   idDict = {}
+  idDuplicatesList = []
 
   faFileNameExt, fastaHandle, faFileName = loadFile(args.input)
   
@@ -37,7 +36,11 @@ def main():
       endId = removeNonAlphanumeric(endId)
       endId = speciesName(endId, faFileName)
       endId = chop(endId)
-
+      
+      if checkForDuplicates(endId, idDict):
+        startId, endId = resolveDuplicate(startId, endId, idDuplicatesList)
+        endId = chop(endId)
+        
       idDict.update({startId: endId})
 
       writeLine(squeakyFileName, endId, True)
@@ -117,6 +120,20 @@ def chop(sequenceId, max = 70):
     newName = ''.join(nameComponents)
     return chop(newName, max)
   
+def checkForDuplicates(sequenceId, idDict):
+  if sequenceId in idDict.values():
+    return True
+  else:
+    return False
+
+def resolveDuplicate(startSequenceId, modSequenceId, dupsList):
+  existing = dupsList.count(modSequenceId)
+  nextCount = existing + 1 
+  startDupId = startSequenceId + '_' + str(nextCount)
+  endDupId = modSequenceId + '_' + str(nextCount)
+  dupsList.append(modSequenceId)
+  return startDupId, endDupId
+
 def writeLine(faFile, line, sequence):
   with open(faFile, 'a') as file:
     if sequence is True:
@@ -139,7 +156,7 @@ def setupParser():
     parser = argparse.ArgumentParser()
     # Add parser arguments. ex: parser.add_argument('-l', '--long_name', help='What is it for?', required=True/False)
     parser.add_argument('-i', '--input', help='Input file', required=True)
-    parser.add_argument('-w', '--write', help='Output Location', required=True)
+    parser.add_argument('-o', '--write', help='Output Location', required=True)
     # add arg for chop function length
     # add arg for write location
     return parser

@@ -6,7 +6,6 @@ import os
 from pyfakefs import fake_filesystem_unittest
 
 # TODO: add test(s) for parser?
-# TODO: add test for duplicates
 
 class TestFileMethods(fake_filesystem_unittest.TestCase):
   # Set up the fake file system
@@ -131,6 +130,28 @@ class TestSequenceMethods(unittest.TestCase):
     self.assertEqual(squeakuences.chop('Acachl_PyruvateDehydrogenaseAcetylTransferringKinaseIsozyme1Mitochondrial'), 'Acachl_PyruvateDehydrogenaseAcetyl___KinaseIsozyme1Mitochondrial')
     self.assertEqual(squeakuences.chop('Acachl_ADisintegrinAndMetalloproteinaseWithThrombospondinMotifs18Partial'), 'Acachl_ADisintegrinAnd___WithThrombospondinMotifs18Partial')
     self.assertEqual(squeakuences.chop('Acachl_MembraneAssociatedGuanylateKinaseWwAndPdzDomainContainingProtein1', 40), 'Acachl_Membrane___ContainingProtein1')
+
+
+  def test_checkForDuplicates(self):
+    modIdDict = {
+      'Galgal_catenin alpha-1': 'Galgal_CateninAlpha1'
+    }
+
+    self.assertEqual(squeakuences.checkForDuplicates('Acachl_1433ProteinGamma', modIdDict), False)
+    self.assertEqual(squeakuences.checkForDuplicates('Galgal_CateninAlpha1', modIdDict), True)
+
+  def test_resolveDuplicate(self):
+    modIdDict = {
+      'Agepho_acid-sensing ion channel 5': 'Agepho_acidsensingionchannel5',
+      'Acachl_14-3-3 protein gamma': 'Acachl_1433ProteinGamma',
+      'Galgal_catenin alpha-1': 'Galgal_CateninAlpha1'
+    }
+
+    existingDuplicates = ['Galgal_CateninAlpha1']
+
+    self.assertEqual(squeakuences.resolveDuplicate('Acachl_14-3-3 protein gamma', 'Acachl_1433ProteinGamma', existingDuplicates), ('Acachl_14-3-3 protein gamma_1', 'Acachl_1433ProteinGamma_1'))
+    self.assertEqual(squeakuences.resolveDuplicate('Galgal_catenin alpha-1', 'Galgal_CateninAlpha1', existingDuplicates), ('Galgal_catenin alpha-1_2', 'Galgal_CateninAlpha1_2'))
+    self.assertEqual(existingDuplicates, ['Galgal_CateninAlpha1', 'Acachl_1433ProteinGamma', 'Galgal_CateninAlpha1'])
 
 if __name__ == '__main__':
   unittest.main()
