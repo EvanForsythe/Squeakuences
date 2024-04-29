@@ -11,22 +11,41 @@ class TestFileMethods(fake_filesystem_unittest.TestCase):
   # Set up the fake file system
   def setUp(self):
     self.setUpPyfakefs()
-    if not os.path.exists('test.fa'):
-      self.fs.create_file('test.fa')
+    if not os.path.exists('/test1.fa'):
+      self.fs.create_file('/test1.fa')
+
+    if not os.path.exists('/myFiles/test2.fa'):
+      self.fs.create_file('/myFiles/test2.fa')
+
+    if not os.path.exists('/myFiles/test3.faa'):
+      self.fs.create_file('/myFiles/test3.faa')
+
+    if not os.path.exists('/myFiles/test4.fa'):
+      self.fs.create_file('/myFiles/test4.fa')
+
+  def test_resolveInput(self):
+    self.setUp()
+    self.assertEqual(squeakuences.resolveInput('test1.fa'), 'File')
+    self.assertEqual(squeakuences.resolveInput('/myFiles'), 'Directory')
+
+  def test_inputList(self):
+    self.setUp()
+    self.assertEqual(squeakuences.inputList('File', 'test1.fa'), ['test1.fa'])
+    self.assertEqual(squeakuences.inputList('Directory', '/myFiles'), ['test2.fa', 'test3.faa', 'test4.fa'])
 
   # Does loadFile load file properly
   def test_loadFile(self):
     self.setUp()
-    faFileNameExt, fastaHandle, faFileName = squeakuences.loadFile('test.fa')
-    self.assertEqual(faFileNameExt, 'test.fa')
+    faFileNameExt, fastaHandle, faFileName = squeakuences.loadFile('test1.fa')
+    self.assertEqual(faFileNameExt, 'test1.fa')
     #self.assertIsInstance(fastaHandle, TextIOWrapper)
-    self.assertEqual(faFileName, 'test')
+    self.assertEqual(faFileName, 'test1')
     fastaHandle.close()
 
   # Does checkExisting remove file(s) from previous squeakuences runs
   def test_checkExisting(self):
     self.setUp()
-    filePathTrue = 'test.fa'
+    filePathTrue = 'test1.fa'
     filePathFalse = 'notThere.faa'
     
     #Test first parameter

@@ -3,6 +3,7 @@ import argparse
 import re
 import os
 import csv
+import glob
 
 # TODO: add functionality for batch processing
 # TODO: decide what we want our output to look like
@@ -50,6 +51,23 @@ def main():
 
   writeModIdFile(write + '/' + faFileName, idDict)
 
+
+def resolveInput(userInput):
+  if os.path.isfile(userInput):
+    return 'File'
+  
+  if os.path.isdir(userInput):
+    return 'Directory'
+  
+def inputList(type, userInput):
+  toSqueakify = []
+
+  if type == 'File':
+    toSqueakify.append(userInput)
+  else:
+    toSqueakify = glob.glob('*.fa*', root_dir=userInput)
+
+  return toSqueakify
 
 def loadFile(file):
   faFileNameExt = os.path.basename(file)
@@ -155,10 +173,9 @@ def writeModIdFile(faFileName, idDictInput):
 def setupParser():
     parser = argparse.ArgumentParser()
     # Add parser arguments. ex: parser.add_argument('-l', '--long_name', help='What is it for?', required=True/False)
-    parser.add_argument('-i', '--input', help='Input file', required=True)
-    parser.add_argument('-o', '--write', help='Output Location', required=True)
+    parser.add_argument('-i', '--input', help='Input file(s) to clean', required=True)
+    parser.add_argument('-o', '--output', help='Output Location', required=True)
     # add arg for chop function length
-    # add arg for write location
     return parser
   
 def parseArguments(parser):
