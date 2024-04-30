@@ -12,7 +12,8 @@ class TestFileMethods(fake_filesystem_unittest.TestCase):
   def setUp(self):
     self.setUpPyfakefs()
     if not os.path.exists('/test1.fa'):
-      self.fs.create_file('/test1.fa')
+      self.fs.create_file('/test1.fa', 
+                          contents='>alpha beta\nABCD\n>gamma_epsilon\nEFGH\n>zeta[eta]\nIJKLMNOP\n')
 
     if not os.path.exists('/myFiles/test2.fa'):
       self.fs.create_file('/myFiles/test2.fa')
@@ -22,6 +23,21 @@ class TestFileMethods(fake_filesystem_unittest.TestCase):
 
     if not os.path.exists('/myFiles/test4.fa'):
       self.fs.create_file('/myFiles/test4.fa')
+
+    if not os.path.exists('/OUT'):
+      self.fs.create_dir('/OUT')
+
+  def test_squeakifySingle(self):
+    self.setUp()
+    squeakuences.squeakify('test1.fa', '/OUT')
+
+    with open("/OUT/test1_squeak.fa") as f:
+      contents = f.readlines()
+
+    self.assertIn('>test1_AlphaBeta\n', contents)
+    self.assertIn('ABCD\n', contents)
+    self.assertIn('>test1_Zetaeta\n', contents)
+    self.assertIn('IJKLMNOP\n', contents)
 
   def test_resolveInput(self):
     self.setUp()
