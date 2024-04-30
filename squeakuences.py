@@ -5,7 +5,6 @@ import os
 import csv
 import glob
 
-# TODO: add functionality for batch processing
 # TODO: decide what we want our output to look like
 # TODO: do we need a separate remove non-alphanumeric function?
 # TODO: add arguments such as max length, allow underscores, species name, custom replace characters, custom regex. 
@@ -67,12 +66,10 @@ def resolveInput(userInput):
   
 def inputList(type, userInput):
   toSqueakify = []
-
   if type == 'File':
     toSqueakify.append(userInput)
   else:
     toSqueakify = glob.glob(userInput + '/*.fa*', root_dir=userInput)
-
   return toSqueakify
 
 def loadFile(file):
