@@ -15,8 +15,13 @@ import glob
 def main():
   parser = setupParser()
   args = parseArguments(parser)
-  write = args.write
+  write = args.output
 
+  inputType = resolveInput(args.input)
+  toProcess = inputList(inputType, args.input)
+  
+  for file in toProcess:
+    squeakify(file, write)
 
 def squeakify(file, write):
   sequenceIdCount = 0
@@ -66,7 +71,7 @@ def inputList(type, userInput):
   if type == 'File':
     toSqueakify.append(userInput)
   else:
-    toSqueakify = glob.glob('*.fa*', root_dir=userInput)
+    toSqueakify = glob.glob(userInput + '/*.fa*', root_dir=userInput)
 
   return toSqueakify
 
