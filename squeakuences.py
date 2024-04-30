@@ -17,11 +17,13 @@ def main():
   args = parseArguments(parser)
   write = args.write
 
+
+def squeakify(file, write):
   sequenceIdCount = 0
   idDict = {}
   idDuplicatesList = []
 
-  faFileNameExt, fastaHandle, faFileName = loadFile(args.input)
+  faFileNameExt, fastaHandle, faFileName = loadFile(file)
   
   squeakyFileName = write + '/' + faFileName + '_squeak.fa'
   squeakyDictFile = write + '/' + faFileName + '_squeakMods.tsv'
@@ -50,7 +52,6 @@ def main():
       writeLine(squeakyFileName, line, False)
 
   writeModIdFile(write + '/' + faFileName, idDict)
-
 
 def resolveInput(userInput):
   if os.path.isfile(userInput):
