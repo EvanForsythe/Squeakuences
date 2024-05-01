@@ -27,6 +27,7 @@ class TestFileMethods(fake_filesystem_unittest.TestCase):
     if not os.path.exists('/OUT'):
       self.fs.create_dir('/OUT')
 
+  # Does squeakify perform all the cleanning steps on the sequences in a file
   def test_squeakifySingle(self):
     self.setUp()
     squeakuences.squeakify('test1.fa', '/OUT')
@@ -34,20 +35,22 @@ class TestFileMethods(fake_filesystem_unittest.TestCase):
     with open("/OUT/test1_squeak.fa") as f:
       contents = f.readlines()
 
-    self.assertIn('>test1_AlphaBeta\n', contents)
+    self.assertIn('>Test1_AlphaBeta\n', contents)
     self.assertIn('ABCD\n', contents)
-    self.assertIn('>test1_Zetaeta\n', contents)
+    self.assertIn('>Test1_Zetaeta\n', contents)
     self.assertIn('IJKLMNOP\n', contents)
 
+  # Does resolveInput determine if a file path or directory path was given in the -i argument
   def test_resolveInput(self):
     self.setUp()
     self.assertEqual(squeakuences.resolveInput('test1.fa'), 'File')
     self.assertEqual(squeakuences.resolveInput('/myFiles'), 'Directory')
 
+  # Does inputList generate a list of files based on the user input
   def test_inputList(self):
     self.setUp()
     self.assertEqual(squeakuences.inputList('File', 'test1.fa'), ['test1.fa'])
-    self.assertEqual(squeakuences.inputList('Directory', '/myFiles'), ['test2.fa', 'test3.faa', 'test4.fa'])
+    self.assertEqual(squeakuences.inputList('Directory', '/myFiles'), ['/myFiles/test2.fa', '/myFiles/test3.faa', '/myFiles/test4.fa'])
 
   # Does loadFile load file properly
   def test_loadFile(self):
@@ -159,6 +162,9 @@ class TestSequenceMethods(unittest.TestCase):
   def test_speciesName(self):
     self.assertEqual(squeakuences.speciesName('AcachlArg8VasotocinReceptorLike', 'Acachl'), 'Acachl_Arg8VasotocinReceptorLike')
     self.assertEqual(squeakuences.speciesName('Arg8VasotocinReceptorLike', 'Acachl'), 'Acachl_Arg8VasotocinReceptorLike')
+    self.assertEqual(squeakuences.speciesName('GalgalExampleGene', 'galgal'), 'Galgal_ExampleGene')
+    self.assertEqual(squeakuences.speciesName('ExampleGene', 'galgal'), 'Galgal_ExampleGene')
+    self.assertEqual(squeakuences.speciesName('ExampleGene', 'felis_catus'), 'FelisCatus_ExampleGene')
 
   # Does chop shorten a sequence id to either the default or given maximum length
   def test_chop(self):
@@ -166,7 +172,7 @@ class TestSequenceMethods(unittest.TestCase):
     self.assertEqual(squeakuences.chop('Acachl_ADisintegrinAndMetalloproteinaseWithThrombospondinMotifs18Partial'), 'Acachl_ADisintegrinAnd___WithThrombospondinMotifs18Partial')
     self.assertEqual(squeakuences.chop('Acachl_MembraneAssociatedGuanylateKinaseWwAndPdzDomainContainingProtein1', 40), 'Acachl_Membrane___ContainingProtein1')
 
-
+  # Does checkForDuplicates return the correct boolean if a given sequence id has already been processed
   def test_checkForDuplicates(self):
     modIdDict = {
       'Galgal_catenin alpha-1': 'Galgal_CateninAlpha1'
@@ -175,6 +181,7 @@ class TestSequenceMethods(unittest.TestCase):
     self.assertEqual(squeakuences.checkForDuplicates('Acachl_1433ProteinGamma', modIdDict), False)
     self.assertEqual(squeakuences.checkForDuplicates('Galgal_CateninAlpha1', modIdDict), True)
 
+  # Does resolveDuplicate add the appropriate number after a sequence id to make it unique
   def test_resolveDuplicate(self):
     modIdDict = {
       'Agepho_acid-sensing ion channel 5': 'Agepho_acidsensingionchannel5',
