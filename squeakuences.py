@@ -119,7 +119,13 @@ def remove_non_english_characters(sequenceId):
   return
 
 def speciesName(sequenceId, speciesName):
-  if sequenceId.startswith(speciesName):
+  speciesName = camelCase(speciesName)
+  speciesName = removeSpaces(speciesName)
+  speciesName = removeNonAlphanumeric(speciesName)
+  sequenceIdLower = sequenceId.lower()
+  speciesNameLower = speciesName.lower()
+
+  if sequenceIdLower.startswith(speciesNameLower):
     underscoreindex = len(speciesName)
     modifiedId = sequenceId[:underscoreindex] + '_' + sequenceId[underscoreindex:]
   else:
