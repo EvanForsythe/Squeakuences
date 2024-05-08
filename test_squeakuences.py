@@ -55,8 +55,14 @@ class TestFileMethods(fake_filesystem_unittest.TestCase):
   # Does checkOutputArg determine if the output directory exists
   def test_checkOutputArg(self):
     self.setUp()
-    self.assertEqual(squeakuences.checkOutputArg('/userOUT'), '/userOUT')
-    self.assertEqual(squeakuences.checkOutputArg('/generatedOUT'), '/generatedOUT')
+    exists = '/userOUT'
+    notExist = '/generatedOUT'
+    self.assertTrue(os.path.exists(exists))
+    self.assertEqual(squeakuences.checkOutputArg(exists), exists)
+
+    self.assertFalse(os.path.exists(notExist))
+    self.assertEqual(squeakuences.checkOutputArg(notExist), notExist)
+    self.assertTrue(os.path.exists(notExist))
 
   # Does loadFile load file properly
   def test_loadFile(self):
