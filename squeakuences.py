@@ -14,13 +14,12 @@ import glob
 def main():
   parser = setupParser()
   args = parseArguments(parser)
-  write = args.output
 
-  inputType = resolveInput(args.input)
-  toProcess = inputList(inputType, args.input)
+  inputType, inputPath = resolveInput(args.input)
+  toProcess = inputList(inputType, inputPath)
   
   for file in toProcess:
-    squeakify(file, write)
+    squeakify(file, args.output)
 
 def squeakify(file, write):
   sequenceIdCount = 0
@@ -59,10 +58,22 @@ def squeakify(file, write):
 
 def resolveInput(userInput):
   if os.path.isfile(userInput):
-    return 'File'
+    return 'File', userInput
   
   if os.path.isdir(userInput):
-    return 'Directory'
+    fullDirPath = checkDirPath(userInput)
+    return 'Directory', fullDirPath
+  
+def checkDirPath(userInput):
+  if os.path.isabs(userInput):
+    return userInput
+  else:
+    cwd = os.getcwd()
+    if cwd == '/':
+      fullPath = '/' + userInput
+    else:
+      fullPath =  os.getcwd() + '/' + userInput
+  return fullPath
   
 def inputList(type, userInput):
   toSqueakify = []
