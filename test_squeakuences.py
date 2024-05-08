@@ -30,9 +30,9 @@ class TestFileMethods(fake_filesystem_unittest.TestCase):
   # Does squeakify perform all the cleanning steps on the sequences in a file
   def test_squeakifySingle(self):
     self.setUp()
-    squeakuences.squeakify('test1.fa', '/OUT')
+    squeakuences.squeakify('test1.fa', '/userOUT')
 
-    with open("/OUT/test1_squeak.fa") as f:
+    with open("/userOUT/test1_squeak.fa") as f:
       contents = f.readlines()
 
     self.assertIn('>Test1_AlphaBeta\n', contents)
@@ -55,8 +55,8 @@ class TestFileMethods(fake_filesystem_unittest.TestCase):
   # Does checkOutputArg determine if the output directory exists
   def test_checkOutputArg(self):
     self.setUp()
-    self.assertEqual(squeakuences.checkOutputArg('/userOUT'), True)
-    self.assertEqual(squeakuences.checkOutputArg('/generatedOUT'), False)
+    self.assertEqual(squeakuences.checkOutputArg('/userOUT'), '/userOUT')
+    self.assertEqual(squeakuences.checkOutputArg('/generatedOUT'), '/generatedOUT')
 
   # Does loadFile load file properly
   def test_loadFile(self):

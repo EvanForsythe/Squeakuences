@@ -72,6 +72,11 @@ def inputList(type, userInput):
     toSqueakify = glob.glob(userInput + '/*.fa*', root_dir=userInput)
   return toSqueakify
 
+def checkOutputArg(ouputDirectoryPath):
+  if not os.path.isdir(ouputDirectoryPath):
+    os.mkdir(ouputDirectoryPath)
+  return ouputDirectoryPath
+
 def loadFile(file):
   faFileNameExt = os.path.basename(file)
   fastaHandle = open(file, 'r')
