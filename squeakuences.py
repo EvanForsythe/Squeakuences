@@ -193,8 +193,8 @@ def writeModIdFile(faFileName, idDictInput):
 def setupParser():
     parser = argparse.ArgumentParser()
     # Add parser arguments. ex: parser.add_argument('-l', '--long_name', help='What is it for?', required=True/False)
-    parser.add_argument('-i', '--input', help='Input file(s) to clean. This can be the full path or relative to the squeakuences file location.', required=True)
-    parser.add_argument('-o', '--output', help='Output Location This can be the full path or relative to the squeakuences file location.', required=True)
+    parser.add_argument('-i', '--input', help='Path to file(s) to clean. This can be the full path or relative to the squeakuences file location.', required=True)
+    parser.add_argument('-o', '--output', help='Path to ouput folder. This can be the full path or relative to the squeakuences file location. This directory must exist prior to running.', required=True)
     # add arg for chop function length
     return parser
   
