@@ -14,13 +14,14 @@ import glob
 def main():
   parser = setupParser()
   args = parseArguments(parser)
-  write = args.output
 
   inputType = resolveInput(args.input)
   toProcess = inputList(inputType, args.input)
+
+  ouputPath = checkOutputArg(args.output)
   
   for file in toProcess:
-    squeakify(file, write)
+    squeakify(file, ouputPath)
 
 def squeakify(file, write):
   sequenceIdCount = 0
