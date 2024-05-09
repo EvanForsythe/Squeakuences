@@ -97,11 +97,11 @@ def stripSequenceId(line):
 
 def camelCase(sequenceId):
   capList = []
-  wordList = re.split(r'[\s_-]', sequenceId)
+  wordList = re.split(r'([^a-zA-Z0-9])', sequenceId)
   for word in wordList:
     capWord = word[:1].upper() + word[1:]
     capList.append(capWord)
-  camelCaseSequence = ' '.join(capList)
+  camelCaseSequence = ''.join(capList)
   return camelCaseSequence
 
 def removeSpaces(sequenceId):

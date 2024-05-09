@@ -37,7 +37,7 @@ class TestFileMethods(fake_filesystem_unittest.TestCase):
 
     self.assertIn('>Test1_AlphaBeta\n', contents)
     self.assertIn('ABCD\n', contents)
-    self.assertIn('>Test1_Zetaeta\n', contents)
+    self.assertIn('>Test1_ZetaEta\n', contents)
     self.assertIn('IJKLMNOP\n', contents)
 
   # Does resolveInput determine if a file path or directory path was given in the -i argument
@@ -137,10 +137,16 @@ class TestSequenceMethods(unittest.TestCase):
     funcOutput = 'Galgal_14-3-3 protein gamma'
     self.assertEqual(squeakuences.stripSequenceId(funcInput), funcOutput)
 
-  # Does camelCase captitalize all the words in a sequence id
+  # Does camelCase captitalize all the words in a sequence id and keep separators
   def test_camelCase(self):
-    input_sequence = 'Galgal_BTB/POZ domain-containing protein KCTD12'
-    self.assertEqual(squeakuences.camelCase(input_sequence), 'Galgal BTB/POZ Domain Containing Protein KCTD12')
+    input1 = 'Galgal_BTB/POZ domain-containing protein KCTD12'
+    input2 = 'alpha[beta](gamma)'
+    input3 = 'alpha beta, gamma'
+    input4 = 'alpha-beta_gamma'
+    self.assertEqual(squeakuences.camelCase(input1), 'Galgal_BTB/POZ Domain-Containing Protein KCTD12')
+    self.assertEqual(squeakuences.camelCase(input2), 'Alpha[Beta](Gamma)')
+    self.assertEqual(squeakuences.camelCase(input3), 'Alpha Beta, Gamma')
+    self.assertEqual(squeakuences.camelCase(input4), 'Alpha-Beta_Gamma')
 
   # Does removeSpaces remove whitespace
   def test_removeSpaces(self):
