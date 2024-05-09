@@ -21,8 +21,14 @@ class TestFileMethods(fake_filesystem_unittest.TestCase):
     if not os.path.exists('/myFiles/test3.faa'):
       self.fs.create_file('/myFiles/test3.faa')
 
-    if not os.path.exists('/myFiles/test4.fa'):
-      self.fs.create_file('/myFiles/test4.fa')
+    if not os.path.exists('/myFiles/faFiles/test4.fa'):
+      self.fs.create_file('/myFiles/faFiles/test4.fa')
+
+    if not os.path.exists('/myFiles/faFiles/test5.fa'):
+      self.fs.create_file('/myFiles/faFiles/test5.fa')
+
+    if not os.path.exists('/directory2/test6.faa'):
+      self.fs.create_file('/directory2/test6.faa')
 
     if not os.path.exists('/OUT'):
       self.fs.create_dir('/OUT')
@@ -43,14 +49,20 @@ class TestFileMethods(fake_filesystem_unittest.TestCase):
   # Does resolveInput determine if a file path or directory path was given in the -i argument
   def test_resolveInput(self):
     self.setUp()
-    self.assertEqual(squeakuences.resolveInput('test1.fa'), 'File')
-    self.assertEqual(squeakuences.resolveInput('/myFiles'), 'Directory')
+    self.assertEqual(squeakuences.resolveInput('test1.fa'), ('File', 'test1.fa'))
+    self.assertEqual(squeakuences.resolveInput('/myFiles'), ('Directory', '/myFiles'))
+
+  # Does checkDirPath complete the directory path based on current working directory
+  def test_checkDirPath(self):
+    self.setUp()
+    self.assertEqual(squeakuences.checkDirPath('myFiles/faFiles'), '/myFiles/faFiles')
+    self.assertEqual(squeakuences.checkDirPath('/myFiles/faFiles'), '/myFiles/faFiles')
 
   # Does inputList generate a list of files based on the user input
   def test_inputList(self):
     self.setUp()
     self.assertEqual(squeakuences.inputList('File', 'test1.fa'), ['test1.fa'])
-    self.assertEqual(squeakuences.inputList('Directory', '/myFiles'), ['/myFiles/test2.fa', '/myFiles/test3.faa', '/myFiles/test4.fa'])
+    self.assertEqual(squeakuences.inputList('Directory', '/myFiles'), ['/myFiles/test2.fa', '/myFiles/test3.faa'])
 
   # Does loadFile load file properly
   def test_loadFile(self):
