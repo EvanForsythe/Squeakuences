@@ -69,8 +69,8 @@ def inputList(type, userInput):
   toSqueakify = []
   if type == 'File':
     toSqueakify.append(userInput)
-  else:
-    toSqueakify = glob.glob(userInput + '/*.fa*', root_dir=userInput)
+  if type == 'Directory':
+    toSqueakify = glob.glob(userInput + '/*.fa*')
   return toSqueakify
 
 def checkOutputArg(ouputDirectoryPath):
