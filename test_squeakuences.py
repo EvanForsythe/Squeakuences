@@ -30,15 +30,15 @@ class TestFileMethods(fake_filesystem_unittest.TestCase):
     if not os.path.exists('/directory2/test6.faa'):
       self.fs.create_file('/directory2/test6.faa')
 
-    if not os.path.exists('/OUT'):
-      self.fs.create_dir('/OUT')
+    if not os.path.exists('/userOUT'):
+      self.fs.create_dir('/userOUT')
 
   # Does squeakify perform all the cleanning steps on the sequences in a file
   def test_squeakifySingle(self):
     self.setUp()
-    squeakuences.squeakify('test1.fa', '/OUT')
+    squeakuences.squeakify('test1.fa', '/userOUT')
 
-    with open("/OUT/test1_squeak.fa") as f:
+    with open("/userOUT/test1_squeak.fa") as f:
       contents = f.readlines()
 
     self.assertIn('>Test1_AlphaBeta\n', contents)
@@ -63,6 +63,18 @@ class TestFileMethods(fake_filesystem_unittest.TestCase):
     self.setUp()
     self.assertEqual(squeakuences.inputList('File', 'test1.fa'), ['test1.fa'])
     self.assertEqual(squeakuences.inputList('Directory', '/myFiles'), ['/myFiles/test2.fa', '/myFiles/test3.faa'])
+
+  # Does checkOutputArg determine if the output directory exists
+  def test_checkOutputArg(self):
+    self.setUp()
+    exists = '/userOUT'
+    notExist = '/generatedOUT'
+    self.assertTrue(os.path.exists(exists))
+    self.assertEqual(squeakuences.checkOutputArg(exists), exists)
+
+    self.assertFalse(os.path.exists(notExist))
+    self.assertEqual(squeakuences.checkOutputArg(notExist), notExist)
+    self.assertTrue(os.path.exists(notExist))
 
   # Does loadFile load file properly
   def test_loadFile(self):

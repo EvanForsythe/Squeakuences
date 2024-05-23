@@ -15,11 +15,13 @@ def main():
   parser = setupParser()
   args = parseArguments(parser)
 
-  inputType, inputPath = resolveInput(args.input)
-  toProcess = inputList(inputType, inputPath)
+  inputType = resolveInput(args.input)
+  toProcess = inputList(inputType, args.input)
+
+  ouputPath = checkOutputArg(args.output)
   
   for file in toProcess:
-    squeakify(file, args.output)
+    squeakify(file, ouputPath)
 
 def squeakify(file, write):
   sequenceIdCount = 0
@@ -79,9 +81,14 @@ def inputList(type, userInput):
   toSqueakify = []
   if type == 'File':
     toSqueakify.append(userInput)
-  else:
-    toSqueakify = glob.glob(userInput + '/*.fa*', root_dir=userInput)
+  if type == 'Directory':
+    toSqueakify = glob.glob(userInput + '/*.fa*')
   return toSqueakify
+
+def checkOutputArg(ouputDirectoryPath):
+  if not os.path.isdir(ouputDirectoryPath):
+    os.mkdir(ouputDirectoryPath)
+  return ouputDirectoryPath
 
 def loadFile(file):
   faFileNameExt = os.path.basename(file)
