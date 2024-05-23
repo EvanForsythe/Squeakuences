@@ -60,11 +60,11 @@ def squeakify(file, write):
 
 def resolveInput(userInput):
   if os.path.isfile(userInput):
-    return 'File', userInput
+    return 'File'
   
   if os.path.isdir(userInput):
     fullDirPath = checkDirPath(userInput)
-    return 'Directory', fullDirPath
+    return 'Directory'
   
 def checkDirPath(userInput):
   if os.path.isabs(userInput):
