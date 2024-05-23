@@ -60,10 +60,22 @@ def squeakify(file, write):
 
 def resolveInput(userInput):
   if os.path.isfile(userInput):
-    return 'File'
+    return 'File', userInput
   
   if os.path.isdir(userInput):
-    return 'Directory'
+    fullDirPath = checkDirPath(userInput)
+    return 'Directory', fullDirPath
+  
+def checkDirPath(userInput):
+  if os.path.isabs(userInput):
+    return userInput
+  else:
+    cwd = os.getcwd()
+    if cwd == '/':
+      fullPath = '/' + userInput
+    else:
+      fullPath =  os.getcwd() + '/' + userInput
+  return fullPath
   
 def inputList(type, userInput):
   toSqueakify = []
@@ -103,11 +115,11 @@ def stripSequenceId(line):
 
 def camelCase(sequenceId):
   capList = []
-  wordList = re.split(r'[\s_-]', sequenceId)
+  wordList = re.split(r'([^a-zA-Z0-9])', sequenceId)
   for word in wordList:
     capWord = word[:1].upper() + word[1:]
     capList.append(capWord)
-  camelCaseSequence = ' '.join(capList)
+  camelCaseSequence = ''.join(capList)
   return camelCaseSequence
 
 def removeSpaces(sequenceId):
@@ -188,8 +200,8 @@ def writeModIdFile(faFileName, idDictInput):
 def setupParser():
     parser = argparse.ArgumentParser()
     # Add parser arguments. ex: parser.add_argument('-l', '--long_name', help='What is it for?', required=True/False)
-    parser.add_argument('-i', '--input', help='Input file(s) to clean', required=True)
-    parser.add_argument('-o', '--output', help='Output Location', required=True)
+    parser.add_argument('-i', '--input', help='Path to file(s) to clean. This can be the full path or relative to the squeakuences file location.', required=True)
+    parser.add_argument('-o', '--output', help='Path to ouput folder. This can be the full path or relative to the squeakuences file location. This directory must exist prior to running.', required=True)
     # add arg for chop function length
     return parser
   
