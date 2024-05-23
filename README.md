@@ -1,3 +1,33 @@
+<a name="top"></a>
 # Squeakuences
+1. [Introduction](#intro)
+2. [Running Squeakuences](#running)
+3. [Arguments](#arguments)
+4. [Examples](#examples)
 
+## <ins>**Introduction**</ins> <a name="intro"></a>
 Squeakuences (squeaky-clean sequences) is a program designed to preproccess DNA sequence datasets to identify and remove formatting issues that are prone to causing problems in common bioinformatics workflows. 
+
+## <ins>**Running Squeakuences**</ins> <a name="running"></a>
+Squeakuences can process one or more fasta files at a time and generates two output files for each fasta file processed. The first output file is a tsv file which lists each sequence id before and after it was cleaned by Squeakuences. The second file is a new fasta file which contains the sequences of the original fasta file but with the cleaned sequence ids. At this time, fasta extensions beginning with ‘fa’ are supported (.fa, .faa, .fasta, etc.)
+
+Squeakuences utilizes a command line interface. It does not have any dependencies outside of Python, so it can simply be run in your shell. Currently, two arguments must be included in your command. These arguments can also be referenced using the -h flag.
+
+## <ins>**Arguments**</ins> <a name="arguments"></a>
+| Short flag | Long flag         | Description | Required? | Default value |
+|------------|-------------------|-------------|-----------|---------------|
+| -i         | --input           | Path to file(s) to clean. You can provide the path to a single fasta file or a directory containing multiple fasta files. Squeakuences will not search subdirectories. This can be the full path or relative to the Squeakuences file location. | Yes | NA |
+| -o         | --output          | Path to output folder. This can be the full path or relative to the Squeakuences file location. This directory must exist prior to running. | Yes | NA |
+
+## <ins>**Examples**</ins> <a name="examples"></a>
+Single File:
+```bash
+./squeakuences.py -i species.fa -o squeakuences_OUT
+```
+
+Directory:
+```bash
+./squeakuences.py -i my_fastas -o squeakuences_OUT
+```
+
+[Back to Top](#top)
