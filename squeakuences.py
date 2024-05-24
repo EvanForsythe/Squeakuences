@@ -12,16 +12,30 @@ import glob
 # TODO: make sure chop can't return ___ only
 
 def main():
+  print('Commencing Squeakuences Cleanup')
+  print('================================')
+
   parser = setupParser()
   args = parseArguments(parser)
 
   inputType = resolveInput(args.input)
+  print('You\'ve input a ' + inputType + '.')
   toProcess = inputList(inputType, args.input)
+  
+  if inputType == 'directory':
+    toClean = getFaNameExt(toProcess)
+  else:
+    toClean = toProcess
+  print('The following file(s) will be cleaned: ' + str(toClean))
+  print('--------------------------------')
 
   ouputPath = checkOutputArg(args.output)
   
   for file in toProcess:
     squeakify(file, ouputPath)
+    print('--------------------------------')
+
+  print('Ta-da! Squeaky clean sequence ids!')
 
 def squeakify(file, write):
   sequenceIdCount = 0
@@ -29,11 +43,14 @@ def squeakify(file, write):
   idDuplicatesList = []
 
   faFileNameExt, fastaHandle, faFileName = loadFile(file)
-  
+  print('Now processing ' + faFileNameExt)
+
   squeakyFileName = write + '/' + faFileName + '_squeak.fa'
   squeakyDictFile = write + '/' + faFileName + '_squeakMods.tsv'
 
   checkExisting(squeakyDictFile, squeakyFileName)
+
+  print('...')
 
   for line in fastaHandle:
     if isSequenceId(line):
@@ -58,13 +75,15 @@ def squeakify(file, write):
 
   writeModIdFile(write + '/' + faFileName, idDict)
 
+  print(faFileNameExt + ' complete!')
+
 def resolveInput(userInput):
   if os.path.isfile(userInput):
-    return 'File'
+    return 'file'
   
   if os.path.isdir(userInput):
     fullDirPath = checkDirPath(userInput)
-    return 'Directory'
+    return 'directory'
   
 def checkDirPath(userInput):
   if os.path.isabs(userInput):
@@ -77,17 +96,27 @@ def checkDirPath(userInput):
       fullPath =  os.getcwd() + '/' + userInput
   return fullPath
   
+def getFaNameExt(inputList):
+  faNameExtList = []
+  for file in inputList:
+    faNameExtList.append(file.split('/')[1])
+  return faNameExtList
+
 def inputList(type, userInput):
   toSqueakify = []
-  if type == 'File':
+  if type == 'file':
     toSqueakify.append(userInput)
-  if type == 'Directory':
+  if type == 'directory':
     toSqueakify = glob.glob(userInput + '/*.fa*')
   return toSqueakify
 
 def checkOutputArg(ouputDirectoryPath):
   if not os.path.isdir(ouputDirectoryPath):
     os.mkdir(ouputDirectoryPath)
+    print('The provided output path does not lead to an existing directory.')
+    print('A dictionary was created at that location.')
+    print('--------------------------------')
+
   return ouputDirectoryPath
 
 def loadFile(file):
