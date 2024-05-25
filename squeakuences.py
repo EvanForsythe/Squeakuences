@@ -114,9 +114,8 @@ def checkOutputArg(ouputDirectoryPath):
   if not os.path.isdir(ouputDirectoryPath):
     os.mkdir(ouputDirectoryPath)
     print('The provided output path does not lead to an existing directory.')
-    print('A dictionary was created at that location.')
+    print('A directory was created at that location.')
     print('--------------------------------')
-
   return ouputDirectoryPath
 
 def loadFile(file):
