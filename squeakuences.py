@@ -59,7 +59,7 @@ def squeakify(file, write):
       endId = camelCase(startId)
       endId = removeSpaces(endId)
       endId = removeNonAlphanumeric(endId)
-      endId = speciesName(endId, faFileName)
+      endId = attachFileName(endId, faFileName)
       endId = chop(endId)
       
       if checkForDuplicates(endId, idDict):
@@ -164,18 +164,18 @@ def remove_non_english_characters(sequenceId):
   # Regex: /<-[a..zA..Z\s]>+/  <<< Do we need this to include numbers? This is saying anything that isn't an english alphabetic letter
   return
 
-def speciesName(sequenceId, speciesName):
-  speciesName = camelCase(speciesName)
-  speciesName = removeSpaces(speciesName)
-  speciesName = removeNonAlphanumeric(speciesName)
+def attachFileName(sequenceId, attachFileName):
+  attachFileName = camelCase(attachFileName)
+  attachFileName = removeSpaces(attachFileName)
+  attachFileName = removeNonAlphanumeric(attachFileName)
   sequenceIdLower = sequenceId.lower()
-  speciesNameLower = speciesName.lower()
+  attachFileNameLower = attachFileName.lower()
 
-  if sequenceIdLower.startswith(speciesNameLower):
-    underscoreindex = len(speciesName)
+  if sequenceIdLower.startswith(attachFileNameLower):
+    underscoreindex = len(attachFileName)
     modifiedId = sequenceId[:underscoreindex] + '_' + sequenceId[underscoreindex:]
   else:
-    modifiedId = speciesName + '_' + sequenceId
+    modifiedId = attachFileName + '_' + sequenceId
   return modifiedId
     
 def chop(sequenceId, max = 70):
