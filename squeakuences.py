@@ -98,8 +98,8 @@ def checkDirPath(userInput):
   
 def getFaNameExt(inputList):
   faNameExtList = []
-  for file in inputList:
-    faNameExtList.append(file.split('/')[1])
+  for filePath in inputList:
+    faNameExtList.append(filePath.split('/')[-1])
   return faNameExtList
 
 def inputList(type, userInput):
