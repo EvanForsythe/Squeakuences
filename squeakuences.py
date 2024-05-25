@@ -36,12 +36,12 @@ def main():
   ouputPath = checkOutputArg(outputPath)
   
   for file in toProcess:
-    squeakify(file, ouputPath, fileNameFlag)
+    squeakify(file, ouputPath, benchmarkFlag, fileNameFlag)
     print('--------------------------------')
 
   print('Ta-da! Squeaky clean sequence ids!')
 
-def squeakify(file, write, fileNameFlag):
+def squeakify(file, write, benchmarkFlag, fileNameFlag):
   sequenceIdCount = 0
   idDict = {}
   idDuplicatesList = []
