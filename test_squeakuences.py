@@ -193,13 +193,13 @@ class TestSequenceMethods(unittest.TestCase):
   def test_remove_non_english_characters(self):
     self.assertEqual(squeakuences.removeNonAlphanumeric('R¥emÙove ÅnoĦn-engŧlish chaŸracters'), 'Remove nonenglish characters')
 
-  # Does speciesName ensure that the sequence id always begins with the species name and an underscore
-  def test_speciesName(self):
-    self.assertEqual(squeakuences.speciesName('AcachlArg8VasotocinReceptorLike', 'Acachl'), 'Acachl_Arg8VasotocinReceptorLike')
-    self.assertEqual(squeakuences.speciesName('Arg8VasotocinReceptorLike', 'Acachl'), 'Acachl_Arg8VasotocinReceptorLike')
-    self.assertEqual(squeakuences.speciesName('GalgalExampleGene', 'galgal'), 'Galgal_ExampleGene')
-    self.assertEqual(squeakuences.speciesName('ExampleGene', 'galgal'), 'Galgal_ExampleGene')
-    self.assertEqual(squeakuences.speciesName('ExampleGene', 'felis_catus'), 'FelisCatus_ExampleGene')
+  # Does attachFileName ensure that the sequence id always begins with the species name and an underscore
+  def test_attachFileName(self):
+    self.assertEqual(squeakuences.attachFileName('AcachlArg8VasotocinReceptorLike', 'Acachl'), 'Acachl_Arg8VasotocinReceptorLike')
+    self.assertEqual(squeakuences.attachFileName('Arg8VasotocinReceptorLike', 'Acachl'), 'Acachl_Arg8VasotocinReceptorLike')
+    self.assertEqual(squeakuences.attachFileName('GalgalExampleGene', 'galgal'), 'Galgal_ExampleGene')
+    self.assertEqual(squeakuences.attachFileName('ExampleGene', 'galgal'), 'Galgal_ExampleGene')
+    self.assertEqual(squeakuences.attachFileName('ExampleGene', 'felis_catus'), 'FelisCatus_ExampleGene')
 
   # Does chop shorten a sequence id to either the default or given maximum length
   def test_chop(self):
