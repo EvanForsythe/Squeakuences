@@ -49,8 +49,8 @@ class TestFileMethods(fake_filesystem_unittest.TestCase):
   # Does resolveInput determine if a file path or directory path was given in the -i argument
   def test_resolveInput(self):
     self.setUp()
-    self.assertEqual(squeakuences.resolveInput('test1.fa'), ('File', 'test1.fa'))
-    self.assertEqual(squeakuences.resolveInput('/myFiles'), ('Directory', '/myFiles'))
+    self.assertEqual(squeakuences.resolveInput('test1.fa'), ('file'))
+    self.assertEqual(squeakuences.resolveInput('/myFiles'), ('directory'))
 
   # Does checkDirPath complete the directory path based on current working directory
   def test_checkDirPath(self):
@@ -61,8 +61,13 @@ class TestFileMethods(fake_filesystem_unittest.TestCase):
   # Does inputList generate a list of files based on the user input
   def test_inputList(self):
     self.setUp()
-    self.assertEqual(squeakuences.inputList('File', 'test1.fa'), ['test1.fa'])
-    self.assertEqual(squeakuences.inputList('Directory', '/myFiles'), ['/myFiles/test2.fa', '/myFiles/test3.faa'])
+    self.assertEqual(squeakuences.inputList('file', 'test1.fa'), ['test1.fa'])
+    self.assertEqual(squeakuences.inputList('directory', '/myFiles'), ['/myFiles/test2.fa', '/myFiles/test3.faa'])
+
+  # Does getFaNameExt generate a list with only the file name and extension
+  def test_getFaNameExt(self):
+    self.setUp()
+    self.assertEqual(squeakuences.getFaNameExt(['/myFiles/test1.fa', '/myFiles/test2.faa', '/myFiles/test3.fa']), ['test1.fa', 'test2.faa', 'test3.fa'])
 
   # Does checkOutputArg determine if the output directory exists
   def test_checkOutputArg(self):
