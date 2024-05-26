@@ -36,8 +36,9 @@ def main():
 
   ouputPath = checkOutputArg(outputPath)
 
-  benchmarkPath = outputPath + '/benchmark.tsv'
-  checkExistingBenchmarkFile(benchmarkPath)
+  if benchmarkFlag is True:
+    benchmarkPath = outputPath + '/benchmark.tsv'
+    checkExistingBenchmarkFile(benchmarkPath)
   print('--------------------------------')
   
   for file in toProcess:
@@ -49,7 +50,8 @@ def main():
 
 def squeakify(file, write, benchmarkFlag, benchmarkPath,fileNameFlag):
   if benchmarkFlag is True:
-    startBenchmarkValues = startBenchmark()  
+    benchmarkData = {}
+    startBenchmark(benchmarkData)  
 
   sequenceIdCount = 0
   idDict = {}
@@ -90,7 +92,7 @@ def squeakify(file, write, benchmarkFlag, benchmarkPath,fileNameFlag):
   writeModIdFile(write + '/' + faFileName, idDict)
 
   if benchmarkFlag is True:
-    endBenchmark(benchmarkPath, startBenchmarkValues)
+    endBenchmark(benchmarkData, benchmarkPath)
 
   print(faFileNameExt + ' complete!')
 
@@ -261,11 +263,12 @@ def writeModIdFile(faFileName, idDictInput):
       writer.writerow([k, v])
   tsvfile.close()
 
-def startBenchmark():
-  return time.perf_counter()
+def startBenchmark(benchmarkDataDict):
+  benchmarkDataDict.update({'start_time': time.perf_counter()})
+  return benchmarkDataDict
 
-def endBenchmark(benchmarkPath, startTime):
-  duration = timedelta(seconds=time.perf_counter() - startTime)
+def endBenchmark(benchmarkDataDict, benchmarkPath):
+  duration = timedelta(seconds=time.perf_counter() - benchmarkDataDict['start_time'])
   with open(benchmarkPath, 'a') as file:
     file.write(str(duration) + ' seconds\n')
   file.close()
