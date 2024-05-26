@@ -49,7 +49,7 @@ def main():
   print('Ta-da! Squeaky clean sequence ids!')
   #print('New squeaky clean files and other output files can be found in: ' + outputPath)
 
-def squeakify(file, write, benchmarkFlag, benchmarkPath,fileNameFlag):
+def squeakify(file, write, benchmarkFlag, benchmarkPath, fileNameFlag):
   if benchmarkFlag is True:
     benchmarkData = {}
     startBenchmark(benchmarkData)  
@@ -93,7 +93,7 @@ def squeakify(file, write, benchmarkFlag, benchmarkPath,fileNameFlag):
   writeModIdFile(write + '/' + faFileName, idDict)
 
   if benchmarkFlag is True:
-    endBenchmark(benchmarkData)
+    endBenchmark(benchmarkData, faFileNameExt)
     writeBenchmarkFile(benchmarkData, benchmarkPath)
 
   print(faFileNameExt + ' complete!')
@@ -269,13 +269,14 @@ def startBenchmark(benchmarkDataDict):
   benchmarkDataDict.update({'start_time': time.perf_counter()})
   return benchmarkDataDict
 
-def endBenchmark(benchmarkDataDict):
+def endBenchmark(benchmarkDataDict, faFileNameExt):
+  benchmarkDataDict.update({'file_name': faFileNameExt})
   benchmarkDataDict.update({'end_time': time.perf_counter()})
   return benchmarkDataDict
 
 def createBenchmarkFile(benchmarkPath):
   with open(benchmarkPath, 'a') as file:
-    file.write('Processing Time\n')
+    file.write('File Name\tProcessing Time\n')
   file.close()
 
 def writeBenchmarkFile(benchmarkDataDict, benchmarkPath):
@@ -283,7 +284,7 @@ def writeBenchmarkFile(benchmarkDataDict, benchmarkPath):
   benchmarkDataDict.update({'duration': str(duration)})
 
   with open(benchmarkPath, 'a') as file:
-    file.write(benchmarkDataDict['duration'] + ' seconds\n')
+    file.write(benchmarkDataDict['file_name'] + '\t' + benchmarkDataDict['duration'] + ' seconds\n')
   file.close()
 
 if __name__ == '__main__':
