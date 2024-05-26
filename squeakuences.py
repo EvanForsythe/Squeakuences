@@ -4,6 +4,7 @@ import re
 import os
 import csv
 import glob
+import time
 
 # TODO: decide what we want our output to look like
 # TODO: do we need a separate remove non-alphanumeric function?
@@ -42,6 +43,9 @@ def main():
   print('Ta-da! Squeaky clean sequence ids!')
 
 def squeakify(file, write, benchmarkFlag, fileNameFlag):
+  if benchmarkFlag is True:
+    startBenchmarkValues = startBenchmark()  
+
   sequenceIdCount = 0
   idDict = {}
   idDuplicatesList = []
@@ -79,6 +83,9 @@ def squeakify(file, write, benchmarkFlag, fileNameFlag):
       writeLine(squeakyFileName, line, False)
 
   writeModIdFile(write + '/' + faFileName, idDict)
+
+  if benchmarkFlag is True:
+    endBenchmark(startBenchmarkValues)
 
   print(faFileNameExt + ' complete!')
 
@@ -243,6 +250,13 @@ def writeModIdFile(faFileName, idDictInput):
     for k, v in idDictInput.items():
       writer.writerow([k, v])
   tsvfile.close()
+
+def startBenchmark():
+  print(time.time())
+  return time.time()
+
+def endBenchmark(startTime):
+  print(str(time.time() - startTime) + ' seconds')
 
 if __name__ == '__main__':
   main()
