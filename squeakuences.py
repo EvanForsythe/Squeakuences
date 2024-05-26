@@ -5,6 +5,7 @@ import os
 import csv
 import glob
 import time
+from datetime import timedelta
 
 # TODO: decide what we want our output to look like
 # TODO: do we need a separate remove non-alphanumeric function?
@@ -32,20 +33,21 @@ def main():
   else:
     toClean = toProcess
   print('The following file(s) will be cleaned: ' + str(toClean))
-  print('--------------------------------')
 
   ouputPath = checkOutputArg(outputPath)
 
   benchmarkPath = outputPath + '/benchmark.tsv'
   checkExistingBenchmarkFile(benchmarkPath)
+  print('--------------------------------')
   
   for file in toProcess:
     squeakify(file, ouputPath, benchmarkFlag, benchmarkPath, fileNameFlag)
     print('--------------------------------')
 
   print('Ta-da! Squeaky clean sequence ids!')
+  #print('New squeaky clean files and other output files can be found in: ' + outputPath)
 
-def squeakify(file, write, benchmarkFlag, benchmarkFilePath,fileNameFlag):
+def squeakify(file, write, benchmarkFlag, benchmarkPath,fileNameFlag):
   if benchmarkFlag is True:
     startBenchmarkValues = startBenchmark()  
 
@@ -88,7 +90,7 @@ def squeakify(file, write, benchmarkFlag, benchmarkFilePath,fileNameFlag):
   writeModIdFile(write + '/' + faFileName, idDict)
 
   if benchmarkFlag is True:
-    endBenchmark(benchmarkFilePath, startBenchmarkValues)
+    endBenchmark(benchmarkPath, startBenchmarkValues)
 
   print(faFileNameExt + ' complete!')
 
@@ -260,11 +262,12 @@ def writeModIdFile(faFileName, idDictInput):
   tsvfile.close()
 
 def startBenchmark():
-  return time.time()
+  return time.perf_counter()
 
 def endBenchmark(benchmarkPath, startTime):
+  duration = timedelta(seconds=time.perf_counter() - startTime)
   with open(benchmarkPath, 'a') as file:
-    file.write(str(time.time() - startTime) + ' seconds\n')
+    file.write(str(duration) + ' seconds\n')
   file.close()
 
 if __name__ == '__main__':
