@@ -275,7 +275,7 @@ def endBenchmark(benchmarkDataDict):
 
 def createBenchmarkFile(benchmarkPath):
   with open(benchmarkPath, 'a') as file:
-    file.write('Processing Time')
+    file.write('Processing Time\n')
   file.close()
 
 def writeBenchmarkFile(benchmarkDataDict, benchmarkPath):
