@@ -39,6 +39,7 @@ def main():
   if benchmarkFlag is True:
     benchmarkPath = outputPath + '/benchmark.tsv'
     checkExistingBenchmarkFile(benchmarkPath)
+    createBenchmarkFile(benchmarkPath)
   print('--------------------------------')
   
   for file in toProcess:
@@ -271,6 +272,11 @@ def startBenchmark(benchmarkDataDict):
 def endBenchmark(benchmarkDataDict):
   benchmarkDataDict.update({'end_time': time.perf_counter()})
   return benchmarkDataDict
+
+def createBenchmarkFile(benchmarkPath):
+  with open(benchmarkPath, 'a') as file:
+    file.write('Processing Time')
+  file.close()
 
 def writeBenchmarkFile(benchmarkDataDict, benchmarkPath):
   duration = timedelta(seconds=benchmarkDataDict['end_time'] - benchmarkDataDict['start_time'])
