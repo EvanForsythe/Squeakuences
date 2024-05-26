@@ -268,7 +268,11 @@ def startBenchmark(benchmarkDataDict):
   return benchmarkDataDict
 
 def endBenchmark(benchmarkDataDict, benchmarkPath):
-  duration = timedelta(seconds=time.perf_counter() - benchmarkDataDict['start_time'])
+  benchmarkDataDict.update({'end_time': time.perf_counter()})
+  return benchmarkDataDict
+
+def writeBenchmarkFile(benchmarkDataDict, benchmarkPath):
+  duration = timedelta(seconds=benchmarkDataDict['end_time'] - benchmarkDataDict['start_time'])
   with open(benchmarkPath, 'a') as file:
     file.write(str(duration) + ' seconds\n')
   file.close()
