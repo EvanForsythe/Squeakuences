@@ -33,14 +33,14 @@ def main():
   else:
     toClean = toProcess
   print('The following file(s) will be cleaned: ' + str(toClean))
+  print('--------------------------------')
 
   ouputPath = checkOutputArg(outputPath)
 
+  benchmarkPath = outputPath + '/benchmark.tsv'
   if benchmarkFlag is True:
-    benchmarkPath = outputPath + '/benchmark.tsv'
     checkExistingBenchmarkFile(benchmarkPath)
     createBenchmarkFile(benchmarkPath)
-  print('--------------------------------')
   
   for file in toProcess:
     squeakify(file, ouputPath, benchmarkFlag, benchmarkPath, fileNameFlag)
@@ -172,6 +172,8 @@ def checkExistingBenchmarkFile(benchmarkPath):
   if os.path.exists(benchmarkPath):
     os.remove(benchmarkPath)
     print('Existing benchmark file deleted.')
+    print('--------------------------------')
+
 
 def isSequenceId(line):
   return line.startswith('>')
