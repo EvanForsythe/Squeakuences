@@ -92,7 +92,8 @@ def squeakify(file, write, benchmarkFlag, benchmarkPath,fileNameFlag):
   writeModIdFile(write + '/' + faFileName, idDict)
 
   if benchmarkFlag is True:
-    endBenchmark(benchmarkData, benchmarkPath)
+    endBenchmark(benchmarkData)
+    writeBenchmarkFile(benchmarkData, benchmarkPath)
 
   print(faFileNameExt + ' complete!')
 
@@ -267,14 +268,16 @@ def startBenchmark(benchmarkDataDict):
   benchmarkDataDict.update({'start_time': time.perf_counter()})
   return benchmarkDataDict
 
-def endBenchmark(benchmarkDataDict, benchmarkPath):
+def endBenchmark(benchmarkDataDict):
   benchmarkDataDict.update({'end_time': time.perf_counter()})
   return benchmarkDataDict
 
 def writeBenchmarkFile(benchmarkDataDict, benchmarkPath):
   duration = timedelta(seconds=benchmarkDataDict['end_time'] - benchmarkDataDict['start_time'])
+  benchmarkDataDict.update({'duration': str(duration)})
+
   with open(benchmarkPath, 'a') as file:
-    file.write(str(duration) + ' seconds\n')
+    file.write(benchmarkDataDict['duration'] + ' seconds\n')
   file.close()
 
 if __name__ == '__main__':
