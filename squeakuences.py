@@ -35,14 +35,17 @@ def main():
   print('--------------------------------')
 
   ouputPath = checkOutputArg(outputPath)
+
+  benchmarkPath = outputPath + '/benchmark.tsv'
+  checkExistingBenchmarkFile(benchmarkPath)
   
   for file in toProcess:
-    squeakify(file, ouputPath, benchmarkFlag, fileNameFlag)
+    squeakify(file, ouputPath, benchmarkFlag, benchmarkPath, fileNameFlag)
     print('--------------------------------')
 
   print('Ta-da! Squeaky clean sequence ids!')
 
-def squeakify(file, write, benchmarkFlag, fileNameFlag):
+def squeakify(file, write, benchmarkFlag, benchmarkFilePath,fileNameFlag):
   if benchmarkFlag is True:
     startBenchmarkValues = startBenchmark()  
 
@@ -53,10 +56,10 @@ def squeakify(file, write, benchmarkFlag, fileNameFlag):
   faFileNameExt, fastaHandle, faFileName = loadFile(file)
   print('Now processing ' + faFileNameExt)
 
-  squeakyFileName = write + '/' + faFileName + '_squeak.fa'
-  squeakyDictFile = write + '/' + faFileName + '_squeakMods.tsv'
+  squeakyPath = write + '/' + faFileName + '_squeak.fa'
+  squeakyDictPath = write + '/' + faFileName + '_squeakMods.tsv'
 
-  checkExisting(squeakyDictFile, squeakyFileName)
+  checkExisting(squeakyDictPath, squeakyPath)
 
   print('...')
 
@@ -77,15 +80,15 @@ def squeakify(file, write, benchmarkFlag, fileNameFlag):
         
       idDict.update({startId: endId})
 
-      writeLine(squeakyFileName, endId, True)
+      writeLine(squeakyPath, endId, True)
 
     else:
-      writeLine(squeakyFileName, line, False)
+      writeLine(squeakyPath, line, False)
 
   writeModIdFile(write + '/' + faFileName, idDict)
 
   if benchmarkFlag is True:
-    endBenchmark(startBenchmarkValues)
+    endBenchmark(benchmarkFilePath, startBenchmarkValues)
 
   print(faFileNameExt + ' complete!')
 
@@ -150,14 +153,19 @@ def loadFile(file):
   faFileName = os.path.splitext(faFileNameExt)[0]
   return faFileNameExt, fastaHandle, faFileName
 
-def checkExisting(squeakyDictFile, squeakyFileName):
-  if os.path.exists(squeakyDictFile):
-    os.remove(squeakyDictFile)
+def checkExisting(squeakyDictPath, squeakyPath):
+  if os.path.exists(squeakyDictPath):
+    os.remove(squeakyDictPath)
     print('Existing squeaky dictionary file deleted.')
 
-  if os.path.exists(squeakyFileName):
-    os.remove(squeakyFileName)
+  if os.path.exists(squeakyPath):
+    os.remove(squeakyPath)
     print('Existing squeaky fa file deleted.')
+
+def checkExistingBenchmarkFile(benchmarkPath):
+  if os.path.exists(benchmarkPath):
+    os.remove(benchmarkPath)
+    print('Existing benchmark file deleted.')
 
 def isSequenceId(line):
   return line.startswith('>')
@@ -252,11 +260,12 @@ def writeModIdFile(faFileName, idDictInput):
   tsvfile.close()
 
 def startBenchmark():
-  print(time.time())
   return time.time()
 
-def endBenchmark(startTime):
-  print(str(time.time() - startTime) + ' seconds')
+def endBenchmark(benchmarkPath, startTime):
+  with open(benchmarkPath, 'a') as file:
+    file.write(str(time.time() - startTime) + ' seconds\n')
+  file.close()
 
 if __name__ == '__main__':
   main()
