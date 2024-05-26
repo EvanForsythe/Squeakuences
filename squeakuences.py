@@ -21,6 +21,9 @@ def main():
   outputPath = args.output
   fileNameFlag = args.addFileName
 
+  messagesForArgs(fileNameFlag)
+  print('--------------------------------')
+
   inputType = resolveInput(inputPath)
   print('You\'ve input a ' + inputType + '.')
   toProcess = inputList(inputType, inputPath)
@@ -93,6 +96,13 @@ def setupParser():
                                                 If this directory path does not exist at runtime, Squeakuences will create it for you.''', required=True)
   parser.add_argument('-f', '--addFileName', help='When activated, Squeakuences will add the file name to the beginning of all sequences cleaned.', required=False, action='store_true')
   return parser
+
+def messagesForArgs(fileNameFlag):
+  if fileNameFlag is False:
+    print('No flags detected in command.')
+  else:
+    if fileNameFlag is True:
+      print('You\'ve activated the -f flag.\nThe file name will be inserted at the beginning of all sequences cleaned.')
 
 def resolveInput(userInput):
   if os.path.isfile(userInput):
