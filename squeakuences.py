@@ -6,6 +6,7 @@ import csv
 import glob
 import time
 from datetime import timedelta
+import tracemalloc
 
 # TODO: decide what we want our output to look like
 # TODO: do we need a separate remove non-alphanumeric function?
@@ -174,7 +175,6 @@ def checkExistingBenchmarkFile(logPath):
     print('Existing log file deleted.')
     print('--------------------------------')
 
-
 def isSequenceId(line):
   return line.startswith('>')
 
@@ -269,16 +269,19 @@ def writeModIdFile(faFileName, idDictInput):
 
 def startBenchmark(logDataDict):
   logDataDict.update({'start_time': time.perf_counter()})
+  tracemalloc.start()
   return logDataDict
 
 def endBenchmark(logDataDict, faFileNameExt):
   logDataDict.update({'file_name': faFileNameExt})
+  logDataDict.update({'memory': tracemalloc.get_traced_memory()[1]})
+  tracemalloc.stop()
   logDataDict.update({'end_time': time.perf_counter()})
   return logDataDict
 
 def createBenchmarkFile(logPath):
   with open(logPath, 'a') as file:
-    file.write('File Name\tProcessing Time\n')
+    file.write('File Name\tProcessing Time (Hours: Minutes: Seconds)\tMemory (peak size of memory blocks traced in bytes)\n')
   file.close()
 
 def writeBenchmarkFile(logDataDict, logPath):
@@ -286,7 +289,7 @@ def writeBenchmarkFile(logDataDict, logPath):
   logDataDict.update({'duration': str(duration)})
 
   with open(logPath, 'a') as file:
-    file.write(logDataDict['file_name'] + '\t' + logDataDict['duration'] + ' seconds\n')
+    file.write(logDataDict['file_name'] + '\t' + logDataDict['duration'] + '\t' + str(logDataDict['memory']) + '\n')
   file.close()
 
 if __name__ == '__main__':
