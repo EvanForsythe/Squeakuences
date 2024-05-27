@@ -175,7 +175,7 @@ def checkOutputArg(ouputDirectoryPath):
     print('--------------------------------')
   else:
     print('Output directory found!')
-    print('Squeakuences files will be written in provided directory.')
+    print('Squeakuences files will be written in the provided directory.')
     print('--------------------------------')
   return ouputDirectoryPath
 
