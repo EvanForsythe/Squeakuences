@@ -44,7 +44,7 @@ def main():
     createBenchmarkFile(logPath)
   
   for file in toProcess:
-    squeakify(file, ouputPath, logFlag, logPath, fileNameFlag)
+    squeakify(os.path.abspath(file), ouputPath, logFlag, logPath, fileNameFlag)
     print('--------------------------------')
 
   print('Ta-da! Squeaky clean sequence ids!')
@@ -53,7 +53,7 @@ def main():
 def squeakify(file, write, logFlag, logPath, fileNameFlag):
   if logFlag is True:
     logData = {}
-    startBenchmark(logData)  
+    startBenchmark(logData, file)  
 
   sequenceIdCount = 0
   idDict = {}
@@ -94,7 +94,7 @@ def squeakify(file, write, logFlag, logPath, fileNameFlag):
   writeModIdFile(write + '/' + faFileName, idDict)
 
   if logFlag is True:
-    endBenchmark(logData, faFileNameExt)
+    endBenchmark(logData, faFileNameExt, os.path.abspath(squeakyPath))
     writeBenchmarkFile(logData, logPath)
 
   print(faFileNameExt + ' complete!')
@@ -267,29 +267,31 @@ def writeModIdFile(faFileName, idDictInput):
       writer.writerow([k, v])
   tsvfile.close()
 
-def startBenchmark(logDataDict):
+def startBenchmark(logDataDict, file):
   logDataDict.update({'start_time': time.perf_counter()})
+  logDataDict.update({'start_file_size': round(os.path.getsize(file)/1000000, 2)})
   tracemalloc.start()
   return logDataDict
 
-def endBenchmark(logDataDict, faFileNameExt):
+def endBenchmark(logDataDict, faFileNameExt, squeakyFile):
   logDataDict.update({'file_name': faFileNameExt})
+  logDataDict.update({'end_file_size': round(os.path.getsize(squeakyFile)/1000000, 2)})
   logDataDict.update({'memory': tracemalloc.get_traced_memory()[1]})
   tracemalloc.stop()
   logDataDict.update({'end_time': time.perf_counter()})
+  duration = timedelta(seconds=logDataDict['end_time'] - logDataDict['start_time'])
+  logDataDict.update({'duration': str(duration)})
   return logDataDict
 
 def createBenchmarkFile(logPath):
   with open(logPath, 'a') as file:
-    file.write('File Name\tProcessing Time (Hours: Minutes: Seconds)\tMemory (peak size of memory blocks traced in bytes)\n')
+    file.write('File Name\tProcessing Time (Hours: Minutes: Seconds)\tMemory (peak size of memory blocks traced in bytes)\tStarting File Size (MB)\tEnding File Size (MB)\n')
   file.close()
 
 def writeBenchmarkFile(logDataDict, logPath):
-  duration = timedelta(seconds=logDataDict['end_time'] - logDataDict['start_time'])
-  logDataDict.update({'duration': str(duration)})
-
   with open(logPath, 'a') as file:
-    file.write(logDataDict['file_name'] + '\t' + logDataDict['duration'] + '\t' + str(logDataDict['memory']) + '\n')
+    file.write(logDataDict['file_name'] + '\t' + logDataDict['duration'] + '\t' + 
+               str(logDataDict['memory']) + '\t' + str(logDataDict['start_file_size']) + '\t' + str(logDataDict['end_file_size']) + '\n')
   file.close()
 
 if __name__ == '__main__':
