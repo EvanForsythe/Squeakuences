@@ -309,7 +309,7 @@ def startLog(logDataDict, file):
 def endLog(logDataDict, faFileNameExt, squeakyFile):
   logDataDict.update({'file_name': faFileNameExt})
   logDataDict.update({'end_file_size': round(os.path.getsize(squeakyFile)/1000000, 2)})
-  logDataDict.update({'memory': tracemalloc.get_traced_memory()[1]})
+  logDataDict.update({'memory': round(tracemalloc.get_traced_memory()[1]/1000000, 2)})
   tracemalloc.stop()
   logDataDict.update({'end_time': time.perf_counter()})
   duration = timedelta(seconds=logDataDict['end_time'] - logDataDict['start_time'])
@@ -318,7 +318,7 @@ def endLog(logDataDict, faFileNameExt, squeakyFile):
 
 def createLogFile(logPath):
   with open(logPath, 'a') as file:
-    file.write('File Name\tProcessing Time (Hours: Minutes: Seconds)\tMemory (peak size of memory blocks traced in bytes)\tStarting File Size (MB)\tEnding File Size (MB)\tNumber of sequences cleaned\n')
+    file.write('File Name\tProcessing Time (Hours: Minutes: Seconds)\tMemory (peak size of memory blocks traced in MB)\tStarting File Size (MB)\tEnding File Size (MB)\tNumber of sequences cleaned\n')
   file.close()
 
 def writeLogFile(logDataDict, logPath, processedIdCount):
