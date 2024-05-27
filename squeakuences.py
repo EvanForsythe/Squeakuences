@@ -15,16 +15,15 @@ import tracemalloc
 # TODO: make sure chop can't return ___ only
   
 def main():
-  print('Commencing Squeakuences Cleanup')
-  print('================================')
-
   parser = setupParser()
   args = parser.parse_args()
   inputPath = args.input
   outputPath = args.output
   logFlag = args.log
   fileNameFlag = args.addFileName
-
+  
+  print('Commencing Squeakuences Cleanup')
+  print('================================')
   messagesForArgs(logFlag, fileNameFlag)
   print('--------------------------------')
 
