@@ -121,6 +121,9 @@ def messagesForArgs(logFileFlag, fileNameFlag):
     if logFileFlag is True:
       print('You\'ve activated the -l flag.\nA log file with information about each fasta file processed will be written in the output directory.')
 
+#####################################################
+# RESOLVE USER INPUT                                #
+#####################################################
 def resolveInput(userInput):
   if os.path.isfile(userInput):
     return 'file'
@@ -139,13 +142,10 @@ def checkDirPath(userInput):
     else:
       fullPath =  os.getcwd() + '/' + userInput
   return fullPath
-  
-def getFaNameExt(inputList):
-  faNameExtList = []
-  for filePath in inputList:
-    faNameExtList.append(filePath.split('/')[-1])
-  return faNameExtList
 
+#####################################################
+# COLLECT FILES                                     #
+#####################################################
 def inputList(type, userInput):
   toSqueakify = []
   if type == 'file':
@@ -157,6 +157,16 @@ def inputList(type, userInput):
     toSqueakify[index] = os.path.abspath(file)
   return toSqueakify
 
+def getFaNameExt(inputList):
+  faNameExtList = []
+  for filePath in inputList:
+    faNameExtList.append(filePath.split('/')[-1])
+  return faNameExtList
+
+#####################################################
+# CHECK FOR EXISTING FILES                          #
+#####################################################
+
 def checkOutputArg(ouputDirectoryPath):
   if not os.path.isdir(ouputDirectoryPath):
     os.mkdir(ouputDirectoryPath)
@@ -164,12 +174,6 @@ def checkOutputArg(ouputDirectoryPath):
     print('A directory was created at that location.')
     print('--------------------------------')
   return ouputDirectoryPath
-
-def loadFile(file):
-  faFileNameExt = os.path.basename(file)
-  fastaHandle = open(file, 'r')
-  faFileName = os.path.splitext(faFileNameExt)[0]
-  return faFileNameExt, fastaHandle, faFileName
 
 def checkExisting(squeakyDictPath, squeakyPath):
   if os.path.exists(squeakyDictPath):
@@ -185,6 +189,16 @@ def checkExistingLogFile(logPath):
     os.remove(logPath)
     print('Existing log file deleted.')
     print('--------------------------------')
+
+#####################################################
+# SQUEAKIFY FUNCTIONS                               #
+#####################################################
+
+def loadFile(file):
+  faFileNameExt = os.path.basename(file)
+  fastaHandle = open(file, 'r')
+  faFileName = os.path.splitext(faFileNameExt)[0]
+  return faFileNameExt, fastaHandle, faFileName
 
 def isSequenceId(line):
   return line.startswith('>')
@@ -277,6 +291,10 @@ def writeModIdFile(faFileName, idDictInput):
     for k, v in idDictInput.items():
       writer.writerow([k, v])
   tsvfile.close()
+
+#####################################################
+# LOG FILE FUNCTIONS                                #
+#####################################################
 
 def startLog(logDataDict, file):
   logDataDict.update({'start_time': time.perf_counter()})
