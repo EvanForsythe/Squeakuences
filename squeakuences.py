@@ -62,7 +62,7 @@ def squeakify(file, write, logFlag, logPath, fileNameFlag):
   print('Now processing ' + faFileNameExt)
 
   squeakyPath = write + '/' + faFileName + '_squeak.fa'
-  squeakyDictPath = write + '/' + faFileName + '_squeakMods.tsv'
+  squeakyDictPath = write + '/' + faFileName + '_modSeqs.tsv'
 
   checkExisting(squeakyDictPath, squeakyPath)
 
@@ -284,7 +284,7 @@ def writeLine(faFile, line, sequence):
   
 def writeModIdFile(faFileName, idDictInput):
   fileExtension = os.path.splitext(faFileName)
-  newFileName = fileExtension[0] + '_squeakMods.tsv'
+  newFileName = fileExtension[0] + '_modSeqs.tsv'
   
   with open(newFileName, 'w') as tsvfile:
     writer = csv.writer(tsvfile, delimiter='\t')
