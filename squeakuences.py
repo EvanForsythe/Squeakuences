@@ -95,7 +95,7 @@ def squeakify(file, write, logFlag, logPath, fileNameFlag):
 
   if logFlag is True:
     endBenchmark(logData, faFileNameExt, os.path.abspath(squeakyPath))
-    writeBenchmarkFile(logData, logPath)
+    writeBenchmarkFile(logData, logPath, sequenceIdCount)
 
   print(faFileNameExt + ' complete!')
 
@@ -285,13 +285,13 @@ def endBenchmark(logDataDict, faFileNameExt, squeakyFile):
 
 def createBenchmarkFile(logPath):
   with open(logPath, 'a') as file:
-    file.write('File Name\tProcessing Time (Hours: Minutes: Seconds)\tMemory (peak size of memory blocks traced in bytes)\tStarting File Size (MB)\tEnding File Size (MB)\n')
+    file.write('File Name\tProcessing Time (Hours: Minutes: Seconds)\tMemory (peak size of memory blocks traced in bytes)\tStarting File Size (MB)\tEnding File Size (MB)\tNumber of sequences cleaned\n')
   file.close()
 
-def writeBenchmarkFile(logDataDict, logPath):
+def writeBenchmarkFile(logDataDict, logPath, processedIdCount):
   with open(logPath, 'a') as file:
     file.write(logDataDict['file_name'] + '\t' + logDataDict['duration'] + '\t' + 
-               str(logDataDict['memory']) + '\t' + str(logDataDict['start_file_size']) + '\t' + str(logDataDict['end_file_size']) + '\n')
+               str(logDataDict['memory']) + '\t' + str(logDataDict['start_file_size']) + '\t' + str(logDataDict['end_file_size']) + '\t' + str(processedIdCount) + '\n')
   file.close()
 
 if __name__ == '__main__':
