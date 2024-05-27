@@ -100,7 +100,7 @@ def squeakify(file, write, logFlag, logPath, fileNameFlag):
 def setupParser():
   parser = argparse.ArgumentParser()
   # Add parser arguments. ex: parser.add_argument('-l', '--long_name', help='What is it for?', required=True/False)
-  parser.add_argument('-i', '--input', metavar='file/dir_path', help='''Path to fasta file(s) to clean.
+  parser.add_argument('-i', '--input', metavar='file_or_dir_path', help='''Path to fasta file(s) to clean.
                                                 You can provide the path to a single fasta file or a directory containing multiple fasta files.
                                                 Squeakuences will not search subdirectories.
                                                 This can be the full path or relative to the squeakuences.py file location.''', required=True)
