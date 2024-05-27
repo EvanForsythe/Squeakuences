@@ -9,7 +9,7 @@
 Squeakuences (squeaky-clean sequences) is a program designed to preproccess DNA sequence datasets to identify and remove formatting issues that are prone to causing problems in common bioinformatics workflows. 
 
 ## <ins>**Running Squeakuences**</ins> <a name="running"></a>
-Squeakuences can process one or more fasta files at a time and generates two output files for each fasta file processed. The first output file is a tsv file which lists each sequence id before and after it was cleaned by Squeakuences. The second file is a new fasta file which contains the sequences of the original fasta file but with the cleaned sequence ids. At this time, fasta extensions beginning with ‘fa’ are supported (.fa, .faa, .fasta, etc.)
+Squeakuences can process one or more fasta files at a time and generates at least two output files for each fasta file processed. The first output file always produced is a tsv file which lists each sequence id before and after it was cleaned by Squeakuences. The second file is a new fasta file which contains the sequences of the original fasta file but with the cleaned sequence ids. Squeakuences can also generate a log file to provide processing insight (see [arguments](#arguments)). At this time, fasta extensions beginning with ‘fa’ are supported (.fa, .faa, .fasta, etc.)
 
 Squeakuences utilizes a command line interface. It does not have any dependencies outside of Python, so it can simply be run in your shell. See the next section for required and optional arguments.
 
