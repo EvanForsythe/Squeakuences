@@ -171,7 +171,12 @@ def checkOutputArg(ouputDirectoryPath):
   if not os.path.isdir(ouputDirectoryPath):
     os.mkdir(ouputDirectoryPath)
     print('The provided output path does not lead to an existing directory.')
-    print('A directory was created at that location.')
+    print('A directory was created at: ' + os.path.abspath(ouputDirectoryPath))
+    print('Squeakuences files will be written in this new directory.')
+    print('--------------------------------')
+  else:
+    print('Output directory found!')
+    print('Squeakuences files will be written in provided directory.')
     print('--------------------------------')
   return ouputDirectoryPath
 
