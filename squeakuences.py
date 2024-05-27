@@ -25,7 +25,7 @@ def main():
   logFlag = args.log
   fileNameFlag = args.addFileName
 
-  messagesForArgs(fileNameFlag)
+  messagesForArgs(logFlag, fileNameFlag)
   print('--------------------------------')
 
   inputType = resolveInput(inputPath)
@@ -116,12 +116,14 @@ def setupParser():
   parser.add_argument('-f', '--addFileName', help='When activated, Squeakuences will add the file name to the beginning of all sequences cleaned.', required=False, action='store_true')
   return parser
 
-def messagesForArgs(fileNameFlag):
+def messagesForArgs(logFileFlag, fileNameFlag):
   if fileNameFlag is False:
     print('No flags detected in command.')
   else:
     if fileNameFlag is True:
       print('You\'ve activated the -f flag.\nThe file name will be inserted at the beginning of all sequences cleaned.')
+    if logFileFlag is True:
+      print('You\'ve activated the -b flag.\nA log file with information about each fasta file processed will be written in the output directory.')
 
 def resolveInput(userInput):
   if os.path.isfile(userInput):
