@@ -117,7 +117,7 @@ def setupParser():
   return parser
 
 def messagesForArgs(logFileFlag, fileNameFlag):
-  if fileNameFlag is False:
+  if logFileFlag == fileNameFlag == False:
     print('No flags detected in command.')
   else:
     if fileNameFlag is True:
