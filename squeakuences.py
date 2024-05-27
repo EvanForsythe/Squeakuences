@@ -31,12 +31,8 @@ def main():
   inputType = resolveInput(inputPath)
   print('You\'ve input a ' + inputType + '.')
   toProcess = inputList(inputType, inputPath)
-  
-  if inputType == 'directory':
-    toClean = getFaNameExt(toProcess)
-  else:
-    toClean = toProcess
-  print('The following file(s) will be cleaned: ' + str(toClean))
+  fileNameList = getFaNameExt(toProcess)
+  print('The following file(s) will be cleaned: ' + str(fileNameList))
   print('--------------------------------')
 
   ouputPath = checkOutputArg(outputPath)
@@ -47,7 +43,7 @@ def main():
     createLogFile(logPath)
   
   for file in toProcess:
-    squeakify(os.path.abspath(file), ouputPath, logFlag, logPath, fileNameFlag)
+    squeakify(file, ouputPath, logFlag, logPath, fileNameFlag)
     print('--------------------------------')
 
   print('Ta-da! Squeaky clean sequence ids!')
@@ -156,6 +152,9 @@ def inputList(type, userInput):
     toSqueakify.append(userInput)
   if type == 'directory':
     toSqueakify = glob.glob(userInput + '/*.fa*')
+  for file in toSqueakify:
+    index = toSqueakify.index(file)
+    toSqueakify[index] = os.path.abspath(file)
   return toSqueakify
 
 def checkOutputArg(ouputDirectoryPath):
