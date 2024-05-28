@@ -49,8 +49,8 @@ class TestFileMethods(fake_filesystem_unittest.TestCase):
   # Does resolveInput determine if a file path or directory path was given in the -i argument
   def test_resolveInput(self):
     self.setUp()
-    self.assertEqual(squeakuences.resolveInput('test1.fa'), ('File', 'test1.fa'))
-    self.assertEqual(squeakuences.resolveInput('/myFiles'), ('Directory', '/myFiles'))
+    self.assertEqual(squeakuences.resolveInput('test1.fa'), ('file'))
+    self.assertEqual(squeakuences.resolveInput('/myFiles'), ('directory'))
 
   # Does checkDirPath complete the directory path based on current working directory
   def test_checkDirPath(self):
@@ -61,8 +61,13 @@ class TestFileMethods(fake_filesystem_unittest.TestCase):
   # Does inputList generate a list of files based on the user input
   def test_inputList(self):
     self.setUp()
-    self.assertEqual(squeakuences.inputList('File', 'test1.fa'), ['test1.fa'])
-    self.assertEqual(squeakuences.inputList('Directory', '/myFiles'), ['/myFiles/test2.fa', '/myFiles/test3.faa'])
+    self.assertEqual(squeakuences.inputList('file', 'test1.fa'), ['test1.fa'])
+    self.assertEqual(squeakuences.inputList('directory', '/myFiles'), ['/myFiles/test2.fa', '/myFiles/test3.faa'])
+
+  # Does getFaNameExt generate a list with only the file name and extension
+  def test_getFaNameExt(self):
+    self.setUp()
+    self.assertEqual(squeakuences.getFaNameExt(['/myFiles/test1.fa', '/myFiles/test2.faa', '/myFiles/test3.fa']), ['test1.fa', 'test2.faa', 'test3.fa'])
 
   # Does checkOutputArg determine if the output directory exists
   def test_checkOutputArg(self):
@@ -188,13 +193,13 @@ class TestSequenceMethods(unittest.TestCase):
   def test_remove_non_english_characters(self):
     self.assertEqual(squeakuences.removeNonAlphanumeric('R¥emÙove ÅnoĦn-engŧlish chaŸracters'), 'Remove nonenglish characters')
 
-  # Does speciesName ensure that the sequence id always begins with the species name and an underscore
-  def test_speciesName(self):
-    self.assertEqual(squeakuences.speciesName('AcachlArg8VasotocinReceptorLike', 'Acachl'), 'Acachl_Arg8VasotocinReceptorLike')
-    self.assertEqual(squeakuences.speciesName('Arg8VasotocinReceptorLike', 'Acachl'), 'Acachl_Arg8VasotocinReceptorLike')
-    self.assertEqual(squeakuences.speciesName('GalgalExampleGene', 'galgal'), 'Galgal_ExampleGene')
-    self.assertEqual(squeakuences.speciesName('ExampleGene', 'galgal'), 'Galgal_ExampleGene')
-    self.assertEqual(squeakuences.speciesName('ExampleGene', 'felis_catus'), 'FelisCatus_ExampleGene')
+  # Does attachFileName ensure that the sequence id always begins with the species name and an underscore
+  def test_attachFileName(self):
+    self.assertEqual(squeakuences.attachFileName('AcachlArg8VasotocinReceptorLike', 'Acachl'), 'Acachl_Arg8VasotocinReceptorLike')
+    self.assertEqual(squeakuences.attachFileName('Arg8VasotocinReceptorLike', 'Acachl'), 'Acachl_Arg8VasotocinReceptorLike')
+    self.assertEqual(squeakuences.attachFileName('GalgalExampleGene', 'galgal'), 'Galgal_ExampleGene')
+    self.assertEqual(squeakuences.attachFileName('ExampleGene', 'galgal'), 'Galgal_ExampleGene')
+    self.assertEqual(squeakuences.attachFileName('ExampleGene', 'felis_catus'), 'FelisCatus_ExampleGene')
 
   # Does chop shorten a sequence id to either the default or given maximum length
   def test_chop(self):
