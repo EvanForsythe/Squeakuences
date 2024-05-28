@@ -39,7 +39,6 @@ def main():
   logPath = outputPath + '/log.tsv'
   if logFlag is True:
     checkExistingLogFile(logPath)
-    createLogFile(logPath)
   
   for file in toProcess:
     squeakify(file, ouputPath, logFlag, logPath, fileNameFlag)
@@ -190,8 +189,14 @@ def checkExisting(squeakyDictPath, squeakyPath):
 
 def checkExistingLogFile(logPath):
   if os.path.exists(logPath):
-    os.remove(logPath)
-    print('Existing log file deleted.')
+    print('Existing log file detected.')
+    print('Processing information from fasta files cleaned in this run will be appended to this file.')
+    print('--------------------------------')
+
+  if not os.path.exists(logPath):
+    createLogFile(logPath)
+    print('An existing log file was not detected.')
+    print('A new log file was created at: ' + os.path.abspath(logPath))
     print('--------------------------------')
 
 #####################################################
