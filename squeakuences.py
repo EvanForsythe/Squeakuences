@@ -107,6 +107,7 @@ def setupParser():
                                                 This can be the full path or relative to the squeakuences.py file location.
                                                 If this directory path does not exist at runtime, Squeakuences will create it for you.''', required=True)
   parser.add_argument('-l', '--log', help='When activated, Squeakuences will generate a log file with processing info from each fasta file cleaned.', required=False, action='store_true')
+  parser.add_argument('-c', '--chopLength', help='When activated, Squeakuences will reduce the length of sequence ids to be less than or equal to the given charcter length.', required=False, type=int, default=70)
   parser.add_argument('-f', '--addFileName', help='When activated, Squeakuences will add the file name to the beginning of all sequences cleaned.', required=False, action='store_true')
   return parser
 
