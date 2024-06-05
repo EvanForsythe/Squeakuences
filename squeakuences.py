@@ -23,6 +23,8 @@ def main():
   maxLength = args.chopLength
   fileNameFlag = args.addFileName
 
+  print(maxLength)
+
   '''
   if maxLength is None:
     print('Option not given at all')
@@ -31,14 +33,14 @@ def main():
   else:
     print('Option and command-line argument given: "-c <int>"')
   '''
-
-  if maxLength is None:
-    maxLength = 70
   
   print('Commencing Squeakuences Cleanup')
   print('================================')
-  messagesForArgs(logFlag, fileNameFlag)
+  messagesForArgs(logFlag, fileNameFlag, maxLength)
   print('--------------------------------')
+
+  if maxLength is None:
+    maxLength = 70
 
   inputType = resolveInput(inputPath)
   print('You\'ve input a ' + inputType + '.')
@@ -120,18 +122,20 @@ def setupParser():
                                                 This can be the full path or relative to the squeakuences.py file location.
                                                 If this directory path does not exist at runtime, Squeakuences will create it for you.''', required=True)
   parser.add_argument('-l', '--log', help='When activated, Squeakuences will generate a log file with processing info from each fasta file cleaned.', required=False, action='store_true')
-  parser.add_argument('-c', '--chopLength', nargs='?', help='When activated, Squeakuences will reduce the length of sequence ids to be less than or equal to the given charcter length.', required=False, const=70, type= int)
+  parser.add_argument('-c', '--chopLength', nargs='?', help='When activated, Squeakuences will reduce the length of sequence ids to be less than or equal to the given charcter length.', required=False, type= int)
   parser.add_argument('-f', '--addFileName', help='When activated, Squeakuences will add the file name to the beginning of all sequences cleaned.', required=False, action='store_true')
   return parser
 
-def messagesForArgs(logFileFlag, fileNameFlag):
-  if logFileFlag == fileNameFlag == False:
+def messagesForArgs(logFileFlag, fileNameFlag, userMax):
+  if logFileFlag == fileNameFlag == False and userMax == None:
     print('No flags detected in command.')
   else:
     if fileNameFlag is True:
       print('You\'ve activated the -f flag.\nThe file name will be inserted at the beginning of all sequences cleaned.')
     if logFileFlag is True:
       print('You\'ve activated the -l flag.\nA log file with information about each fasta file processed will be written in the output directory.')
+    if userMax != None:
+      print('You\'ve activated the -c flag.\nSequence ids processed by Squeakuences will be shortened to be ' + str(userMax) + ' characters or less.')
 
 #####################################################
 # RESOLVE USER INPUT                                #
