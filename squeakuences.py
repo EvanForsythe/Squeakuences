@@ -22,17 +22,6 @@ def main():
   logFlag = args.log
   maxLength = args.chopLength
   fileNameFlag = args.addFileName
-
-  print(maxLength)
-
-  '''
-  if maxLength is None:
-    print('Option not given at all')
-  elif maxLength == 70:
-    print('Option given, but no command-line argument: "-c"')
-  else:
-    print('Option and command-line argument given: "-c <int>"')
-  '''
   
   print('Commencing Squeakuences Cleanup')
   print('================================')
