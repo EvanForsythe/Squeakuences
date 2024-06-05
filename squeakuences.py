@@ -20,7 +20,20 @@ def main():
   inputPath = args.input
   outputPath = args.output
   logFlag = args.log
+  maxLength = args.chopLength
   fileNameFlag = args.addFileName
+
+  '''
+  if maxLength is None:
+    print('Option not given at all')
+  elif maxLength == 70:
+    print('Option given, but no command-line argument: "-c"')
+  else:
+    print('Option and command-line argument given: "-c <int>"')
+  '''
+
+  if maxLength is None:
+    maxLength = 70
   
   print('Commencing Squeakuences Cleanup')
   print('================================')
@@ -41,13 +54,13 @@ def main():
     checkExistingLogFile(logPath)
   
   for file in toProcess:
-    squeakify(file, ouputPath, logFlag, logPath, fileNameFlag)
+    squeakify(file, ouputPath, logFlag, logPath, fileNameFlag, maxLength)
     print('--------------------------------')
 
   print('Ta-da! Squeaky clean sequence ids!')
   #print('New squeaky clean files and other output files can be found in: ' + outputPath)
 
-def squeakify(file, write, logFlag, logPath, fileNameFlag):
+def squeakify(file, write, logFlag, logPath, fileNameFlag, maxLength):
   if logFlag is True:
     logData = {}
     startLog(logData, file)  
@@ -75,11 +88,11 @@ def squeakify(file, write, logFlag, logPath, fileNameFlag):
       endId = removeNonAlphanumeric(endId)
       if fileNameFlag is True:
         endId = attachFileName(endId, faFileName)
-      endId = chop(endId)
+      endId = chop(endId, maxLength)
       
       if checkForDuplicates(endId, idDict):
         startId, endId = resolveDuplicate(startId, endId, idDuplicatesList)
-        endId = chop(endId)
+        endId = chop(endId, maxLength)
         
       idDict.update({startId: endId})
 
@@ -107,7 +120,7 @@ def setupParser():
                                                 This can be the full path or relative to the squeakuences.py file location.
                                                 If this directory path does not exist at runtime, Squeakuences will create it for you.''', required=True)
   parser.add_argument('-l', '--log', help='When activated, Squeakuences will generate a log file with processing info from each fasta file cleaned.', required=False, action='store_true')
-  parser.add_argument('-c', '--chopLength', help='When activated, Squeakuences will reduce the length of sequence ids to be less than or equal to the given charcter length.', required=False, type=int, default=70)
+  parser.add_argument('-c', '--chopLength', nargs='?', help='When activated, Squeakuences will reduce the length of sequence ids to be less than or equal to the given charcter length.', required=False, const=70, type= int)
   parser.add_argument('-f', '--addFileName', help='When activated, Squeakuences will add the file name to the beginning of all sequences cleaned.', required=False, action='store_true')
   return parser
 
@@ -255,7 +268,7 @@ def attachFileName(sequenceId, attachFileName):
     modifiedId = attachFileName + '_' + sequenceId
   return modifiedId
     
-def chop(sequenceId, max = 70):
+def chop(sequenceId, max):
   length = len(sequenceId)
 
   if length < max:
