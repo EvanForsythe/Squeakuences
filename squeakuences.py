@@ -108,6 +108,7 @@ def setupParser():
                                                 If this directory path does not exist at runtime, Squeakuences will create it for you.''', required=True)
   parser.add_argument('-l', '--log', help='When activated, Squeakuences will generate a log file with processing info from each fasta file cleaned.', required=False, action='store_true')
   parser.add_argument('-f', '--addFileName', help='When activated, Squeakuences will add the file name to the beginning of all sequences cleaned.', required=False, action='store_true')
+  parser.add_argument('-e', '--fileExt', metavar='.ext', help='When activated, Squeakuences will collect files with the given extension. Only one extension type is accepted at this time.', required=False)  
   return parser
 
 def messagesForArgs(logFileFlag, fileNameFlag):
