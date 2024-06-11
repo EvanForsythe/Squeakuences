@@ -30,7 +30,7 @@ def main():
 
   inputType = resolveInput(inputPath)
   print('You\'ve input a ' + inputType + '.')
-  toProcess = inputList(inputType, inputPath)
+  toProcess = inputList(inputType, inputPath, fileExtension)
   fileNameList = getFaNameExt(toProcess)
   print('The following file(s) will be cleaned: ' + str(fileNameList))
   print('--------------------------------')
@@ -148,12 +148,12 @@ def checkDirPath(userInput):
 #####################################################
 # COLLECT FILES                                     #
 #####################################################
-def inputList(type, userInput):
+def inputList(type, userInput, ext):
   toSqueakify = []
   if type == 'file':
     toSqueakify.append(userInput)
   if type == 'directory':
-    toSqueakify = glob.glob(userInput + '/*.fa*')
+    toSqueakify = glob.glob(userInput + '/*' + ext)
   for file in toSqueakify:
     index = toSqueakify.index(file)
     toSqueakify[index] = os.path.abspath(file)
