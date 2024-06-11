@@ -109,18 +109,18 @@ def setupParser():
                                                 If this directory path does not exist at runtime, Squeakuences will create it for you.''', required=True)
   parser.add_argument('-l', '--log', help='When activated, Squeakuences will generate a log file with processing info from each fasta file cleaned.', required=False, action='store_true')
   parser.add_argument('-f', '--addFileName', help='When activated, Squeakuences will add the file name to the beginning of all sequences cleaned.', required=False, action='store_true')
-  parser.add_argument('-e', '--fileExt', metavar='.ext', default = '.fa*', required=False, nargs='*', help='When activated, Squeakuences will collect files with the given extension(s). To collect files with multiple extensions, simply list them behind each other such as ".fa .fna". Include the dot in your argument, such as ".fna"')  
+  parser.add_argument('-e', '--fileExt', metavar='.ext', default = ['.fa*'], required=False, nargs='*', help='When activated, Squeakuences will collect files with the given extension(s). To collect files with multiple extensions, simply list them behind each other such as ".fa .fna". Include the dot in your argument, such as ".fna"')  
   return parser
 
 def messagesForArgs(logFileFlag, fileNameFlag, extFlag):
-  if logFileFlag == fileNameFlag == False and extFlag == '.fa*':
+  if logFileFlag == fileNameFlag == False and extFlag == ['.fa*']:
     print('No flags detected in command.')
   else:
     if fileNameFlag is True:
       print('You\'ve activated the -f flag.\nThe file name will be inserted at the beginning of all sequences cleaned.')
     if logFileFlag is True:
       print('You\'ve activated the -l flag.\nA log file with information about each fasta file processed will be written in the output directory.')
-    if extFlag != '.fa*':
+    if extFlag != ['.fa*']:
       print('You\'ve activated the -e flag.\nFiles with the ' + str(extFlag) + ' extension will be collected for cleaning.')
 
 #####################################################
