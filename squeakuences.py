@@ -21,10 +21,11 @@ def main():
   outputPath = args.output
   logFlag = args.log
   fileNameFlag = args.addFileName
+  fileExtension = args.fileExt
   
   print('Commencing Squeakuences Cleanup')
   print('================================')
-  messagesForArgs(logFlag, fileNameFlag)
+  messagesForArgs(logFlag, fileNameFlag, fileExtension)
   print('--------------------------------')
 
   inputType = resolveInput(inputPath)
@@ -108,17 +109,19 @@ def setupParser():
                                                 If this directory path does not exist at runtime, Squeakuences will create it for you.''', required=True)
   parser.add_argument('-l', '--log', help='When activated, Squeakuences will generate a log file with processing info from each fasta file cleaned.', required=False, action='store_true')
   parser.add_argument('-f', '--addFileName', help='When activated, Squeakuences will add the file name to the beginning of all sequences cleaned.', required=False, action='store_true')
-  parser.add_argument('-e', '--fileExt', metavar='.ext', help='When activated, Squeakuences will collect files with the given extension. Only one extension type is accepted at this time.', required=False)  
+  parser.add_argument('-e', '--fileExt', metavar='.ext', default = '.fa*', required=False, help='When activated, Squeakuences will collect files with the given extension. Only one extension type is accepted at this time.')  
   return parser
 
-def messagesForArgs(logFileFlag, fileNameFlag):
-  if logFileFlag == fileNameFlag == False:
+def messagesForArgs(logFileFlag, fileNameFlag, extFlag):
+  if logFileFlag == fileNameFlag == False and extFlag == '.fa*':
     print('No flags detected in command.')
   else:
     if fileNameFlag is True:
       print('You\'ve activated the -f flag.\nThe file name will be inserted at the beginning of all sequences cleaned.')
     if logFileFlag is True:
       print('You\'ve activated the -l flag.\nA log file with information about each fasta file processed will be written in the output directory.')
+    if extFlag is not '.fa*':
+      print('You\'ve activated the -e flag.\nFiles with the ' + extFlag + ' extension will be collected for cleaning.')
 
 #####################################################
 # RESOLVE USER INPUT                                #
