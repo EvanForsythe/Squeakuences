@@ -150,6 +150,7 @@ def inputList(type, userInput):
     toSqueakify.append(userInput)
   if type == 'directory':
     toSqueakify = glob.glob(userInput + '/*.fa*')
+    toSqueakify.sort()
   for file in toSqueakify:
     index = toSqueakify.index(file)
     toSqueakify[index] = os.path.abspath(file)
@@ -317,13 +318,13 @@ def endLog(logDataDict, faFileNameExt, squeakyFile):
   logDataDict.update({'memory': round(tracemalloc.get_traced_memory()[1]/1000000, 2)})
   tracemalloc.stop()
   logDataDict.update({'end_time': time.perf_counter()})
-  duration = timedelta(seconds=logDataDict['end_time'] - logDataDict['start_time'])
+  duration = timedelta(seconds=logDataDict['end_time'] - logDataDict['start_time']).total_seconds()
   logDataDict.update({'duration': str(duration)})
   return logDataDict
 
 def createLogFile(logPath):
   with open(logPath, 'a') as file:
-    file.write('File Name\tProcessing Time (Hours: Minutes: Seconds)\tMemory (peak size of memory blocks traced in MB)\tStarting File Size (MB)\tEnding File Size (MB)\tNumber of sequences cleaned\n')
+    file.write('File Name\tProcessing Time (Seconds)\tMemory (peak size of memory blocks traced in MB)\tStarting File Size (MB)\tEnding File Size (MB)\tNumber of sequences cleaned\n')
   file.close()
 
 def writeLogFile(logDataDict, logPath, processedIdCount):
