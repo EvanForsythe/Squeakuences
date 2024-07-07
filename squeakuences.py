@@ -57,6 +57,8 @@ def squeakify(file, write, logFlag, logPath, fileNameFlag):
   idDict = {}
   idDuplicatesList = []
 
+  cleanedFaLines = []
+
   faFileNameExt, fastaHandle, faFileName = loadFile(file)
   print('Now processing ' + faFileNameExt)
 
@@ -84,10 +86,12 @@ def squeakify(file, write, logFlag, logPath, fileNameFlag):
         
       idDict.update({startId: endId})
 
-      writeLine(squeakyPath, endId, True)
+      storeLine(cleanedFaLines, endId, True)
 
     else:
-      writeLine(squeakyPath, line, False)
+      storeLine(cleanedFaLines, line, False)
+  
+  writeNewFaFile(squeakyPath, cleanedFaLines)
 
   writeModIdFile(write + '/' + faFileName, idDict)
 
@@ -284,6 +288,7 @@ def resolveDuplicate(startSequenceId, modSequenceId, dupsList):
   dupsList.append(modSequenceId)
   return startDupId, endDupId
 
+'''
 def writeLine(faFile, line, sequence):
   with open(faFile, 'a') as file:
     if sequence is True:
@@ -291,6 +296,18 @@ def writeLine(faFile, line, sequence):
     else:
       file.write(line)
   file.close()
+'''
+
+def storeLine(outFaFileLines, line, sequence):
+    if sequence is True:
+      outFaFileLines.append('>' + line)
+    else:
+      outFaFileLines.append(line)
+
+def writeNewFaFile(newFilePath, cleanedLinesList):
+  f = open(newFilePath, 'w')
+  f.writelines(cleanedLinesList)
+  f.close()
   
 def writeModIdFile(faFileName, idDictInput):
   fileExtension = os.path.splitext(faFileName)
