@@ -289,7 +289,7 @@ def resolveDuplicate(startSequenceId, modSequenceId, dupsList):
 
 def storeLine(outFaFileLines, line, sequence):
     if sequence is True:
-      outFaFileLines.append('>' + line)
+      outFaFileLines.append('>' + line + '\n')
     else:
       outFaFileLines.append(line)
 
