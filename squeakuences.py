@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-import cProfile
 import argparse
 import re
 import os
@@ -351,4 +350,4 @@ def writeLogFile(logDataDict, logPath, processedIdCount):
   file.close()
 
 if __name__ == '__main__':
-  cProfile.run('main()', sort='tottime')
+  main()
