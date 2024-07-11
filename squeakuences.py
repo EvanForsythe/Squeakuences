@@ -287,16 +287,6 @@ def resolveDuplicate(startSequenceId, modSequenceId, dupsList):
   dupsList.append(modSequenceId)
   return startDupId, endDupId
 
-'''
-def writeLine(faFile, line, sequence):
-  with open(faFile, 'a') as file:
-    if sequence is True:
-      file.write('>' + line + '\n')
-    else:
-      file.write(line)
-  file.close()
-'''
-
 def storeLine(outFaFileLines, line, sequence):
     if sequence is True:
       outFaFileLines.append('>' + line)
