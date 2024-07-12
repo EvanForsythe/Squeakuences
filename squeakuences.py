@@ -31,22 +31,30 @@ def main():
   inputType = resolveInput(inputPath)
   print('You\'ve input a ' + inputType + '.')
   toProcess = inputList(inputType, inputPath, fileExtension)
-  fileNameList = getFaNameExt(toProcess)
-  print('The following file(s) will be cleaned: ' + str(fileNameList))
-  print('--------------------------------')
 
-  ouputPath = checkOutputArg(outputPath)
+  if toProcess == []:
+    print('--------------------------------')
+    print('Squeakuences did not find any files with the ' + str(fileExtension) + ' extension at the input location.')
+    print('If this is unexpected, please check your command and try again.')
+    print('Exiting Squeakuences run now.')
 
-  logPath = outputPath + '/log.tsv'
-  if logFlag is True:
-    checkExistingLogFile(logPath)
-  
-  for file in toProcess:
-    squeakify(file, ouputPath, logFlag, logPath, fileNameFlag)
+  else:
+    fileNameList = getFaNameExt(toProcess)
+    print('The following file(s) will be cleaned: ' + str(fileNameList))
     print('--------------------------------')
 
-  print('Ta-da! Squeaky clean sequence ids!')
-  #print('New squeaky clean files and other output files can be found in: ' + outputPath)
+    ouputPath = checkOutputArg(outputPath)
+
+    logPath = outputPath + '/log.tsv'
+    if logFlag is True:
+      checkExistingLogFile(logPath)
+    
+    for file in toProcess:
+      squeakify(file, ouputPath, logFlag, logPath, fileNameFlag)
+      print('--------------------------------')
+
+    print('Ta-da! Squeaky clean sequence ids!')
+    #print('New squeaky clean files and other output files can be found in: ' + outputPath)
 
 def squeakify(file, write, logFlag, logPath, fileNameFlag):
   if logFlag is True:
