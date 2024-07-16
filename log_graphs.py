@@ -37,6 +37,7 @@ def timeVsSeq(df, outputPath):
   plt.title('Runtime in Seconds VS Number of Sequences Cleaned')
   plt.xlabel('Seconds')
   plt.ylabel('Sequences Cleaned')
+  plt.yscale('log')
   plt.savefig(outputPath + '/timeVsSeq.pdf', format = 'pdf', transparent = True) 
   plt.close()
 
@@ -87,11 +88,13 @@ def seqVsStartingMb(df, outputPath):
 def startingMbVsSeq(df, outputPath):
   #mpl.rcParams['pdf.fonttype'] = 42
   df = df.sort_values(by=['Starting File Size (MB)'])
+  print(df)
   plt.Figure(figsize=(3,2))
   plt.plot(df['Starting File Size (MB)'], df['Number of sequences cleaned'])
   plt.title('Starting File Size VS Number of Sequences Cleaned')
   plt.ylabel('Sequences Cleaned')
   plt.xlabel('File Size (MB)')
+  plt.yscale('log')
   plt.savefig(outputPath + '/StartingMbVsSeq.pdf', format = 'pdf', transparent = True) 
   plt.close()
 
