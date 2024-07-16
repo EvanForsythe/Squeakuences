@@ -21,31 +21,40 @@ def main():
   outputPath = args.output
   logFlag = args.log
   fileNameFlag = args.addFileName
+  fileExtension = args.fileExt
   
   print('Commencing Squeakuences Cleanup')
   print('================================')
-  messagesForArgs(logFlag, fileNameFlag)
+  messagesForArgs(logFlag, fileNameFlag, fileExtension)
   print('--------------------------------')
 
   inputType = resolveInput(inputPath)
   print('You\'ve input a ' + inputType + '.')
-  toProcess = inputList(inputType, inputPath)
-  fileNameList = getFaNameExt(toProcess)
-  print('The following file(s) will be cleaned: ' + str(fileNameList))
-  print('--------------------------------')
+  toProcess = inputList(inputType, inputPath, fileExtension)
 
-  ouputPath = checkOutputArg(outputPath)
+  if toProcess == []:
+    print('--------------------------------')
+    print('Squeakuences did not find any files with the ' + str(fileExtension) + ' extension at the input location.')
+    print('If this is unexpected, please check your command and try again.')
+    print('Exiting Squeakuences run now.')
 
-  logPath = outputPath + '/log.tsv'
-  if logFlag is True:
-    checkExistingLogFile(logPath)
-  
-  for file in toProcess:
-    squeakify(file, ouputPath, logFlag, logPath, fileNameFlag)
+  else:
+    fileNameList = getFaNameExt(toProcess)
+    print('The following file(s) will be cleaned: ' + str(fileNameList))
     print('--------------------------------')
 
-  print('Ta-da! Squeaky clean sequence ids!')
-  #print('New squeaky clean files and other output files can be found in: ' + outputPath)
+    ouputPath = checkOutputArg(outputPath)
+
+    logPath = outputPath + '/log.tsv'
+    if logFlag is True:
+      checkExistingLogFile(logPath)
+    
+    for file in toProcess:
+      squeakify(file, ouputPath, logFlag, logPath, fileNameFlag)
+      print('--------------------------------')
+
+    print('Ta-da! Squeaky clean sequence ids!')
+    #print('New squeaky clean files and other output files can be found in: ' + outputPath)
 
 def squeakify(file, write, logFlag, logPath, fileNameFlag):
   if logFlag is True:
@@ -112,16 +121,19 @@ def setupParser():
                                                 If this directory path does not exist at runtime, Squeakuences will create it for you.''', required=True)
   parser.add_argument('-l', '--log', help='When activated, Squeakuences will generate a log file with processing info from each fasta file cleaned.', required=False, action='store_true')
   parser.add_argument('-f', '--addFileName', help='When activated, Squeakuences will add the file name to the beginning of all sequences cleaned.', required=False, action='store_true')
+  parser.add_argument('-e', '--fileExt', metavar='.ext', default = ['.fa*'], required=False, nargs='*', help='When activated, Squeakuences will collect files with the provided extension(s). To collect files with multiple extensions, simply list them behind each other such as ".fa .fna". Include the dot in your argument, such as ".fna"')  
   return parser
 
-def messagesForArgs(logFileFlag, fileNameFlag):
-  if logFileFlag == fileNameFlag == False:
+def messagesForArgs(logFileFlag, fileNameFlag, extFlag):
+  if logFileFlag == fileNameFlag == False and extFlag == ['.fa*']:
     print('No flags detected in command.')
   else:
     if fileNameFlag is True:
       print('You\'ve activated the -f flag.\nThe file name will be inserted at the beginning of all sequences cleaned.')
     if logFileFlag is True:
       print('You\'ve activated the -l flag.\nA log file with information about each fasta file processed will be written in the output directory.')
+    if extFlag != ['.fa*']:
+      print('You\'ve activated the -e flag.\nFiles with the ' + str(extFlag) + ' extension will be collected for cleaning.')
 
 #####################################################
 # RESOLVE USER INPUT                                #
@@ -148,15 +160,17 @@ def checkDirPath(userInput):
 #####################################################
 # COLLECT FILES                                     #
 #####################################################
-def inputList(type, userInput):
+def inputList(type, userInput, ext):
   toSqueakify = []
   if type == 'file':
     toSqueakify.append(userInput)
   if type == 'directory':
-    toSqueakify = glob.glob(userInput + '/*.fa*')
+    for inputExt in ext:
+      toSqueakify += glob.glob(userInput + '/*' + inputExt)
   for file in toSqueakify:
     index = toSqueakify.index(file)
     toSqueakify[index] = os.path.abspath(file)
+  toSqueakify.sort()
   return toSqueakify
 
 def getFaNameExt(inputList):
