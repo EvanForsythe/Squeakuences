@@ -37,28 +37,48 @@ def multiPlot(df, outputPath):
 
   #Seq vs Time
   df = df.sort_values(by=['Number of sequences cleaned'])
-  ax[0, 0].plot(df['Number of sequences cleaned'], df['Processing Time (Seconds)'], 'o')
+  labelsList = df['Label'].tolist()
+  x = df['Number of sequences cleaned']
+  y = df['Processing Time (Seconds)']
+  ax[0, 0].plot(x, y, 'o')
+  for i in range(len(labelsList)): 
+    ax[0, 0].annotate(labelsList[i], (x[i], y[i] + 7.0)) 
   ax[0, 0].set_title('Number of Sequences Cleaned VS Runtime in Seconds')
   ax[0, 0].set_xlabel('Sequences Cleaned')
   ax[0, 0].set_ylabel('Seconds') 
 
   #StartingMb vs Time
   df = df.sort_values(by=['Starting File Size (MB)'])
-  ax[0, 1].plot(df['Starting File Size (MB)'], df['Processing Time (Seconds)'], 'o')
+  labelsList = df['Label'].tolist()
+  x = df['Starting File Size (MB)']
+  y = df['Processing Time (Seconds)']
+  ax[0, 1].plot(x, y, 'o')
+  for i in range(len(labelsList)): 
+    ax[0, 1].annotate(labelsList[i], (x[i], y[i] + 7.0)) 
   ax[0, 1].set_title('Starting File Size VS Runtime in Seconds')
   ax[0, 1].set_xlabel('File Size (MB)')
   ax[0, 1].set_ylabel('Seconds')
 
   #Seq vs StartedMb
   df = df.sort_values(by=['Number of sequences cleaned'])
-  ax[1, 0].plot(df['Number of sequences cleaned'], df['Starting File Size (MB)'], 'o')
+  labelsList = df['Label'].tolist()
+  x = df['Number of sequences cleaned']
+  y = df['Starting File Size (MB)']
+  ax[1, 0].plot(x, y, 'o')
+  for i in range(len(labelsList)): 
+    ax[1, 0].annotate(labelsList[i], (x[i], y[i] + 7.0)) 
   ax[1, 0].set_title('Number of Sequences Cleaned VS Starting File Size')
   ax[1, 0].set_xlabel('Sequences Cleaned')
   ax[1, 0].set_ylabel('File Size (MB)')
 
   #Seq vs PeakMb
   df = df.sort_values(by=['Number of sequences cleaned'])
-  ax[1, 1].plot(df['Number of sequences cleaned'], df['Memory (peak size of memory blocks traced in MB)'], 'o')
+  labelsList = df['Label'].tolist()
+  x = df['Number of sequences cleaned']
+  y = df['Memory (peak size of memory blocks traced in MB)']
+  ax[1, 1].plot(x, y, 'o')
+  for i in range(len(labelsList)): 
+    ax[1, 1].annotate(labelsList[i], (x[i], y[i] + 7.0)) 
   ax[1, 1].set_title('Number of Sequences Cleaned VS Peak Memory')
   ax[1, 1].set_xlabel('Sequences Cleaned')
   ax[1, 1].set_ylabel('Peak Memory (MB)')
