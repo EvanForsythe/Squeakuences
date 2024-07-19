@@ -49,8 +49,22 @@ def multiPlot(df, outputPath):
   ax[0, 1].set_xlabel('File Size (MB)')
   ax[0, 1].set_ylabel('Seconds')
 
+  #Seq vs StartedMb
+  df = df.sort_values(by=['Number of sequences cleaned'])
+  ax[1, 0].plot(df['Number of sequences cleaned'], df['Starting File Size (MB)'], 'o')
+  ax[1, 0].set_title('Number of Sequences Cleaned VS Starting File Size')
+  ax[1, 0].set_xlabel('Sequences Cleaned')
+  ax[1, 0].set_ylabel('File Size (MB)')
+
+  #Seq vs PeakMb
+  df = df.sort_values(by=['Number of sequences cleaned'])
+  ax[1, 1].plot(df['Number of sequences cleaned'], df['Memory (peak size of memory blocks traced in MB)'], 'o')
+  ax[1, 1].set_title('Number of Sequences Cleaned VS Peak Memory')
+  ax[1, 1].set_xlabel('Sequences Cleaned')
+  ax[1, 1].set_ylabel('Peak Memory (MB)')
+
   fig.suptitle('HG38 Performance Analysis', fontsize=20)
-  fig.tight_layout(pad=2.0, w_pad=1.5, h_pad=1.5)
+  fig.tight_layout(pad=1.5, w_pad=1.5, h_pad=1.5)
   plt.savefig(outputPath + '/multiplot.pdf', format = 'pdf', transparent = True) 
 
 
