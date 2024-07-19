@@ -33,23 +33,24 @@ def main():
   '''
 
 def multiPlot(df, outputPath):
-  fig, ax = plt.subplots(2, 2, figsize=(10,10))
+  fig, ax = plt.subplots(2, 2, figsize=(12,12))
 
   #Seq vs Time
   df = df.sort_values(by=['Number of sequences cleaned'])
-  ax[0, 0].plot(df['Number of sequences cleaned'], df['Processing Time (Seconds)'])
+  ax[0, 0].plot(df['Number of sequences cleaned'], df['Processing Time (Seconds)'], 'o')
   ax[0, 0].set_title('Number of Sequences Cleaned VS Runtime in Seconds')
   ax[0, 0].set_xlabel('Sequences Cleaned')
   ax[0, 0].set_ylabel('Seconds') 
 
   #StartingMb vs Time
   df = df.sort_values(by=['Starting File Size (MB)'])
-  ax[0, 1].plot(df['Starting File Size (MB)'], df['Processing Time (Seconds)'])
+  ax[0, 1].plot(df['Starting File Size (MB)'], df['Processing Time (Seconds)'], 'o')
   ax[0, 1].set_title('Starting File Size VS Runtime in Seconds')
   ax[0, 1].set_xlabel('File Size (MB)')
   ax[0, 1].set_ylabel('Seconds')
 
-  fig.tight_layout()
+  fig.suptitle('HG38 Performance Analysis', fontsize=20)
+  fig.tight_layout(pad=2.0, w_pad=1.5, h_pad=1.5)
   plt.savefig(outputPath + '/multiplot.pdf', format = 'pdf', transparent = True) 
 
 
