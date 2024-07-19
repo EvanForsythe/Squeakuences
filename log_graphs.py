@@ -21,13 +21,37 @@ def main():
   df = pandas.read_csv(log_file_path, sep='\t')
   #print(df)
 
+  multiPlot(df, outputPath)
+
+  '''
   timeVsSeq(df, outputPath)
   seqVsTime(df, outputPath)
   startingMbVsTime(df, outputPath)
   timeVsStartingMb(df, outputPath)
   seqVsStartingMb(df, outputPath)
   startingMbVsSeq(df, outputPath)
-  
+  '''
+
+def multiPlot(df, outputPath):
+  fig, ax = plt.subplots(2, 2, figsize=(10,10))
+
+  #Seq vs Time
+  df = df.sort_values(by=['Number of sequences cleaned'])
+  ax[0, 0].plot(df['Number of sequences cleaned'], df['Processing Time (Seconds)'])
+  ax[0, 0].set_title('Number of Sequences Cleaned VS Runtime in Seconds')
+  ax[0, 0].set_xlabel('Sequences Cleaned')
+  ax[0, 0].set_ylabel('Seconds') 
+
+  #StartingMb vs Time
+  df = df.sort_values(by=['Starting File Size (MB)'])
+  ax[0, 1].plot(df['Starting File Size (MB)'], df['Processing Time (Seconds)'])
+  ax[0, 1].set_title('Starting File Size VS Runtime in Seconds')
+  ax[0, 1].set_xlabel('File Size (MB)')
+  ax[0, 1].set_ylabel('Seconds')
+
+  fig.tight_layout()
+  plt.savefig(outputPath + '/multiplot.pdf', format = 'pdf', transparent = True) 
+
 
 def timeVsSeq(df, outputPath):
   #mpl.rcParams['pdf.fonttype'] = 42
