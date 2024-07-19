@@ -339,7 +339,8 @@ def endLog(logDataDict, faFileNameExt, squeakyFile):
   tracemalloc.stop()
   logDataDict.update({'end_time': time.perf_counter()})
   duration = timedelta(seconds=logDataDict['end_time'] - logDataDict['start_time'])
-  logDataDict.update({'duration': str(duration)})
+  total_seconds = duration.total_seconds()
+  logDataDict.update({'duration': str(total_seconds)})
   return logDataDict
 
 def createLogFile(logPath):
