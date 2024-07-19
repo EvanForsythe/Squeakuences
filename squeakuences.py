@@ -345,13 +345,13 @@ def endLog(logDataDict, faFileNameExt, squeakyFile):
 
 def createLogFile(logPath):
   with open(logPath, 'a') as file:
-    file.write('File Name\tProcessing Time (Seconds)\tPeak Memory (MB)\tStarting File Size (MB)\tEnding File Size (MB)\tNumber of sequences cleaned\n')
+    file.write('File Name\tNumber of sequences cleaned\tProcessing Time (Seconds)\tStarting File Size (MB)\tEnding File Size (MB)\tPeak Memory (MB)\n')
   file.close()
 
 def writeLogFile(logDataDict, logPath, processedIdCount):
   with open(logPath, 'a') as file:
-    file.write(logDataDict['file_name'] + '\t' + logDataDict['duration'] + '\t' + 
-               str(logDataDict['memory']) + '\t' + str(logDataDict['start_file_size']) + '\t' + str(logDataDict['end_file_size']) + '\t' + str(processedIdCount) + '\n')
+    file.write(logDataDict['file_name'] + '\t' + str(processedIdCount) + '\t' + logDataDict['duration'] + '\t' + 
+              str(logDataDict['start_file_size']) + '\t' + str(logDataDict['end_file_size']) + '\t' + str(logDataDict['memory']) +'\n')
   file.close()
 
 if __name__ == '__main__':
