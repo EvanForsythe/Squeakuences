@@ -42,7 +42,7 @@ def multiPlot(df, outputPath):
   y = df['Processing Time (Seconds)']
   ax[0, 0].plot(x, y, 'o')
   for i in range(len(labelsList)): 
-    ax[0, 0].annotate(labelsList[i], (x[i], y[i] + 7.0)) 
+    ax[0, 0].annotate(labelsList[i], (x[i], y[i] + 5.0)) 
   ax[0, 0].set_title('Number of Sequences Cleaned VS Runtime in Seconds')
   ax[0, 0].set_xlabel('Sequences Cleaned')
   ax[0, 0].set_ylabel('Seconds') 
@@ -54,7 +54,7 @@ def multiPlot(df, outputPath):
   y = df['Processing Time (Seconds)']
   ax[0, 1].plot(x, y, 'o')
   for i in range(len(labelsList)): 
-    ax[0, 1].annotate(labelsList[i], (x[i], y[i] + 7.0)) 
+    ax[0, 1].annotate(labelsList[i], (x[i], y[i] + 5.0)) 
   ax[0, 1].set_title('Starting File Size VS Runtime in Seconds')
   ax[0, 1].set_xlabel('File Size (MB)')
   ax[0, 1].set_ylabel('Seconds')
@@ -66,7 +66,7 @@ def multiPlot(df, outputPath):
   y = df['Starting File Size (MB)']
   ax[1, 0].plot(x, y, 'o')
   for i in range(len(labelsList)): 
-    ax[1, 0].annotate(labelsList[i], (x[i], y[i] + 7.0)) 
+    ax[1, 0].annotate(labelsList[i], (x[i], y[i] + 50.0)) 
   ax[1, 0].set_title('Number of Sequences Cleaned VS Starting File Size')
   ax[1, 0].set_xlabel('Sequences Cleaned')
   ax[1, 0].set_ylabel('File Size (MB)')
@@ -77,8 +77,8 @@ def multiPlot(df, outputPath):
   x = df['Number of sequences cleaned']
   y = df['Memory (peak size of memory blocks traced in MB)']
   ax[1, 1].plot(x, y, 'o')
-  for i in range(len(labelsList)): 
-    ax[1, 1].annotate(labelsList[i], (x[i], y[i] + 7.0)) 
+  for i in range(len(labelsList)):
+    ax[1, 1].annotate(labelsList[i], (x[i], y[i] + 75.0))
   ax[1, 1].set_title('Number of Sequences Cleaned VS Peak Memory')
   ax[1, 1].set_xlabel('Sequences Cleaned')
   ax[1, 1].set_ylabel('Peak Memory (MB)')
