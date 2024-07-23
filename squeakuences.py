@@ -103,6 +103,9 @@ def squeakify(file, write, logFlag, logPath, fileNameFlag):
 
   print(faFileNameExt + ' complete!')
 
+#####################################################
+# PARSER                                            #
+#####################################################
 def setupParser():
   parser = argparse.ArgumentParser()
   # Add parser arguments. ex: parser.add_argument('-l', '--long_name', help='What is it for?', required=True/False)
