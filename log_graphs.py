@@ -22,6 +22,7 @@ def main():
   #print(df)
 
   multiPlot(df, outputPath)
+  multiPlotTwo(df, outputPath)
 
   '''
   timeVsSeq(df, outputPath)
@@ -87,6 +88,36 @@ def multiPlot(df, outputPath):
   fig.tight_layout(pad=1.5, w_pad=1.5, h_pad=1.5)
   plt.savefig(outputPath + '/multiplot.pdf', format = 'pdf', transparent = True) 
 
+def multiPlotTwo(df, outputPath):
+  fig, ax = plt.subplots(2, 2, figsize=(12,12))
+
+  #StartingMb vs PeakMb
+  df = df.sort_values(by=['Starting File Size (MB)'])
+  labelsList = df['Label'].tolist()
+  x = df['Starting File Size (MB)']
+  y = df['Memory (peak size of memory blocks traced in MB)']
+  ax[0, 0].plot(x, y, 'o')
+  for i in range(len(labelsList)): 
+    ax[0, 0].annotate(labelsList[i], (x[i], y[i] + 5.0)) 
+  ax[0, 0].set_title('Starting File Size VS Peak Memory Traced')
+  ax[0, 0].set_xlabel('File Size (MB)')
+  ax[0, 0].set_ylabel('Peak Memory (MB)') 
+
+  #StartingMb vs EndingMb
+  df = df.sort_values(by=['Starting File Size (MB)'])
+  labelsList = df['Label'].tolist()
+  x = df['Starting File Size (MB)']
+  y = df['Ending File Size (MB)']
+  ax[0, 1].plot(x, y, 'o')
+  for i in range(len(labelsList)): 
+    ax[0, 1].annotate(labelsList[i], (x[i], y[i] + 5.0)) 
+  ax[0, 1].set_title('Starting File Size VS Ending File Size')
+  ax[0, 1].set_xlabel('File Size (MB)')
+  ax[0, 1].set_ylabel('File Size (MB)') 
+
+  fig.suptitle('HG38 Performance Analysis', fontsize=20)
+  fig.tight_layout(pad=1.5, w_pad=1.5, h_pad=1.5)
+  plt.savefig(outputPath + '/multiplotTwo.pdf', format = 'pdf', transparent = True) 
 
 def timeVsSeq(df, outputPath):
   #mpl.rcParams['pdf.fonttype'] = 42
