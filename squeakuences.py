@@ -345,7 +345,7 @@ def endLog(logDataDict, faFileNameExt, squeakyFile):
 
 def createLogFile(logPath):
   with open(logPath, 'a') as file:
-    file.write('File Name\tNumber of sequences cleaned\tProcessing Time (Seconds)\tStarting File Size (MB)\tEnding File Size (MB)\tPeak Memory (MB)\n')
+    file.write('File Name\tNumber of Sequences Cleaned\tProcessing Time (Seconds)\tStarting File Size (MB)\tEnding File Size (MB)\tPeak Memory (MB)\n')
   file.close()
 
 def writeLogFile(logDataDict, logPath, processedIdCount):
