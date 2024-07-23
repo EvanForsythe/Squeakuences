@@ -7,12 +7,6 @@ import glob
 import time
 from datetime import timedelta
 import tracemalloc
-
-# TODO: decide what we want our output to look like
-# TODO: do we need a separate remove non-alphanumeric function?
-# TODO: add arguments such as max length, allow underscores, species name, custom replace characters, custom regex. 
-# TODO: Make sure all arguements have defaults
-# TODO: make sure chop can't return ___ only
   
 def main():
   parser = setupParser()
@@ -251,12 +245,6 @@ def removeSpaces(sequenceId):
 def removeNonAlphanumeric(sequenceId):
   modifiedId = re.sub(r'[^a-zA-Z0-9\s]', '', sequenceId)
   return modifiedId
-
-# Optional?
-def remove_non_english_characters(sequenceId):
-  # TODO: Remove any non-english characters
-  # Regex: /<-[a..zA..Z\s]>+/  <<< Do we need this to include numbers? This is saying anything that isn't an english alphabetic letter
-  return
 
 def attachFileName(sequenceId, attachFileName):
   attachFileName = camelCase(attachFileName)
