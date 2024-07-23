@@ -48,6 +48,7 @@ def multiPlot(df, outputPath):
   ax[0, 0].set_xlabel('Sequences Cleaned')
   ax[0, 0].set_ylabel('Seconds') 
 
+  '''
   #StartingMb vs Time
   df = df.sort_values(by=['Starting File Size (MB)'])
   labelsList = df['Label'].tolist()
@@ -59,6 +60,7 @@ def multiPlot(df, outputPath):
   ax[0, 1].set_title('Starting File Size VS Runtime in Seconds')
   ax[0, 1].set_xlabel('File Size (MB)')
   ax[0, 1].set_ylabel('Seconds')
+  '''
 
   #Seq vs StartedMb
   df = df.sort_values(by=['Number of sequences cleaned'])
@@ -86,7 +88,7 @@ def multiPlot(df, outputPath):
 
   fig.suptitle('HG38 Performance Analysis', fontsize=20)
   fig.tight_layout(pad=1.5, w_pad=1.5, h_pad=1.5)
-  plt.savefig(outputPath + '/multiplot.pdf', format = 'pdf', transparent = True) 
+  plt.savefig(outputPath + '/multiplot_NumberOfSequences.pdf', format = 'pdf', transparent = True) 
 
 def multiPlotTwo(df, outputPath):
   fig, ax = plt.subplots(2, 2, figsize=(12,12))
@@ -115,9 +117,21 @@ def multiPlotTwo(df, outputPath):
   ax[0, 1].set_xlabel('File Size (MB)')
   ax[0, 1].set_ylabel('File Size (MB)') 
 
+  #StartingMb vs Time
+  df = df.sort_values(by=['Starting File Size (MB)'])
+  labelsList = df['Label'].tolist()
+  x = df['Starting File Size (MB)']
+  y = df['Processing Time (Seconds)']
+  ax[1, 0].plot(x, y, 'o')
+  for i in range(len(labelsList)): 
+    ax[1, 0].annotate(labelsList[i], (x[i], y[i] + 5.0)) 
+  ax[1, 0].set_title('Starting File Size VS Runtime in Seconds')
+  ax[1, 0].set_xlabel('File Size (MB)')
+  ax[1, 0].set_ylabel('Seconds')
+
   fig.suptitle('HG38 Performance Analysis', fontsize=20)
   fig.tight_layout(pad=1.5, w_pad=1.5, h_pad=1.5)
-  plt.savefig(outputPath + '/multiplotTwo.pdf', format = 'pdf', transparent = True) 
+  plt.savefig(outputPath + '/multiplot_StartingMb.pdf', format = 'pdf', transparent = True) 
 
 def timeVsSeq(df, outputPath):
   #mpl.rcParams['pdf.fonttype'] = 42
