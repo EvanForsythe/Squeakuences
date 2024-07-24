@@ -19,7 +19,6 @@ def main():
   log_file_path = args.input
 
   df = pandas.read_csv(log_file_path, sep='\t')
-  #print(df)
 
   multiPlot(df, outputPath)
   #multiPlotTwo(df, outputPath)
@@ -87,9 +86,7 @@ def multiPlot(df, outputPath):
 
   #StartingMb vs EndingMb
   #df = df.sort_values(by=['Starting File Size (MB)'])
-  print(df)
   labelsList = df['Label'].tolist()
-  print(labelsList)
   x = df['Starting File Size (MB)']
   y = df['Ending File Size (MB)']
   ax[1, 0].plot([0, 1], [0, 1], transform=ax[1, 0].transAxes, color='k')
@@ -218,7 +215,6 @@ def seqVsStartingMb(df, outputPath):
 def startingMbVsSeq(df, outputPath):
   #mpl.rcParams['pdf.fonttype'] = 42
   df = df.sort_values(by=['Starting File Size (MB)'])
-  print(df)
   plt.Figure(figsize=(3,2))
   plt.plot(df['Starting File Size (MB)'], df['Number of sequences cleaned'])
   plt.title('Starting File Size VS Number of Sequences Cleaned')
