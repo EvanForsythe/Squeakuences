@@ -3,7 +3,7 @@ import argparse
 import glob
 import pandas
 import matplotlib.pyplot as plt
-#import mpl
+import matplotlib as mpl
 
 def setupParser():
   parser = argparse.ArgumentParser()
@@ -22,7 +22,7 @@ def main():
   #print(df)
 
   multiPlot(df, outputPath)
-  multiPlotTwo(df, outputPath)
+  #multiPlotTwo(df, outputPath)
 
   '''
   timeVsSeq(df, outputPath)
@@ -34,61 +34,87 @@ def main():
   '''
 
 def multiPlot(df, outputPath):
-  fig, ax = plt.subplots(2, 2, figsize=(12,12))
+  mpl.rcParams['pdf.fonttype'] = 42
+  fig, ax = plt.subplots(2, 3, figsize=(24,12))
 
   #Seq vs Time
-  df = df.sort_values(by=['Number of sequences cleaned'])
+  #df = df.sort_values(by=['Number of sequences cleaned'])
   labelsList = df['Label'].tolist()
   x = df['Number of sequences cleaned']
   y = df['Processing Time (Seconds)']
-  ax[0, 0].plot(x, y, 'o')
-  for i in range(len(labelsList)): 
-    ax[0, 0].annotate(labelsList[i], (x[i], y[i] + 5.0)) 
-  ax[0, 0].set_title('Number of Sequences Cleaned VS Runtime in Seconds')
-  ax[0, 0].set_xlabel('Sequences Cleaned')
-  ax[0, 0].set_ylabel('Seconds') 
-
-  '''
-  #StartingMb vs Time
-  df = df.sort_values(by=['Starting File Size (MB)'])
-  labelsList = df['Label'].tolist()
-  x = df['Starting File Size (MB)']
-  y = df['Processing Time (Seconds)']
-  ax[0, 1].plot(x, y, 'o')
+  ax[0, 1].plot(x, y, 'o', color='k')
   for i in range(len(labelsList)): 
     ax[0, 1].annotate(labelsList[i], (x[i], y[i] + 5.0)) 
-  ax[0, 1].set_title('Starting File Size VS Runtime in Seconds')
-  ax[0, 1].set_xlabel('File Size (MB)')
-  ax[0, 1].set_ylabel('Seconds')
-  '''
+  #ax[0, 1].set_title('Number of Sequences Cleaned VS Runtime in Seconds')
+  ax[0, 1].set_xlabel('Sequences Cleaned')
+  ax[0, 1].set_ylabel('Runtime (Seconds)') 
 
   #Seq vs StartedMb
-  df = df.sort_values(by=['Number of sequences cleaned'])
+  #df = df.sort_values(by=['Number of sequences cleaned'])
   labelsList = df['Label'].tolist()
   x = df['Number of sequences cleaned']
   y = df['Starting File Size (MB)']
-  ax[1, 0].plot(x, y, 'o')
+  ax[0, 0].plot(x, y, 'o', color='k')
   for i in range(len(labelsList)): 
-    ax[1, 0].annotate(labelsList[i], (x[i], y[i] + 50.0)) 
-  ax[1, 0].set_title('Number of Sequences Cleaned VS Starting File Size')
-  ax[1, 0].set_xlabel('Sequences Cleaned')
-  ax[1, 0].set_ylabel('File Size (MB)')
+    ax[0, 0].annotate(labelsList[i], (x[i], y[i] + 50.0)) 
+  #ax[0, 0].set_title('Number of Sequences Cleaned VS Starting File Size')
+  ax[0, 0].set_xlabel('Sequences Cleaned')
+  ax[0, 0].set_ylabel('File Size (MB)')
 
   #Seq vs PeakMb
-  df = df.sort_values(by=['Number of sequences cleaned'])
+  #df = df.sort_values(by=['Number of sequences cleaned'])
   labelsList = df['Label'].tolist()
   x = df['Number of sequences cleaned']
   y = df['Memory (peak size of memory blocks traced in MB)']
-  ax[1, 1].plot(x, y, 'o')
+  ax[0, 2].plot(x, y, 'o', color='k')
   for i in range(len(labelsList)):
-    ax[1, 1].annotate(labelsList[i], (x[i], y[i] + 75.0))
-  ax[1, 1].set_title('Number of Sequences Cleaned VS Peak Memory')
-  ax[1, 1].set_xlabel('Sequences Cleaned')
-  ax[1, 1].set_ylabel('Peak Memory (MB)')
+    ax[0, 2].annotate(labelsList[i], (x[i], y[i] + 75.0))
+  #ax[0, 2].set_title('Number of Sequences Cleaned VS Peak Memory')
+  ax[0, 2].set_xlabel('Sequences Cleaned')
+  ax[0, 2].set_ylabel('Peak Memory (MB)')
 
-  fig.suptitle('HG38 Performance Analysis', fontsize=20)
+  #StartingMb vs PeakMb
+  #df = df.sort_values(by=['Starting File Size (MB)'])
+  labelsList = df['Label'].tolist()
+  x = df['Starting File Size (MB)']
+  y = df['Memory (peak size of memory blocks traced in MB)']
+  ax[1, 2].plot(x, y, 'o', color='k')
+  for i in range(len(labelsList)): 
+    ax[1, 2].annotate(labelsList[i], (x[i], y[i] + 5.0)) 
+  #ax[1, 2].set_title('Starting File Size VS Peak Memory Traced')
+  ax[1, 2].set_xlabel('Starting File Size (MB)')
+  ax[1, 2].set_ylabel('Peak Memory (MB)') 
+
+  #StartingMb vs EndingMb
+  #df = df.sort_values(by=['Starting File Size (MB)'])
+  print(df)
+  labelsList = df['Label'].tolist()
+  print(labelsList)
+  x = df['Starting File Size (MB)']
+  y = df['Ending File Size (MB)']
+  ax[1, 0].plot([0, 1], [0, 1], transform=ax[1, 0].transAxes, color='k')
+  ax[1, 0].plot(x, y, 'o', color='k')
+  for i in range(len(labelsList)): 
+    ax[1, 0].annotate(labelsList[i], (x[i], y[i] + 5.0)) 
+  #ax[1, 0].set_title('Starting File Size VS Ending File Size')
+  ax[1, 0].set_xlabel('Starting File Size (MB)')
+  ax[1, 0].set_ylabel('Ending File Size (MB)') 
+
+  #StartingMb vs Time
+ #df = df.sort_values(by=['Starting File Size (MB)'])
+  labelsList = df['Label'].tolist()
+  x = df['Starting File Size (MB)']
+  y = df['Processing Time (Seconds)']
+  ax[1, 1].plot(x, y, 'o', color='k')
+  for i in range(len(labelsList)): 
+    ax[1, 1].annotate(labelsList[i], (x[i], y[i] + 5.0)) 
+  #ax[1, 1].set_title('Starting File Size VS Runtime in Seconds')
+  ax[1, 1].set_xlabel('Starting File Size (MB)')
+  ax[1, 1].set_ylabel('Runtime (Seconds)')
+
+  #fig.suptitle('HG38 Performance Analysis', fontsize=20)
   fig.tight_layout(pad=1.5, w_pad=1.5, h_pad=1.5)
-  plt.savefig(outputPath + '/multiplot_NumberOfSequences.pdf', format = 'pdf', transparent = True) 
+  plt.savefig(outputPath + '/multiplot_2X3_RD.pdf', format = 'pdf', transparent = True) 
 
 def multiPlotTwo(df, outputPath):
   fig, ax = plt.subplots(2, 2, figsize=(12,12))
