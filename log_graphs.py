@@ -36,18 +36,6 @@ def multiPlot(df, outputPath):
   mpl.rcParams['pdf.fonttype'] = 42
   fig, ax = plt.subplots(2, 3, figsize=(24,12))
 
-  #Seq vs Time
-  #df = df.sort_values(by=['Number of sequences cleaned'])
-  labelsList = df['Label'].tolist()
-  x = df['Number of sequences cleaned']
-  y = df['Processing Time (Seconds)']
-  ax[0, 1].plot(x, y, 'o', color='k')
-  for i in range(len(labelsList)): 
-    ax[0, 1].annotate(labelsList[i], (x[i], y[i] + 5.0)) 
-  #ax[0, 1].set_title('Number of Sequences Cleaned VS Runtime in Seconds')
-  ax[0, 1].set_xlabel('Sequences Cleaned')
-  ax[0, 1].set_ylabel('Runtime (Seconds)') 
-
   #Seq vs StartedMb
   #df = df.sort_values(by=['Number of sequences cleaned'])
   labelsList = df['Label'].tolist()
@@ -56,9 +44,21 @@ def multiPlot(df, outputPath):
   ax[0, 0].plot(x, y, 'o', color='k')
   for i in range(len(labelsList)): 
     ax[0, 0].annotate(labelsList[i], (x[i], y[i] + 50.0)) 
-  #ax[0, 0].set_title('Number of Sequences Cleaned VS Starting File Size')
+  ax[0, 0].set_title('A)', loc='left', fontsize=16)
   ax[0, 0].set_xlabel('Sequences Cleaned')
   ax[0, 0].set_ylabel('File Size (MB)')
+
+  #Seq vs Time
+  #df = df.sort_values(by=['Number of sequences cleaned'])
+  labelsList = df['Label'].tolist()
+  x = df['Number of sequences cleaned']
+  y = df['Processing Time (Seconds)']
+  ax[0, 1].plot(x, y, 'o', color='k')
+  for i in range(len(labelsList)): 
+    ax[0, 1].annotate(labelsList[i], (x[i], y[i] + 5.0)) 
+  ax[0, 1].set_title('B)', loc='left', fontsize=16)
+  ax[0, 1].set_xlabel('Sequences Cleaned')
+  ax[0, 1].set_ylabel('Runtime (Seconds)') 
 
   #Seq vs PeakMb
   #df = df.sort_values(by=['Number of sequences cleaned'])
@@ -68,21 +68,9 @@ def multiPlot(df, outputPath):
   ax[0, 2].plot(x, y, 'o', color='k')
   for i in range(len(labelsList)):
     ax[0, 2].annotate(labelsList[i], (x[i], y[i] + 75.0))
-  #ax[0, 2].set_title('Number of Sequences Cleaned VS Peak Memory')
+  ax[0, 2].set_title('C)', loc='left', fontsize=16)
   ax[0, 2].set_xlabel('Sequences Cleaned')
   ax[0, 2].set_ylabel('Peak Memory (MB)')
-
-  #StartingMb vs PeakMb
-  #df = df.sort_values(by=['Starting File Size (MB)'])
-  labelsList = df['Label'].tolist()
-  x = df['Starting File Size (MB)']
-  y = df['Memory (peak size of memory blocks traced in MB)']
-  ax[1, 2].plot(x, y, 'o', color='k')
-  for i in range(len(labelsList)): 
-    ax[1, 2].annotate(labelsList[i], (x[i], y[i] + 5.0)) 
-  #ax[1, 2].set_title('Starting File Size VS Peak Memory Traced')
-  ax[1, 2].set_xlabel('Starting File Size (MB)')
-  ax[1, 2].set_ylabel('Peak Memory (MB)') 
 
   #StartingMb vs EndingMb
   #df = df.sort_values(by=['Starting File Size (MB)'])
@@ -93,7 +81,7 @@ def multiPlot(df, outputPath):
   ax[1, 0].plot(x, y, 'o', color='k')
   for i in range(len(labelsList)): 
     ax[1, 0].annotate(labelsList[i], (x[i], y[i] + 5.0)) 
-  #ax[1, 0].set_title('Starting File Size VS Ending File Size')
+  ax[1, 0].set_title('D)', loc='left', fontsize=16)
   ax[1, 0].set_xlabel('Starting File Size (MB)')
   ax[1, 0].set_ylabel('Ending File Size (MB)') 
 
@@ -105,9 +93,21 @@ def multiPlot(df, outputPath):
   ax[1, 1].plot(x, y, 'o', color='k')
   for i in range(len(labelsList)): 
     ax[1, 1].annotate(labelsList[i], (x[i], y[i] + 5.0)) 
-  #ax[1, 1].set_title('Starting File Size VS Runtime in Seconds')
+  ax[1, 1].set_title('E)', loc='left', fontsize=16)
   ax[1, 1].set_xlabel('Starting File Size (MB)')
   ax[1, 1].set_ylabel('Runtime (Seconds)')
+
+  #StartingMb vs PeakMb
+  #df = df.sort_values(by=['Starting File Size (MB)'])
+  labelsList = df['Label'].tolist()
+  x = df['Starting File Size (MB)']
+  y = df['Memory (peak size of memory blocks traced in MB)']
+  ax[1, 2].plot(x, y, 'o', color='k')
+  for i in range(len(labelsList)): 
+    ax[1, 2].annotate(labelsList[i], (x[i], y[i] + 5.0)) 
+  ax[1, 2].set_title('F)', loc='left', fontsize=16)
+  ax[1, 2].set_xlabel('Starting File Size (MB)')
+  ax[1, 2].set_ylabel('Peak Memory (MB)') 
 
   #fig.suptitle('HG38 Performance Analysis', fontsize=20)
   fig.tight_layout(pad=1.5, w_pad=1.5, h_pad=1.5)
