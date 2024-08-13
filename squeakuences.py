@@ -16,10 +16,11 @@ def main():
   logFlag = args.log
   fileNameFlag = args.addFileName
   fileExtension = args.fileExt
+  maxLength = args.chopLength
   
   print('Commencing Squeakuences Cleanup')
   print('================================')
-  messagesForArgs(logFlag, fileNameFlag, fileExtension)
+  messagesForArgs(logFlag, fileNameFlag, fileExtension, maxLength)
   print('--------------------------------')
 
   inputType = resolveInput(inputPath)
@@ -122,8 +123,8 @@ def setupParser():
   parser.add_argument('-c', '--chopLength', metavar='maxLength', type=int, default = 70, required=False, help='When activated, Squeakuences will shorten sequence ids to be shorter than the user provided length.')  
   return parser
 
-def messagesForArgs(logFileFlag, fileNameFlag, extFlag):
-  if logFileFlag == fileNameFlag == False and extFlag == ['.fa*']:
+def messagesForArgs(logFileFlag, fileNameFlag, extFlag, maxLength):
+  if logFileFlag == fileNameFlag == False and extFlag == ['.fa*'] and maxLength ==70:
     print('No flags detected in command.')
   else:
     if fileNameFlag is True:
@@ -132,6 +133,8 @@ def messagesForArgs(logFileFlag, fileNameFlag, extFlag):
       print('You\'ve activated the -l flag.\nA log file with information about each fasta file processed will be written in the output directory.')
     if extFlag != ['.fa*']:
       print('You\'ve activated the -e flag.\nFiles with the ' + str(extFlag) + ' extension will be collected for cleaning.')
+    if maxLength != 70:
+      print('You\'ve activated the -c flag.\nSequence ids will be shortened to be less than ' +str(maxLength)+ ' characters.')
 
 #####################################################
 # RESOLVE USER INPUT                                #
