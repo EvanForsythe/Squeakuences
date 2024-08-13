@@ -34,6 +34,7 @@ def main():
 
 def multiPlot(df, outputPath):
   mpl.rcParams['pdf.fonttype'] = 42
+  mpl.rcParams['font.size'] = 12
   fig, ax = plt.subplots(2, 3, figsize=(24,12))
 
   #Seq vs StartedMb
@@ -111,7 +112,7 @@ def multiPlot(df, outputPath):
 
   #fig.suptitle('HG38 Performance Analysis', fontsize=20)
   fig.tight_layout(pad=1.5, w_pad=1.5, h_pad=1.5)
-  plt.savefig(outputPath + '/multiplot_2X3_RD.pdf', format = 'pdf', transparent = True) 
+  plt.savefig(outputPath + '/multiplot_2X3_RD_LargerFont.pdf', format = 'pdf', transparent = True) 
 
 def multiPlotTwo(df, outputPath):
   fig, ax = plt.subplots(2, 2, figsize=(12,12))
