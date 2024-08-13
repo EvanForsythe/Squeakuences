@@ -119,6 +119,7 @@ def setupParser():
   parser.add_argument('-l', '--log', help='When activated, Squeakuences will generate a log file with processing info from each fasta file cleaned.', required=False, action='store_true')
   parser.add_argument('-f', '--addFileName', help='When activated, Squeakuences will add the file name to the beginning of all sequences cleaned.', required=False, action='store_true')
   parser.add_argument('-e', '--fileExt', metavar='.ext', default = ['.fa*'], required=False, nargs='+', help='When activated, Squeakuences will collect files with the provided extension(s). To collect files with multiple extensions, simply list them behind each other such as ".fa .fna". Include the dot in your argument, such as ".fna"')  
+  parser.add_argument('-c', '--chopLength', metavar='maxLength', type=int, default = 70, required=False, help='When activated, Squeakuences will shorten sequence ids to be shorter than the user provided length.')  
   return parser
 
 def messagesForArgs(logFileFlag, fileNameFlag, extFlag):
