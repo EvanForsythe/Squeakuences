@@ -45,13 +45,13 @@ def main():
       checkExistingLogFile(logPath)
     
     for file in toProcess:
-      squeakify(file, ouputPath, logFlag, logPath, fileNameFlag)
+      squeakify(file, ouputPath, logFlag, logPath, fileNameFlag, maxLength)
       print('--------------------------------')
 
     print('Ta-da! Squeaky clean sequence ids!')
     #print('New squeaky clean files and other output files can be found in: ' + outputPath)
 
-def squeakify(file, write, logFlag, logPath, fileNameFlag):
+def squeakify(file, write, logFlag, logPath, fileNameFlag, maxLength):
   if logFlag is True:
     logData = {}
     startLog(logData, file)  
@@ -81,11 +81,11 @@ def squeakify(file, write, logFlag, logPath, fileNameFlag):
       endId = removeNonAlphanumeric(endId)
       if fileNameFlag is True:
         endId = attachFileName(endId, faFileName)
-      endId = chop(endId)
+      endId = chop(endId, maxLength)
       
       if checkForDuplicates(endId, idDict):
         startId, endId = resolveDuplicate(startId, endId, idDuplicatesList)
-        endId = chop(endId)
+        endId = chop(endId, maxLength)
         
       idDict.update({startId: endId})
 
@@ -267,7 +267,7 @@ def attachFileName(sequenceId, attachFileName):
     modifiedId = attachFileName + '_' + sequenceId
   return modifiedId
     
-def chop(sequenceId, max = 70):
+def chop(sequenceId, max):
   length = len(sequenceId)
 
   if length < max:
