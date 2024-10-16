@@ -27,13 +27,13 @@ def runParser():
 
   return parser.parse_args()
 
-def messagesForArgs(logFileFlag, fileNameFlag, extFlag):
-  if logFileFlag == fileNameFlag == False and extFlag == ['.fa*']:
+def messagesForArgs(argsDict):
+  if argsDict['log'] == argsDict['addFileName'] == False and argsDict['fileExt'] == ['.fa*']:
     print('No flags detected in command.')
   else:
-    if fileNameFlag is True:
+    if argsDict['addFileName'] is True:
       print('You\'ve activated the -f flag.\nThe file name will be inserted at the beginning of all sequences cleaned.')
-    if logFileFlag is True:
+    if argsDict['log'] is True:
       print('You\'ve activated the -l flag.\nA log file with information about each fasta file processed will be written in the output directory.')
-    if extFlag != ['.fa*']:
-      print('You\'ve activated the -e flag.\nFiles with the ' + str(extFlag) + ' extension will be collected for cleaning.')
+    if argsDict['fileExt'] != ['.fa*']:
+      print('You\'ve activated the -e flag.\nFiles with the ' + str(argsDict['fileExt']) + ' extension(s) will be collected for cleaning.')
