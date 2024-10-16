@@ -1,4 +1,5 @@
 import argparse
+import os
 
 def runParser():
   parser = argparse.ArgumentParser()
@@ -37,4 +38,12 @@ def messagesForArgs(argsDict):
       print('You\'ve activated the -f flag.\nThe file name will be inserted at the beginning of all sequences cleaned.')
     if argsDict['log'] is True:
       print('You\'ve activated the -l flag.\nA log file with information about each fasta file processed will be written in the output directory.')
-    
+
+def resolveInputType(userInput):
+  if os.path.isfile(userInput):
+    fileType = 'file'
+  elif os.path.isdir(userInput):
+    fileType = 'directory'
+  else:
+    fileType = 'non-path'
+  return fileType
