@@ -7,12 +7,6 @@ import glob
 import time
 from datetime import timedelta
 import tracemalloc
-
-# TODO: decide what we want our output to look like
-# TODO: do we need a separate remove non-alphanumeric function?
-# TODO: add arguments such as max length, allow underscores, species name, custom replace characters, custom regex. 
-# TODO: Make sure all arguements have defaults
-# TODO: make sure chop can't return ___ only
   
 def main():
   parser = setupParser()
@@ -35,7 +29,7 @@ def main():
   if toProcess == []:
     print('--------------------------------')
     print('Squeakuences did not find any files with the ' + str(fileExtension) + ' extension at the input location.')
-    print('If this is unexpected, please check your command and try again.')
+    print('Please check your command and try again.')
     print('Exiting Squeakuences run now.')
 
   else:
