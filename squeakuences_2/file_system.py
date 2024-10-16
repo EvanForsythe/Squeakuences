@@ -15,3 +15,9 @@ def compileSqueakifyList(type, argsDict):
     toSqueakify[index] = os.path.abspath(file)
   toSqueakify.sort()
   return toSqueakify
+
+def getFileNames(inputList):
+  faNameExtList = []
+  for filePath in inputList:
+    faNameExtList.append(filePath.split('/')[-1])
+  return faNameExtList
