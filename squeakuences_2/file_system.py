@@ -21,3 +21,16 @@ def getFileNames(inputList):
   for filePath in inputList:
     faNameExtList.append(filePath.split('/')[-1])
   return faNameExtList
+
+def checkExistingOutputPath(ouputDirectoryPath):
+  if not os.path.isdir(ouputDirectoryPath):
+    os.mkdir(ouputDirectoryPath)
+    print('The provided output path does not lead to an existing directory.')
+    print('A directory was created at: ' + os.path.abspath(ouputDirectoryPath))
+    print('Squeakuences files will be written in this new directory.')
+    print('--------------------------------')
+  else:
+    print('Output directory found!')
+    print('Squeakuences files will be written in the provided directory.')
+    print('--------------------------------')
+  return ouputDirectoryPath

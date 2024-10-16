@@ -33,3 +33,5 @@ if squeakifyList == []:
 fileNameList = file_system.getFileNames(squeakifyList)
 print('The following file(s) will be cleaned: ' + str(fileNameList))
 print('--------------------------------')
+
+ouputPath = file_system.checkExistingOutputPath(argsDict['output'])
