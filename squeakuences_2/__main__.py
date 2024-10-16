@@ -1,5 +1,6 @@
 import sys
 import cli
+import file_system
 
 #Parse user input from the command line
 args = cli.runParser()
@@ -19,4 +20,5 @@ if inputType == 'non-path':
   
 print('You\'ve input a ' + inputType + '.')
 
+squeakifyList = file_system.compileSqueakifyList(inputType, argsDict)
 
