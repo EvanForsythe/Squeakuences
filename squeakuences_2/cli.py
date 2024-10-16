@@ -14,26 +14,27 @@ def runParser():
     This can be the full path or relative to the squeakuences.py file location.
     If this directory path does not exist at runtime, Squeakuences will create it for you.''')
 
-  parser.add_argument('-l', '--log', action='store_true', default = False, required=False,
-    help='When activated, Squeakuences will generate a log file with processing info from each fasta file cleaned.')
-  
-  parser.add_argument('-f', '--addFileName', action='store_true', default = False, required=False,
-    help='When activated, Squeakuences will add the file name to the beginning of all sequences cleaned.')
-  
   parser.add_argument('-e', '--fileExt', nargs='*', default = ['.fa*'], required=False, metavar='.ext',
     help='''When activated, Squeakuences will collect files with the provided extension(s). 
     To collect files with multiple extensions, simply list them behind each other such as ".fa .fna". 
-    Include the dot in your argument, such as ".fna"''')  
+    Include the dot in your argument, such as ".fna"''') 
 
+  parser.add_argument('-f', '--addFileName', action='store_true', default = False, required=False,
+    help='When activated, Squeakuences will add the file name to the beginning of all sequences cleaned.') 
+  
+  parser.add_argument('-l', '--log', action='store_true', default = False, required=False,
+    help='When activated, Squeakuences will generate a log file with processing info from each fasta file cleaned.')
+  
   return parser.parse_args()
 
 def messagesForArgs(argsDict):
   if argsDict['log'] == argsDict['addFileName'] == False and argsDict['fileExt'] == ['.fa*']:
     print('No flags detected in command.')
   else:
+    if argsDict['fileExt'] != ['.fa*']:
+      print('You\'ve activated the -e flag.\nFiles with the ' + str(argsDict['fileExt']) + ' extension(s) will be collected for cleaning.')
     if argsDict['addFileName'] is True:
       print('You\'ve activated the -f flag.\nThe file name will be inserted at the beginning of all sequences cleaned.')
     if argsDict['log'] is True:
       print('You\'ve activated the -l flag.\nA log file with information about each fasta file processed will be written in the output directory.')
-    if argsDict['fileExt'] != ['.fa*']:
-      print('You\'ve activated the -e flag.\nFiles with the ' + str(argsDict['fileExt']) + ' extension(s) will be collected for cleaning.')
+    

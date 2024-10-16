@@ -7,7 +7,6 @@ argsDict = vars(args)
 
 print('Commencing Squeakuences Cleanup')
 print('================================')
-print(argsDict)
 cli.messagesForArgs(argsDict)
 print('--------------------------------')
 
