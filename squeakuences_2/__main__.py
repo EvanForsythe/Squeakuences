@@ -1,6 +1,7 @@
 import sys
 import cli
 import file_system
+import squeaky_file
 
 #Parse user input from the command line
 args = cli.runParser()
@@ -39,3 +40,10 @@ verifiedOuputPath = file_system.checkExistingOutputPath(argsDict['output'])
 logPath = verifiedOuputPath + '/log.tsv'
 if argsDict['log'] is True:
   file_system.checkExistingLogFile(logPath)
+
+for file in squeakifyList:
+  squeaky_file.generate(file, argsDict)
+  print('--------------------------------')
+
+print('Ta-da! Squeaky clean sequence ids!')
+#print('New squeaky clean files and other output files can be found in: ' + outputPath)

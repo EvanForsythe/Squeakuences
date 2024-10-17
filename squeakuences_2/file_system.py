@@ -47,3 +47,19 @@ def checkExistingLogFile(logPath):
     print('An existing log file was not detected.')
     print('A new log file was created at: ' + os.path.abspath(logPath))
     print('--------------------------------')
+
+def loadMessyFile(file):
+  try: 
+    messyFastaHandle = open(file, 'r')
+  except:
+    print('Squeakuences was unable to open ' + str(file) +'.')
+    print('')
+  else:
+    return messyFastaHandle
+  
+def fileNameWithExt(file):
+  return os.path.basename(file)
+
+def fileNameOnly(file):
+  faFileNameExt = fileNameWithExt(file)
+  return os.path.splitext(faFileNameExt)[0]
