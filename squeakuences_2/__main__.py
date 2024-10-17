@@ -6,7 +6,7 @@ import file_system
 args = cli.runParser()
 #Generate dictionary of flags parsed in cli.py
 argsDict = vars(args)
-
+print('================================')
 print('Commencing Squeakuences Cleanup')
 print('================================')
 cli.messagesForArgs(argsDict)
@@ -34,4 +34,8 @@ fileNameList = file_system.getFileNames(squeakifyList)
 print('The following file(s) will be cleaned: ' + str(fileNameList))
 print('--------------------------------')
 
-existingOuputPath = file_system.checkExistingOutputPath(argsDict['output'])
+verifiedOuputPath = file_system.checkExistingOutputPath(argsDict['output'])
+
+logPath = verifiedOuputPath + '/log.tsv'
+if argsDict['log'] is True:
+  file_system.checkExistingLogFile(logPath)

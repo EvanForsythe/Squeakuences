@@ -1,5 +1,6 @@
 import glob
 import os
+import log
 
 def compileSqueakifyList(type, argsDict):
   toSqueakify = []
@@ -34,3 +35,15 @@ def checkExistingOutputPath(ouputDirectoryPath):
     print('Squeakuences files will be written in the provided directory.')
     print('--------------------------------')
   return ouputDirectoryPath
+
+def checkExistingLogFile(logPath):
+  if os.path.exists(logPath):
+    print('Existing log file detected.')
+    print('Processing information from fasta files cleaned in this run will be appended to this file.')
+    print('--------------------------------')
+
+  if not os.path.exists(logPath):
+    log.createLogFile(logPath)
+    print('An existing log file was not detected.')
+    print('A new log file was created at: ' + os.path.abspath(logPath))
+    print('--------------------------------')
