@@ -14,3 +14,10 @@ def generate(file, argsDict):
 
   messyFastaHandle = file_system.loadMessyFile(file)
   print('Now processing ' + file_system.fileNameWithExt(file))
+
+
+  currentFaFileName = file_system.fileNameOnly(file)
+  squeakyPath = argsDict['output'] + '/' + currentFaFileName + '_squeak.fa'
+  squeakyDictPath = argsDict['output'] + '/' + currentFaFileName + '_modSeqs.tsv'
+
+  file_system.removeExistingSqueakyFiles(squeakyDictPath, squeakyPath)

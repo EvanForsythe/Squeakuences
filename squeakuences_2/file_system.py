@@ -63,3 +63,12 @@ def fileNameWithExt(file):
 def fileNameOnly(file):
   faFileNameExt = fileNameWithExt(file)
   return os.path.splitext(faFileNameExt)[0]
+
+def removeExistingSqueakyFiles(squeakyDictPath, squeakyPath):
+  if os.path.exists(squeakyDictPath):
+    os.remove(squeakyDictPath)
+    print('Existing squeaky dictionary file deleted.')
+
+  if os.path.exists(squeakyPath):
+    os.remove(squeakyPath)
+    print('Existing squeaky fa file deleted.')
