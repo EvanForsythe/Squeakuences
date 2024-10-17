@@ -1,4 +1,3 @@
-import sys
 import cli
 import file_system
 import squeaky_file
