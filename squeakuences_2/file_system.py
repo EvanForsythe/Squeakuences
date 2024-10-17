@@ -1,6 +1,7 @@
 import glob
 import os
 import log
+import sys
 
 def compileSqueakifyList(type, argsDict):
   toSqueakify = []
@@ -21,6 +22,8 @@ def getFileNames(inputList):
   faNameExtList = []
   for filePath in inputList:
     faNameExtList.append(filePath.split('/')[-1])
+  print('The following file(s) will be cleaned: ' + str(faNameExtList))
+  print('--------------------------------')
   return faNameExtList
 
 def checkExistingOutputPath(ouputDirectoryPath):
@@ -47,6 +50,7 @@ def checkExistingLogFile(logPath):
     print('An existing log file was not detected.')
     print('A new log file was created at: ' + os.path.abspath(logPath))
     print('--------------------------------')
+  return logPath
 
 def loadMessyFile(file):
   try: 
@@ -72,3 +76,11 @@ def removeExistingSqueakyFiles(squeakyDictPath, squeakyPath):
   if os.path.exists(squeakyPath):
     os.remove(squeakyPath)
     print('Existing squeaky fa file deleted.')
+
+def checkEmptySqueakifyList(squeakifyList, ext):
+  if squeakifyList == []:
+    print('--------------------------------')
+    print('Squeakuences did not find any files with the ' + str(ext) + ' extension at the input directory location.')
+    print('Please check your command and try again.')
+    print('Exiting Squeakuences run now.')
+    sys.exit()

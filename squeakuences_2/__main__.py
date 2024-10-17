@@ -10,40 +10,35 @@ argsDict = vars(args)
 print('================================')
 print('Commencing Squeakuences Cleanup')
 print('================================')
+#Print message confirming user arguments to command line
 cli.messagesForArgs(argsDict)
-print('--------------------------------')
 
+#Check that user input is a path like string otherwise exit
 inputType = cli.resolveInputType(argsDict['input'])
-
-if inputType == 'non-path':
-  print('You\'ve passed a non-path string into the input flag. Please review your input and try again.')
-  print('Exiting Squeakuences run now.')
-  sys.exit()
+cli.checkValidInput(inputType)
   
-print('You\'ve input a ' + inputType + '.')
-
+#Collect file(s) to be cleaned  
 squeakifyList = file_system.compileSqueakifyList(inputType, argsDict)
+#Check if list is empty and exit if empty
+file_system.checkEmptySqueakifyList(squeakifyList, argsDict['fileExt'])
 
-if squeakifyList == []:
-  print('--------------------------------')
-  print('Squeakuences did not find any files with the ' + str(argsDict['fileExt']) + ' extension at the input directory location.')
-  print('Please check your command and try again.')
-  print('Exiting Squeakuences run now.')
-  sys.exit()
-
+#Get names of fasta files to be cleaned
 fileNameList = file_system.getFileNames(squeakifyList)
-print('The following file(s) will be cleaned: ' + str(fileNameList))
-print('--------------------------------')
 
+#Verify path to user defined ouput directory exists and create directory if not found
 verifiedOuputPath = file_system.checkExistingOutputPath(argsDict['output'])
 
-logPath = verifiedOuputPath + '/log.tsv'
+#Create log file if flag is true and no existing log file exists at path location. 
+#Otherwise, create log file at logPath location
 if argsDict['log'] is True:
-  file_system.checkExistingLogFile(logPath)
+  logPath = file_system.checkExistingLogFile(verifiedOuputPath + '/log.tsv')
 
+#Clean each fasta file collected and generate a squeaky clean version
+'''
 for file in squeakifyList:
   squeaky_file.generate(file, argsDict)
   print('--------------------------------')
+'''
 
 print('Ta-da! Squeaky clean sequence ids!')
 #print('New squeaky clean files and other output files can be found in: ' + outputPath)

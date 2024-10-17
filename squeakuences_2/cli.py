@@ -1,5 +1,6 @@
 import argparse
 import os
+import sys
 
 def runParser():
   parser = argparse.ArgumentParser()
@@ -38,6 +39,8 @@ def messagesForArgs(argsDict):
       print('You\'ve activated the -f flag.\nThe file name will be inserted at the beginning of all sequences cleaned.')
     if argsDict['log'] is True:
       print('You\'ve activated the -l flag.\nA log file with information about each fasta file processed will be written in the output directory.')
+  print('--------------------------------')
+
 
 def resolveInputType(userInput):
   if os.path.isfile(userInput):
@@ -47,3 +50,11 @@ def resolveInputType(userInput):
   else:
     fileType = 'non-path'
   return fileType
+
+def checkValidInput(inputType):
+  if inputType == 'non-path':
+    print('You\'ve passed a non-path string into the input flag. Please review your input and try again.')
+    print('Exiting Squeakuences run now.')
+    sys.exit()
+  else:
+    print('You\'ve input a ' + inputType + '.')
