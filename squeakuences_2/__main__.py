@@ -6,22 +6,23 @@ import squeaky_file
 args = cli.runParser()
 #Generate dictionary of flags parsed in cli.py
 argsDict = vars(args)
+
 print('================================')
 print('Commencing Squeakuences Cleanup')
 print('================================')
 #Print message confirming user arguments to command line
 cli.messagesForArgs(argsDict)
 
-#Check that user input is a path like string otherwise exit
+#Determine if input is a valid path like string that leads to a single file or directory
+#Exits if input is not a valid path
 inputType = cli.resolveInputType(argsDict['input'])
-cli.checkValidInput(inputType)
   
 #Collect file(s) to be cleaned  
 squeakifyList = file_system.compileSqueakifyList(inputType, argsDict)
 #Check if list is empty and exit if empty
 file_system.checkEmptySqueakifyList(squeakifyList, argsDict['fileExt'])
 
-#Get names of fasta files to be cleaned
+#Get names of fasta files to be cleaned and print to command line
 fileNameList = file_system.getFileNames(squeakifyList)
 
 #Verify path to user defined ouput directory exists and create directory if not found

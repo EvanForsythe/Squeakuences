@@ -48,13 +48,12 @@ def resolveInputType(userInput):
   elif os.path.isdir(userInput):
     fileType = 'directory'
   else:
-    fileType = 'non-path'
+    invalidInput()
+
+  print('You\'ve input a ' + fileType + '.')
   return fileType
 
-def checkValidInput(inputType):
-  if inputType == 'non-path':
+def invalidInput():
     print('You\'ve passed a non-path string into the input flag. Please review your input and try again.')
     print('Exiting Squeakuences run now.')
     sys.exit()
-  else:
-    print('You\'ve input a ' + inputType + '.')
