@@ -13,7 +13,7 @@ print('================================')
 #Print message confirming user arguments to command line
 cli.messagesForArgs(argsDict)
 
-#Determine if input is a valid path like string that leads to a single file or directory
+#Determine if input is a valid path like string that leads to a file or directory
 #Exits if input is not a valid path
 inputType = cli.resolveInputType(argsDict['input'])
   
@@ -21,7 +21,6 @@ inputType = cli.resolveInputType(argsDict['input'])
 squeakifyList = file_system.compileSqueakifyList(inputType, argsDict)
 #Check if list is empty and exit if empty
 file_system.checkEmptySqueakifyList(squeakifyList, argsDict['fileExt'])
-
 #Get names of fasta files to be cleaned and print to command line
 fileNameList = file_system.getFileNames(squeakifyList)
 
