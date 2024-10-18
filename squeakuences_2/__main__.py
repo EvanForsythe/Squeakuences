@@ -1,6 +1,7 @@
 import cli
 import file_system
 import squeaky_file
+import preview
 
 #Parse user input from the command line
 args = cli.runParser()
@@ -10,33 +11,37 @@ argsDict = vars(args)
 print('================================')
 print('Commencing Squeakuences Cleanup')
 print('================================')
-#Print message confirming user arguments to command line
-cli.messagesForArgs(argsDict)
-
-#Determine if input is a valid path like string that leads to a file or directory
-#Exits if input is not a valid path
-inputType = cli.resolveInputType(argsDict['input'])
+if argsDict['preview'] is True:
+  preview.generatePreview()
   
-#Collect file(s) to be cleaned  
-squeakifyList = file_system.compileSqueakifyList(inputType, argsDict)
-#Check if list is empty and exit if empty
-file_system.checkEmptySqueakifyList(squeakifyList, argsDict['fileExt'])
-#Get names of fasta files to be cleaned and print to command line
-fileNameList = file_system.getFileNames(squeakifyList)
+else: 
+  #Print message confirming user arguments to command line
+  cli.messagesForArgs(argsDict)
 
-#Verify path to user defined ouput directory exists and create directory if not found
-verifiedOuputPath = file_system.checkExistingOutputPath(argsDict['output'])
+  #Determine if input is a valid path like string that leads to a file or directory
+  #Exits if input is not a valid path
+  inputType = cli.resolveInputType(argsDict['input'])
+    
+  #Collect file(s) to be cleaned  
+  squeakifyList = file_system.compileSqueakifyList(inputType, argsDict)
+  #Check if list is empty and exit if empty
+  file_system.checkEmptySqueakifyList(squeakifyList, argsDict['fileExt'])
+  #Get names of fasta files to be cleaned and print to command line
+  fileNameList = file_system.getFileNames(squeakifyList)
 
-#Create log file if flag is true and no existing log file exists at path location. 
-#Otherwise, create log file at logPath location
-if argsDict['log'] is True:
-  logPath = file_system.checkExistingLogFile(verifiedOuputPath + '/log.tsv')
-  argsDict.update({'logPath': logPath}) 
+  #Verify path to user defined ouput directory exists and create directory if not found
+  verifiedOuputPath = file_system.checkExistingOutputPath(argsDict['output'])
 
-#Clean each fasta file collected and generate a squeaky clean version
-for file in squeakifyList:
-  squeaky_file.generate(file, argsDict)
-  print('--------------------------------')
+  #Create log file if flag is true and no existing log file exists at path location. 
+  #Otherwise, create log file at logPath location
+  if argsDict['log'] is True:
+    logPath = file_system.checkExistingLogFile(verifiedOuputPath + '/log.tsv')
+    argsDict.update({'logPath': logPath}) 
 
-print('Ta-da! Squeaky clean sequence ids!')
-#print('New squeaky clean files and other output files can be found in: ' + outputPath)
+  #Clean each fasta file collected and generate a squeaky clean version
+  for file in squeakifyList:
+    squeaky_file.generate(file, argsDict)
+    print('--------------------------------')
+
+  print('Ta-da! Squeaky clean sequence ids!')
+  #print('New squeaky clean files and other output files can be found in: ' + outputPath)
