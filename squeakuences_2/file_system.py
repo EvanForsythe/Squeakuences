@@ -2,6 +2,7 @@ import glob
 import os
 import log
 import sys
+import csv
 
 def compileSqueakifyList(type, argsDict):
   toSqueakify = []
@@ -46,7 +47,7 @@ def checkExistingLogFile(logPath):
     print('--------------------------------')
 
   if not os.path.exists(logPath):
-    log.createLogFile(logPath)
+    createLogFile(logPath)
     print('An existing log file was not detected.')
     print('A new log file was created at: ' + os.path.abspath(logPath))
     print('--------------------------------')
@@ -84,3 +85,29 @@ def checkEmptySqueakifyList(squeakifyList, ext):
     print('Please check your command and try again.')
     print('Exiting Squeakuences run now.')
     sys.exit()
+
+def writeNewFaFile(newFilePath, cleanedLinesList):
+  f = open(newFilePath, 'w')
+  f.writelines(cleanedLinesList)
+  f.close()
+  
+def writeModIdFile(faFileName, idDictInput):
+  fileExtension = os.path.splitext(faFileName)
+  newFileName = fileExtension[0] + '_modSeqs.tsv'
+  
+  with open(newFileName, 'w') as tsvfile:
+    writer = csv.writer(tsvfile, delimiter='\t')
+    for k, v in idDictInput.items():
+      writer.writerow([k, v])
+  tsvfile.close()
+
+def createLogFile(logPath):
+  with open(logPath, 'a') as file:
+    file.write('File Name\tProcessing Time (Hours: Minutes: Seconds)\tMemory (peak size of memory blocks traced in MB)\tStarting File Size (MB)\tEnding File Size (MB)\tNumber of sequences cleaned\n')
+  file.close()
+
+def writeLogFile(logDataDict, logPath, processedIdCount):
+  with open(logPath, 'a') as file:
+    file.write(logDataDict['file_name'] + '\t' + logDataDict['duration'] + '\t' + 
+               str(logDataDict['memory']) + '\t' + str(logDataDict['start_file_size']) + '\t' + str(logDataDict['end_file_size']) + '\t' + str(processedIdCount) + '\n')
+  file.close()
