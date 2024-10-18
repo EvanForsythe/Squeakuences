@@ -34,7 +34,7 @@ def runParser():
     help='When activated, Squeakuences will set the maximum character length of cleaned sequence ids to this integer.')
   
   parser.add_argument('-p', '--preview', action='store_true', default = False, required=False,
-    help='When activated, Squeakuences will generate a preview of squeakuences output for the top 10 sequence ids in a file.')
+    help='When activated, Squeakuences will generate a preview of squeakuences output from the top of the input file.')
   
   return parser.parse_args()
 

@@ -3,15 +3,15 @@ import squeakify
 
 def generatePreview(argsDict):
   print('Preview mode activated!')
-  sequenceIdCount = 0
 
   messyFastaHandle = file_system.loadMessyFile(argsDict['input'])
 
-  for line in messyFastaHandle:
+  for linecount in range(30):
+    line = next(messyFastaHandle).strip()
     if line.startswith('>'):
-      sequenceIdCount += 1
       sequenceID = squeakify.stripSequenceID(line)
 
       cleanSequenceId = squeakify.squeakify(sequenceID, argsDict)
 
       print(cleanSequenceId)
+    linecount += 1
