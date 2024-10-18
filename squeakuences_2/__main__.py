@@ -12,8 +12,8 @@ print('================================')
 print('Commencing Squeakuences Cleanup')
 print('================================')
 if argsDict['preview'] is True:
-  preview.generatePreview()
-  
+  preview.generatePreview(argsDict)
+
 else: 
   #Print message confirming user arguments to command line
   cli.messagesForArgs(argsDict)
