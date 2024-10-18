@@ -26,7 +26,7 @@ def generate(file, argsDict):
 
   for line in messyFastaHandle:
     if line.startswith('>'):
-      squeakify.squeakify(line)
+      squeakify.squeakify(line, argsDict)
     else:
       print('write line')
 
