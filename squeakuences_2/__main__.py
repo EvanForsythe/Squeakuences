@@ -31,13 +31,12 @@ verifiedOuputPath = file_system.checkExistingOutputPath(argsDict['output'])
 #Otherwise, create log file at logPath location
 if argsDict['log'] is True:
   logPath = file_system.checkExistingLogFile(verifiedOuputPath + '/log.tsv')
+  argsDict.update({'logPath': logPath}) 
 
 #Clean each fasta file collected and generate a squeaky clean version
-'''
 for file in squeakifyList:
   squeaky_file.generate(file, argsDict)
   print('--------------------------------')
-'''
 
 print('Ta-da! Squeaky clean sequence ids!')
 #print('New squeaky clean files and other output files can be found in: ' + outputPath)
