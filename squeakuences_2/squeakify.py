@@ -1,40 +1,20 @@
 import re
 
 def squeakify(sequenceID, argsFlags):
-  print("Original:\n")
-  print(sequenceID)
-  print()
+  sequenceID = stripSequenceID(sequenceID)
 
-  print("Number of whitespace characters")
-  print(checkWhiteSpace(sequenceID))
-  print()
+  checkWhiteSpace(sequenceID)
 
   endID = camelCase(sequenceID)
-  print("Camel Case:\n")
-  print(endID)
-  print()
-
+  
   endID = removeNonAlphanumeric(endID)
-  print("Remove Nonalphanumeric:\n")
-  print(endID)
-  print()
-
+  
   if argsFlags['fileNameFlag'] is True:
     endID = attachFileName(endID, argsFlags['faFileName'])
-    print("Attach File Name:\n")
-    print(endID)
-    print()
-
+    
   endID = chopWords(endID, argsFlags['chopMax'])
-  print("Chop Output:\n")
-  print(endID)
-  print()
 
   endID = removeSpaces(endID)
-  print("Remove Whitespace:\n")
-  print(endID)
-  print("-------------------------------------------------------------------------------------")
-  print()
 
 def stripSequenceID(line):
   line = line.strip('>')
