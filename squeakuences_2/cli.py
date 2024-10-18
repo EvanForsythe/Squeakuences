@@ -30,7 +30,7 @@ def runParser():
   parser.add_argument('-l', '--log', action='store_true', default = False, required=False,
     help='When activated, Squeakuences will generate a log file with processing info from each fasta file cleaned.')
   
-  parser.add_argument('-m', '--chopMax', action='store', default = 70, type = int, required=False,
+  parser.add_argument('-m', '--chopMax', action='store', default = 70, type = int, required=False, metavar='integer',
     help='When activated, Squeakuences will set the maximum character length of cleaned sequence ids to this integer.')
   
   return parser.parse_args()
