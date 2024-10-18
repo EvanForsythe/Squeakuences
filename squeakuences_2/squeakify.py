@@ -1,20 +1,20 @@
 import re
 
 def squeakify(sequenceID, argsFlags):
-  sequenceID = stripSequenceID(sequenceID)
-
   checkWhiteSpace(sequenceID)
 
   endID = camelCase(sequenceID)
   
   endID = removeNonAlphanumeric(endID)
   
-  if argsFlags['fileNameFlag'] is True:
-    endID = attachFileName(endID, argsFlags['faFileName'])
+  if argsFlags['addFileName'] is True:
+    endID = attachFileName(endID, argsFlags['addFileName'])
     
-  endID = chopWords(endID, argsFlags['chopMax'])
+  endID = checkLength(endID, argsFlags['chopMax'], argsFlags['chopMethod'])
 
   endID = removeSpaces(endID)
+
+  return endID
 
 def stripSequenceID(line):
   line = line.strip('>')
@@ -55,39 +55,37 @@ def attachFileName(sequenceID, attachFileName):
   else:
     modifiedID = attachFileName + '_' + sequenceID
   return modifiedID
+
+def checkLength(sequenceID, max, method):
+  choppedSeqID = ''
+  if method == 'words':
+    choppedSeqID = chopWords(sequenceID, max)
+  if method == 'chars':
+    choppedSeqID = chopChars(sequenceID, max)
+  return choppedSeqID
+
     
-def chopWords(sequenceID, max = 70):
+def chopWords(sequenceID, max):
   length = len(sequenceID)
-  print("Start Chop: " + sequenceID)
 
   if length < max:
     return sequenceID
   else:
-    #sequenceID = re.sub(r'___', 'temp', sequenceID)
     nameComponents = []
     nameComponents = re.findall(r'[A-Za-z0-9_]+|[\s]', sequenceID)
-    print("ID components:")
-    print(nameComponents)
     middle = len(nameComponents) // 2
     del nameComponents[middle:middle+2]
     nameComponents.insert(middle, '___')
     newName = ''.join(nameComponents)
-    print("End Chop:")
-    print(newName)
-    print()
     return chopWords(newName, max)
   
-def chopChars(sequenceID, max = 70):
+def chopChars(sequenceID, max):
   length = len(sequenceID)
   difference = length - max
-  print("Start Chop: " + sequenceID)
   sequenceID  = removeSpaces(sequenceID)
   middle = length // 2
   buffer = difference // 2
   spliceIndexLeft = middle - buffer
   spliceIndexRight = middle + buffer
   choppedSeqID = sequenceID[:spliceIndexLeft] + '___' + sequenceID[spliceIndexRight:]
-  print("End Chop:")
-  print(choppedSeqID)
-  print()
   return choppedSeqID
