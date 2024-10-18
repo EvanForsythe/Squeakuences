@@ -16,8 +16,8 @@ def runParser():
     This can be the full path or relative to the squeakuences.py file location.
     If this directory path does not exist at runtime, Squeakuences will create it for you.''')
   
-  parser.add_argument('-m', '--chopMax', action='store', default = 70, type = int, required=False,
-    help='When activated, Squeakuences will set the maximum character length of cleaned sequence ids to this integer.')
+  parser.add_argument('-c', '--chopMethod', action='store', default = 'words', choices=['words', 'chars'], required=False,
+    help='When activated, Squeakuences will use the specified shortening method.')
 
   parser.add_argument('-e', '--fileExt', nargs='*', default = ['.fa*'], required=False, metavar='.ext',
     help='''When activated, Squeakuences will collect files with the provided extension(s). 
@@ -30,20 +30,25 @@ def runParser():
   parser.add_argument('-l', '--log', action='store_true', default = False, required=False,
     help='When activated, Squeakuences will generate a log file with processing info from each fasta file cleaned.')
   
+  parser.add_argument('-m', '--chopMax', action='store', default = 70, type = int, required=False,
+    help='When activated, Squeakuences will set the maximum character length of cleaned sequence ids to this integer.')
+  
   return parser.parse_args()
 
 def messagesForArgs(argsDict):
-  if argsDict['log'] == argsDict['addFileName'] == False and argsDict['fileExt'] == ['.fa*'] and argsDict['chopMax'] == 70:
+  if argsDict['log'] == argsDict['addFileName'] == False and argsDict['fileExt'] == ['.fa*'] and argsDict['chopMax'] == 70 and argsDict['chopMethod'] == 'words':
     print('No flags detected in command.')
   else:
-    if argsDict['chopMax'] != 70:
-      print('You\'ve activated the -m flag.\nThe maximum character length of cleaned sequence ids is set to ' + argsDict['chopMax'] + '.')
+    if argsDict['chopMethod'] != 'words':
+      print('You\'ve activated the -c flag.\nSqueakuences will shorten sequence ids with the '+ argsDict['chopMethod']+ ' method.')
     if argsDict['fileExt'] != ['.fa*']:
       print('You\'ve activated the -e flag.\nFiles with the ' + str(argsDict['fileExt']) + ' extension(s) will be collected for cleaning.')
     if argsDict['addFileName'] is True:
       print('You\'ve activated the -f flag.\nThe file name will be inserted at the beginning of all sequences cleaned.')
     if argsDict['log'] is True:
       print('You\'ve activated the -l flag.\nA log file with information about each fasta file processed will be written in the output directory.')
+    if argsDict['chopMax'] != 70:
+      print('You\'ve activated the -m flag.\nThe maximum character length of cleaned sequence ids is set to ' + str(argsDict['chopMax']) + '.')
   print('--------------------------------')
 
 
