@@ -18,14 +18,3 @@ def endLog(logDataDict, faFileNameExt, squeakyFile):
   duration = timedelta(seconds=logDataDict['end_time'] - logDataDict['start_time'])
   logDataDict.update({'duration': str(duration)})
   return logDataDict
-
-def createLogFile(logPath):
-  with open(logPath, 'a') as file:
-    file.write('File Name\tProcessing Time (Hours: Minutes: Seconds)\tMemory (peak size of memory blocks traced in MB)\tStarting File Size (MB)\tEnding File Size (MB)\tNumber of sequences cleaned\n')
-  file.close()
-
-def writeLogFile(logDataDict, logPath, processedIdCount):
-  with open(logPath, 'a') as file:
-    file.write(logDataDict['file_name'] + '\t' + logDataDict['duration'] + '\t' + 
-               str(logDataDict['memory']) + '\t' + str(logDataDict['start_file_size']) + '\t' + str(logDataDict['end_file_size']) + '\t' + str(processedIdCount) + '\n')
-  file.close()
