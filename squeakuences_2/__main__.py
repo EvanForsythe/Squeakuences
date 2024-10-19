@@ -3,21 +3,25 @@ import file_system
 import squeaky_file
 import preview
 
+print('================================')
+print('Commencing Squeakuences Cleanup')
+print('================================')
+
 #Parse user input from the command line
 args = cli.runParser()
 #Generate dictionary of flags parsed in cli.py
 argsDict = vars(args)
+#Print message confirming user arguments to command line
+cli.messagesForArgs(argsDict)
+print('--------------------------------')
+#Set default values
+cli.setDefaults(argsDict)
+print(argsDict)
 
-print('================================')
-print('Commencing Squeakuences Cleanup')
-print('================================')
 if argsDict['preview'] is True:
   preview.generatePreview(argsDict)
 
 else: 
-  #Print message confirming user arguments to command line
-  cli.messagesForArgs(argsDict)
-
   #Determine if input is a valid path like string that leads to a file or directory
   #Exits if input is not a valid path
   inputType = cli.resolveInputType(argsDict['input'])

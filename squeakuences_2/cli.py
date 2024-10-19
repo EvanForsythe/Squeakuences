@@ -16,21 +16,21 @@ def runParser():
     This can be the full path or relative to the squeakuences.py file location.
     If this directory path does not exist at runtime, Squeakuences will create it for you.''')
   
-  parser.add_argument('-c', '--chopMethod', action='store', default = 'words', choices=['words', 'chars'], required=False,
+  parser.add_argument('-c', '--chopMethod', action='store', default = None, choices=['words', 'chars'], required=False,
     help='When activated, Squeakuences will use the specified shortening method.')
 
-  parser.add_argument('-e', '--fileExt', nargs='*', default = ['.fa*'], required=False, metavar='.ext',
+  parser.add_argument('-e', '--fileExt', nargs='*', default = None, required=False, metavar='.ext',
     help='''When activated, Squeakuences will collect files with the provided extension(s). 
     To collect files with multiple extensions, simply list them behind each other such as ".fa .fna". 
     Include the dot in your argument, such as ".fna"''') 
 
-  parser.add_argument('-f', '--addFileName', action='store_true', default = False, required=False,
+  parser.add_argument('-f', '--addFileName', action='store_true', default = None, required=False,
     help='When activated, Squeakuences will add the file name to the beginning of all sequences cleaned.') 
   
-  parser.add_argument('-l', '--log', action='store_true', default = False, required=False,
+  parser.add_argument('-l', '--log', action='store_true', default = None, required=False,
     help='When activated, Squeakuences will generate a log file with processing info from each fasta file cleaned.')
   
-  parser.add_argument('-m', '--chopMax', action='store', default = 70, type = int, required=False, metavar='integer',
+  parser.add_argument('-m', '--chopMax', action='store', default = None, type = int, required=False, metavar='integer',
     help='When activated, Squeakuences will set the maximum character length of cleaned sequence ids to this integer.')
   
   parser.add_argument('-p', '--preview', action='store_true', default = False, required=False,
@@ -38,21 +38,39 @@ def runParser():
   
   return parser.parse_args()
 
+def setDefaults(argsDict):
+  if argsDict['chopMethod'] is None:
+    argsDict.update({'chopMethod': 'words'})
+
+  if argsDict['fileExt'] is None:
+    argsDict.update({'fileExt': ['.fa*']})
+
+  if argsDict['addFileName'] is None:
+    argsDict.update({'addFileName': False})
+
+  if argsDict['log'] is None:
+    argsDict.update({'log': False})
+
+  if argsDict['chopMax'] is None:
+    argsDict.update({'chopMax': 70})
+
+  if argsDict['preview'] is None:
+    argsDict.update({'preview': False})
+
 def messagesForArgs(argsDict):
-  if argsDict['log'] == argsDict['addFileName'] == False and argsDict['fileExt'] == ['.fa*'] and argsDict['chopMax'] == 70 and argsDict['chopMethod'] == 'words':
+  if argsDict['chopMethod'] == argsDict['fileExt'] == argsDict['addFileName'] == argsDict['log'] == argsDict['chopMax'] == argsDict['preview'] == None:
     print('No flags detected in command.')
   else:
-    if argsDict['chopMethod'] != 'words':
+    if argsDict['chopMethod'] != None:
       print('You\'ve activated the -c flag.\nSqueakuences will shorten sequence ids with the '+ argsDict['chopMethod']+ ' method.')
-    if argsDict['fileExt'] != ['.fa*']:
+    if argsDict['fileExt'] != None:
       print('You\'ve activated the -e flag.\nFiles with the ' + str(argsDict['fileExt']) + ' extension(s) will be collected for cleaning.')
-    if argsDict['addFileName'] is True:
+    if argsDict['addFileName'] != None:
       print('You\'ve activated the -f flag.\nThe file name will be inserted at the beginning of all sequences cleaned.')
-    if argsDict['log'] is True:
+    if argsDict['log'] != None:
       print('You\'ve activated the -l flag.\nA log file with information about each fasta file processed will be written in the output directory.')
-    if argsDict['chopMax'] != 70:
+    if argsDict['chopMax'] != None:
       print('You\'ve activated the -m flag.\nThe maximum character length of cleaned sequence ids is set to ' + str(argsDict['chopMax']) + '.')
-  print('--------------------------------')
 
 
 def resolveInputType(userInput):
