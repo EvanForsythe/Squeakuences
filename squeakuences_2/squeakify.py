@@ -64,7 +64,6 @@ def checkLength(sequenceID, max, method):
     choppedSeqID = chopChars(sequenceID, max)
   return choppedSeqID
 
-    
 def chopWords(sequenceID, max):
   length = len(sequenceID)
 
