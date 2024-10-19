@@ -9,8 +9,9 @@ def squeakify(sequenceID, argsFlags):
   
   if argsFlags['addFileName'] is True:
     endID = attachFileName(endID, argsFlags['addFileName'])
-    
-  endID = checkLength(endID, argsFlags['chopMax'], argsFlags['chopMethod'])
+
+  if argsFlags['chopMethod'] != 'skip':
+    endID = checkLength(endID, argsFlags['chopMax'], argsFlags['chopMethod'])
 
   endID = removeSpaces(endID)
 

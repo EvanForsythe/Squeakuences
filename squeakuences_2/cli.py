@@ -16,7 +16,7 @@ def runParser():
     This can be the full path or relative to the squeakuences.py file location.
     If this directory path does not exist at runtime, Squeakuences will create it for you.''')
   
-  parser.add_argument('-c', '--chopMethod', action='store', default = None, choices=['words', 'chars'], required=False,
+  parser.add_argument('-c', '--chopMethod', action='store', default = None, choices=['words', 'chars', 'skip'], required=False,
     help='When activated, Squeakuences will use the specified shortening method.')
 
   parser.add_argument('-e', '--fileExt', nargs='*', default = None, required=False, metavar='.ext',
@@ -58,11 +58,13 @@ def setDefaults(argsDict):
     argsDict.update({'preview': False})
 
 def messagesForArgs(argsDict):
-  if argsDict['chopMethod'] == argsDict['fileExt'] == argsDict['addFileName'] == argsDict['log'] == argsDict['chopMax'] == argsDict['preview'] == None:
+  if argsDict['chopMethod'] == argsDict['fileExt'] == argsDict['addFileName'] == argsDict['log'] == argsDict['chopMax'] ==  None:
     print('No flags detected in command.')
   else:
-    if argsDict['chopMethod'] != None:
+    if argsDict['chopMethod'] == 'words' or argsDict['chopMethod'] == 'chars':
       print('You\'ve activated the -c flag.\nSqueakuences will shorten sequence ids with the '+ argsDict['chopMethod']+ ' method.')
+    if argsDict['chopMethod'] == 'skip':
+      print('You\'ve activated the -c flag in skip mode.\nSqueakuences will not shorten sequence ids.')
     if argsDict['fileExt'] != None:
       print('You\'ve activated the -e flag.\nFiles with the ' + str(argsDict['fileExt']) + ' extension(s) will be collected for cleaning.')
     if argsDict['addFileName'] != None:

@@ -16,7 +16,6 @@ cli.messagesForArgs(argsDict)
 print('--------------------------------')
 #Set default values
 cli.setDefaults(argsDict)
-print(argsDict)
 
 if argsDict['preview'] is True:
   preview.generatePreview(argsDict)
