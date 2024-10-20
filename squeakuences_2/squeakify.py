@@ -5,7 +5,7 @@ def squeakify(sequenceID, argsFlags):
 
   endID = camelCase(sequenceID)
   
-  endID = removeNonAlphanumeric(endID)
+  endID = removeNonAlphanumeric(endID, argsFlags['ignore'])
   
   if argsFlags['addFileName'] is True:
     endID = attachFileName(endID, argsFlags['addFileName'])
@@ -39,8 +39,13 @@ def removeSpaces(sequenceID):
   modifiedID = re.sub(r'\s', '', sequenceID)
   return modifiedID
 
-def removeNonAlphanumeric(sequenceID):
-  modifiedID = re.sub(r'[^a-zA-Z0-9\s]', '', sequenceID)
+def removeNonAlphanumeric(sequenceID, ignore):
+  if ignore is None:
+    customRegex = r'[^A-Za-z0-9\s]'
+  else:
+    customRegex = r'[^A-Za-z0-9\s](?<![' + ignore + '])'
+    #print(customRegex)
+  modifiedID = re.sub(customRegex, '', sequenceID)
   return modifiedID
 
 def attachFileName(sequenceID, attachFileName):
