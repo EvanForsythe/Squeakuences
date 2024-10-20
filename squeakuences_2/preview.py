@@ -3,6 +3,12 @@ import squeakify
 
 def generatePreview(argsDict):
   print('Preview mode activated!')
+  print('--------------------------------')
+  print('Squeakuences will clean sequence ids will the following settings:\n')
+  print('Chop method (-c): ' + argsDict['chopMethod'])
+  print('Maximum sequence id character length (-m): ' + str(argsDict['chopMax']))
+  print('Prepend file name (-f): ' + str(argsDict['addFileName']))
+  print('--------------------------------')
 
   messyFastaHandle = file_system.loadMessyFile(argsDict['input'])
 

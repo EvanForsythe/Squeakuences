@@ -58,7 +58,7 @@ def setDefaults(argsDict):
     argsDict.update({'preview': False})
 
 def messagesForArgs(argsDict):
-  if argsDict['chopMethod'] == argsDict['fileExt'] == argsDict['addFileName'] == argsDict['log'] == argsDict['chopMax'] ==  None:
+  if argsDict['chopMethod'] == argsDict['fileExt'] == argsDict['addFileName'] == argsDict['log'] == argsDict['chopMax'] == argsDict['preview'] == None:
     print('No flags detected in command.')
   else:
     if argsDict['chopMethod'] == 'words' or argsDict['chopMethod'] == 'chars':
@@ -73,6 +73,8 @@ def messagesForArgs(argsDict):
       print('You\'ve activated the -l flag.\nA log file with information about each fasta file processed will be written in the output directory.')
     if argsDict['chopMax'] != None:
       print('You\'ve activated the -m flag.\nThe maximum character length of cleaned sequence ids is set to ' + str(argsDict['chopMax']) + '.')
+    if argsDict['preview'] != False:
+      print('You\'ve activated the -p flag.\nSqueakuences will generate a preview of cleaned sequence ids from the input file.')
 
 
 def resolveInputType(userInput):
