@@ -8,6 +8,7 @@ def generatePreview(argsDict):
   print('Chop method (-c): ' + argsDict['chopMethod'])
   print('Maximum sequence id character length (-m): ' + str(argsDict['chopMax']))
   print('Prepend file name (-f): ' + str(argsDict['addFileName']))
+  print('Ignore characters (-x): ' + str(argsDict['ignore']))
   print('--------------------------------')
 
   messyFastaHandle = file_system.loadMessyFile(argsDict['input'])
