@@ -36,7 +36,6 @@ def checkWhiteSpace(sequenceID):
   return len(number)
 
 def removeSpaces(sequenceID, underscores):
-  print(underscores)
   if underscores is False:
     modifiedID = re.sub(r'\s', '', sequenceID)
   if underscores is True:
