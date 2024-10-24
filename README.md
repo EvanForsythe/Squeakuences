@@ -16,7 +16,7 @@ Squeakuences utilizes a command line interface. It does not have any dependencie
 ## <ins>**Arguments**</ins> <a name="arguments"></a>
 These arguments can also be referenced in your command line using the -h flag.
 ```bash
-./squeakuences.py -h
+python3 squeakuences -h
 ```
 | Short flag | Long flag         | Description | Required? | Default value |
 |------------|-------------------|-------------|-----------|---------------|
