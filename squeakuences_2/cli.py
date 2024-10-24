@@ -89,7 +89,7 @@ def messagesForArgs(argsDict):
     if argsDict['preview'] != False:
       print('You\'ve activated the -p flag.\nSqueakuences will generate a preview of cleaned sequence ids from the input file.')
     if argsDict['underscore'] != None:
-      print('You\'ve activated the -u flag.\nSqueakuences will replace whitespace (spaces and tabs) with an underscore.')
+      print('You\'ve activated the -u flag.\nSqueakuences will replace whitespace (spaces and tabs) and nonalphanumeric characters with an underscore.')
     if argsDict['ignore'] != None:
       print('You\'ve activated the -x flag.\nSqueakuences will ignore ' + argsDict['ignore'] + ' characters during cleaning.')
 
