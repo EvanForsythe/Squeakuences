@@ -13,7 +13,7 @@ def squeakify(sequenceID, argsFlags):
   if argsFlags['chopMethod'] != 'skip':
     endID = checkLength(endID, argsFlags['chopMax'], argsFlags['chopMethod'])
 
-  endID = removeSpaces(endID)
+  endID = removeSpaces(endID, argsFlags['underscore'])
 
   return endID
 
@@ -35,8 +35,12 @@ def checkWhiteSpace(sequenceID):
   number = re.findall(r'\s', sequenceID)
   return len(number)
 
-def removeSpaces(sequenceID):
-  modifiedID = re.sub(r'\s', '', sequenceID)
+def removeSpaces(sequenceID, underscores):
+  print(underscores)
+  if underscores is False:
+    modifiedID = re.sub(r'\s', '', sequenceID)
+  if underscores is True:
+    modifiedID = re.sub(r'\s', '_', sequenceID)
   return modifiedID
 
 def removeNonAlphanumeric(sequenceID, ignore):

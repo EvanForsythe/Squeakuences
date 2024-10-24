@@ -36,7 +36,7 @@ def runParser():
   parser.add_argument('-p', '--preview', action='store_true', default = False, required=False,
     help='When activated, Squeakuences will generate a preview of squeakuences output from the top of the input file.')
   
-  parser.add_argument('-u', '--underscore', action='store_const', default = None, required=False,
+  parser.add_argument('-u', '--underscore', action='store_true', default = None, required=False,
     help='When activated, Squeakuences will replace whitespace (spaces and tabs) with an underscore.')
   
   parser.add_argument('-x', '--ignore', action='store', default = None, required=False, metavar='characters',
@@ -65,7 +65,7 @@ def setDefaults(argsDict):
     argsDict.update({'preview': False})
 
   if argsDict['underscore'] is None:
-    argsDict.update({'underscore': None})
+    argsDict.update({'underscore': False})
 
   if argsDict['ignore'] is None:
     argsDict.update({'ignore': None})

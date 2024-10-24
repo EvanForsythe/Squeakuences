@@ -8,6 +8,7 @@ def generatePreview(argsDict):
   print('Chop method (-c): ' + argsDict['chopMethod'])
   print('Maximum sequence id character length (-m): ' + str(argsDict['chopMax']))
   print('Prepend file name (-f): ' + str(argsDict['addFileName']))
+  print('Underscores (-u): ' + str(argsDict['underscore']))
   print('Ignore characters (-x): ' + str(argsDict['ignore']))
   print('--------------------------------')
 
