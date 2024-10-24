@@ -36,8 +36,12 @@ def runParser():
   parser.add_argument('-p', '--preview', action='store_true', default = False, required=False,
     help='When activated, Squeakuences will generate a preview of squeakuences output from the top of the input file.')
   
-  parser.add_argument('-x', '--ignore', action='store', default = None, required=False,
-    help='When activated, Squeakuences will ignore the provided specifed characters during cleaning and be left in cleaned sequence ids.')
+  parser.add_argument('-u', '--underscore', action='store_const', default = None, required=False,
+    help='When activated, Squeakuences will replace whitespace (spaces and tabs) with an underscore.')
+  
+  parser.add_argument('-x', '--ignore', action='store', default = None, required=False, metavar='characters',
+    help='''When activated, Squeakuences will ignore the provided specifed characters during cleaning and be left in cleaned sequence ids. 
+    Please provide the characters you would like to leave in sequence ids in single or double quotes such as "-,()".''')
   
   return parser.parse_args()
 
@@ -60,11 +64,14 @@ def setDefaults(argsDict):
   if argsDict['preview'] is None:
     argsDict.update({'preview': False})
 
+  if argsDict['underscore'] is None:
+    argsDict.update({'underscore': None})
+
   if argsDict['ignore'] is None:
     argsDict.update({'ignore': None})
 
 def messagesForArgs(argsDict):
-  if argsDict['chopMethod'] == argsDict['fileExt'] == argsDict['addFileName'] == argsDict['log'] == argsDict['chopMax'] == argsDict['preview'] == argsDict['ignore'] == None:
+  if argsDict['chopMethod'] == argsDict['fileExt'] == argsDict['addFileName'] == argsDict['log'] == argsDict['chopMax'] == argsDict['preview'] == argsDict['underscore'] == argsDict['ignore'] == None:
     print('No flags detected in command.')
   else:
     if argsDict['chopMethod'] == 'words' or argsDict['chopMethod'] == 'chars':
@@ -81,6 +88,8 @@ def messagesForArgs(argsDict):
       print('You\'ve activated the -m flag.\nThe maximum character length of cleaned sequence ids is set to ' + str(argsDict['chopMax']) + '.')
     if argsDict['preview'] != False:
       print('You\'ve activated the -p flag.\nSqueakuences will generate a preview of cleaned sequence ids from the input file.')
+    if argsDict['underscore'] != None:
+      print('You\'ve activated the -u flag.\nSqueakuences will replace whitespace (spaces and tabs) with an underscore.')
     if argsDict['ignore'] != None:
       print('You\'ve activated the -x flag.\nSqueakuences will ignore ' + argsDict['ignore'] + ' characters during cleaning.')
 
