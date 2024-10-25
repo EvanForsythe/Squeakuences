@@ -72,7 +72,7 @@ def setDefaults(argsDict):
     argsDict.update({'ignore': None})
 
 def messagesForArgs(argsDict):
-  if argsDict['chopMethod'] == argsDict['fileExt'] == argsDict['addFileName'] == argsDict['log'] == argsDict['chopMax'] == argsDict['preview'] == argsDict['underscore'] == argsDict['ignore'] == None:
+  if argsDict['chopMethod'] == argsDict['fileExt'] == argsDict['addFileName'] == argsDict['log'] == argsDict['chopMax'] == argsDict['underscore'] == argsDict['ignore'] == None  and argsDict['preview'] == False:
     print('No flags detected in command.')
   else:
     if argsDict['chopMethod'] == 'words' or argsDict['chopMethod'] == 'chars':
@@ -93,7 +93,6 @@ def messagesForArgs(argsDict):
       print('You\'ve activated the -u flag.\nSqueakuences will replace whitespace (spaces and tabs) and nonalphanumeric characters with an underscore.')
     if argsDict['ignore'] != None:
       print('You\'ve activated the -x flag.\nSqueakuences will ignore ' + argsDict['ignore'] + ' characters during cleaning.')
-
 
 def resolveInputType(userInput):
   if os.path.isfile(userInput):
