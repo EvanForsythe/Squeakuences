@@ -46,7 +46,7 @@ Directory with specified file extensions:
 python3 squeakuences -i my_fastas -o squeakuences_OUT -e .fna .fasta
 ```
 
-Directory with preview mode, underscore, and ignore character flags activated:
+Directory with preview mode, whitespace/character replacement with underscores, and ignore character flags activated:
 ```bash
 python3 squeakuences -i my_fastas -o squeakuences_OUT -p -u -x '.-[]'
 ```
