@@ -53,3 +53,4 @@ else:
 
   print('Ta-da! Squeaky clean sequence ids!')
   #print('New squeaky clean files and other output files can be found in: ' + outputPath)
+  

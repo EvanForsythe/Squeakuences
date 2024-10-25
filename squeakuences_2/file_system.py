@@ -111,3 +111,4 @@ def writeLogFile(logDataDict, logPath, processedIdCount):
     file.write(logDataDict['file_name'] + '\t' + logDataDict['duration'] + '\t' + 
                str(logDataDict['memory']) + '\t' + str(logDataDict['start_file_size']) + '\t' + str(logDataDict['end_file_size']) + '\t' + str(processedIdCount) + '\n')
   file.close()
+  

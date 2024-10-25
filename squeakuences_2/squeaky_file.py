@@ -11,7 +11,6 @@ def generate(file, argsDict):
   sequenceIdCount = 0
   idDict = {}
   idDuplicatesList = []
-
   cleanedFaLines = []
 
   messyFastaHandle = file_system.loadMessyFile(file)
@@ -75,3 +74,4 @@ def storeLine(outFaFileLines, line, sequence):
       outFaFileLines.append('>' + line + '\n')
     else:
       outFaFileLines.append(line)
+      
