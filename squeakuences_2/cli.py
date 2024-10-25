@@ -42,7 +42,7 @@ def runParser():
   parser.add_argument('-x', '--ignore', action='store', default = None, required=False, metavar='characters',
     help='''When activated, Squeakuences will ignore the provided specifed characters during cleaning and leave them in any cleaned sequence ids. 
     Please provide the characters you would like to leave in sequence ids in single or double quotes such as "-,()". 
-    The underscore character must be at the front of your input string.''')
+    If included, the underscore character must be at the front of your input string.''')
   
   return parser.parse_args()
 
