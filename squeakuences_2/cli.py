@@ -34,14 +34,15 @@ def runParser():
     help='When activated, Squeakuences will set the maximum character length of cleaned sequence ids to this integer.')
   
   parser.add_argument('-p', '--preview', action='store_true', default = False, required=False,
-    help='When activated, Squeakuences will generate a preview of squeakuences output from the top of the input file.')
+    help='When activated, Squeakuences will generate a preview of 10 cleaned sequences from the top of each input file.')
   
   parser.add_argument('-u', '--underscore', action='store_true', default = None, required=False,
-    help='When activated, Squeakuences will replace whitespace (spaces and tabs) with an underscore.')
+    help='When activated, Squeakuences will replace whitespace (spaces and tabs) and non-alphanumeric characters with an underscore.')
   
   parser.add_argument('-x', '--ignore', action='store', default = None, required=False, metavar='characters',
-    help='''When activated, Squeakuences will ignore the provided specifed characters during cleaning and be left in cleaned sequence ids. 
-    Please provide the characters you would like to leave in sequence ids in single or double quotes such as "-,()".''')
+    help='''When activated, Squeakuences will ignore the provided specifed characters during cleaning and leave them in any cleaned sequence ids. 
+    Please provide the characters you would like to leave in sequence ids in single or double quotes such as "-,()". 
+    The underscore character must be at the front of your input string.''')
   
   return parser.parse_args()
 
