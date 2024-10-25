@@ -16,6 +16,7 @@ cli.messagesForArgs(argsDict)
 print('--------------------------------')
 #Set default values
 cli.setDefaults(argsDict)
+cli.printArgumentState(argsDict)
 
 #Determine if input is a valid path like string that leads to a file or directory
 #Exits if input is not a valid path
@@ -29,7 +30,6 @@ file_system.checkEmptySqueakifyList(squeakifyList, argsDict['fileExt'])
 fileNameList = file_system.getFileNames(squeakifyList)
 
 if argsDict['preview'] is True:
-  preview.printMessage(argsDict)
   for file in squeakifyList:
     preview.generatePreview(file, argsDict)
     print('--------------------------------')
@@ -53,4 +53,3 @@ else:
 
   print('Ta-da! Squeaky clean sequence ids!')
   #print('New squeaky clean files and other output files can be found in: ' + outputPath)
-  

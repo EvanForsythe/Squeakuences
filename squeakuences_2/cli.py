@@ -94,6 +94,15 @@ def messagesForArgs(argsDict):
     if argsDict['ignore'] != None:
       print('You\'ve activated the -x flag.\nSqueakuences will ignore ' + argsDict['ignore'] + ' characters during cleaning.')
 
+def printArgumentState(argsDict):
+  print('Squeakuences will clean sequence ids will the following settings:\n')
+  print('Chop method (-c): ' + argsDict['chopMethod'])
+  print('Maximum sequence id character length (-m): ' + str(argsDict['chopMax']))
+  print('Prepend file name (-f): ' + str(argsDict['addFileName']))
+  print('Underscores (-u): ' + str(argsDict['underscore']))
+  print('Ignore characters (-x): ' + str(argsDict['ignore']))
+  print('--------------------------------')
+
 def resolveInputType(userInput):
   if os.path.isfile(userInput):
     fileType = 'file'
