@@ -1,7 +1,7 @@
 import file_system
 import squeakify
 
-def generatePreview(argsDict):
+def printMessage(argsDict):
   print('Preview mode activated!')
   print('--------------------------------')
   print('Squeakuences will clean sequence ids will the following settings:\n')
@@ -12,7 +12,10 @@ def generatePreview(argsDict):
   print('Ignore characters (-x): ' + str(argsDict['ignore']))
   print('--------------------------------')
 
-  messyFastaHandle = file_system.loadMessyFile(argsDict['input'])
+def generatePreview(file, argsDict):
+  print('Now generating preview of cleaned sequence ids from: ' + file_system.fileNameWithExt(file))
+  print()
+  messyFastaHandle = file_system.loadMessyFile(file)
 
   for linecount in range(30):
     line = next(messyFastaHandle).strip()

@@ -17,21 +17,26 @@ print('--------------------------------')
 #Set default values
 cli.setDefaults(argsDict)
 
+#Determine if input is a valid path like string that leads to a file or directory
+#Exits if input is not a valid path
+inputType = cli.resolveInputType(argsDict['input'])
+  
+#Collect file(s) to be cleaned  
+squeakifyList = file_system.compileSqueakifyList(inputType, argsDict)
+#Check if list is empty and exit if empty
+file_system.checkEmptySqueakifyList(squeakifyList, argsDict['fileExt'])
+#Get names of fasta files to be cleaned and print to command line
+fileNameList = file_system.getFileNames(squeakifyList)
+
 if argsDict['preview'] is True:
-  preview.generatePreview(argsDict)
+  preview.printMessage(argsDict)
+  for file in squeakifyList:
+    preview.generatePreview(file, argsDict)
+    print('--------------------------------')
 
-else: 
-  #Determine if input is a valid path like string that leads to a file or directory
-  #Exits if input is not a valid path
-  inputType = cli.resolveInputType(argsDict['input'])
-    
-  #Collect file(s) to be cleaned  
-  squeakifyList = file_system.compileSqueakifyList(inputType, argsDict)
-  #Check if list is empty and exit if empty
-  file_system.checkEmptySqueakifyList(squeakifyList, argsDict['fileExt'])
-  #Get names of fasta files to be cleaned and print to command line
-  fileNameList = file_system.getFileNames(squeakifyList)
+  print('Preview(s) sucessfully generated!')
 
+else:
   #Verify path to user defined ouput directory exists and create directory if not found
   verifiedOuputPath = file_system.checkExistingOutputPath(argsDict['output'])
 
