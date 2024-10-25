@@ -93,7 +93,7 @@ def chopWords(sequenceID, max):
 def chopChars(sequenceID, max):
   length = len(sequenceID)
   difference = length - max
-  sequenceID  = removeSpaces(sequenceID)
+  #sequenceID  = removeSpaces(sequenceID)
   middle = length // 2
   buffer = difference // 2
   spliceIndexLeft = middle - buffer
