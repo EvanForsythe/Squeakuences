@@ -30,7 +30,7 @@ def generate(file, argsDict):
       sequenceIdCount += 1
       sequenceID = squeakify.stripSequenceID(line)
 
-      cleanSequenceId = squeakify.squeakify(sequenceID, argsDict)
+      cleanSequenceId = squeakify.squeakify(sequenceID, argsDict, currentFaFileName)
 
       if checkForDuplicates(cleanSequenceId, idDict):
         sequenceID, cleanSequenceId = resolveDuplicate(sequenceID, cleanSequenceId, idDuplicatesList)

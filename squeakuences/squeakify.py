@@ -1,6 +1,6 @@
 import re
 
-def squeakify(sequenceID, argsFlags):
+def squeakify(sequenceID, argsFlags, fastaFileName):
   checkWhiteSpace(sequenceID)
 
   endID = camelCase(sequenceID)
@@ -8,7 +8,7 @@ def squeakify(sequenceID, argsFlags):
   endID = removeNonAlphanumeric(endID, argsFlags['ignore'], argsFlags['underscore'])
   
   if argsFlags['addFileName'] is True:
-    endID = attachFileName(endID, argsFlags['addFileName'])
+    endID = attachFileName(endID, fastaFileName, argsFlags)
 
   if argsFlags['chopMethod'] != 'skip':
     endID = checkLength(endID, argsFlags['chopMax'], argsFlags['chopMethod'])
@@ -54,10 +54,10 @@ def removeNonAlphanumeric(sequenceID, ignore, underscore):
     modifiedID = re.sub(customRegex, '_', sequenceID)
   return modifiedID
 
-def attachFileName(sequenceID, attachFileName):
+def attachFileName(sequenceID, attachFileName, argsFlags):
   attachFileName = camelCase(attachFileName)
-  attachFileName = removeSpaces(attachFileName)
-  attachFileName = removeNonAlphanumeric(attachFileName)
+  attachFileName = removeSpaces(attachFileName, argsFlags['underscore'])
+  attachFileName = removeNonAlphanumeric(attachFileName,argsFlags['ignore'], argsFlags['underscore'])
   sequenceIDLower = sequenceID.lower()
   attachFileNameLower = attachFileName.lower()
 
