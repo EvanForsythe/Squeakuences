@@ -4,6 +4,7 @@ import squeakify
 
 def generatePreview(file, argsDict):
   fileNameWithExt = file_system.fileNameWithExt(file)
+  fileNameOnly = file_system.fileNameOnly(file)
   print('Now generating preview of cleaned sequence ids from: ' + fileNameWithExt)
   print()
 
@@ -14,7 +15,7 @@ def generatePreview(file, argsDict):
     if line.startswith('>'):
       sequenceID = squeakify.stripSequenceID(line)
 
-      cleanSequenceId = squeakify.squeakify(sequenceID, argsDict, fileNameWithExt)
+      cleanSequenceId = squeakify.squeakify(sequenceID, argsDict, fileNameOnly)
 
       print(cleanSequenceId)
     linecount += 1
