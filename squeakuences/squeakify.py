@@ -83,7 +83,7 @@ def chopWords(sequenceID, max):
     return sequenceID
   else:
     nameComponents = []
-    nameComponents = re.findall(r'[A-Za-z0-9_]+|[\s]', sequenceID)
+    nameComponents = re.findall(r'[A-Za-z0-9]+|[^\w\s]+', sequenceID)
     middle = len(nameComponents) // 2
     del nameComponents[middle:middle+2]
     nameComponents.insert(middle, '___')
