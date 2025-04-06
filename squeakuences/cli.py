@@ -34,7 +34,7 @@ def runParser():
     help='When activated, Squeakuences will set the maximum character length of cleaned sequence ids to this integer.')
   
   parser.add_argument('-p', '--preview', action='store_true', default = False, required=False,
-    help='When activated, Squeakuences will generate a preview of 10 cleaned sequences from the top of each input file.')
+    help='When activated, Squeakuences will generate a preview of 15 cleaned sequences from the top of each input file.')
   
   parser.add_argument('-u', '--underscore', action='store_true', default = None, required=False,
     help='When activated, Squeakuences will replace whitespace (spaces and tabs) and non-alphanumeric characters with an underscore.')
