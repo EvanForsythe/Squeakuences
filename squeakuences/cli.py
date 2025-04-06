@@ -44,7 +44,7 @@ def runParser():
     Please provide the characters you would like to leave in sequence ids in single or double quotes such as "-,()". 
     If included, the underscore character must be at the front of your input string.''')
   
-  parser.add_argument('-r', '--retain', action='store', default = None, required=False, metavar='string',
+  parser.add_argument('-r', '--retain', action='store', default = None, required=False, metavar='tag',
     help='''When activated, Squeakuences will retain tag information in the sequence id such as "locus=abc123". 
     The information in this tag will not be cleaned and appended to the end of the cleaned sequence id. Pass in the tag name in the format of -r 'locus='.''')
   
