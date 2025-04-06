@@ -2,7 +2,8 @@ import re
 
 def squeakify(sequenceID, argsFlags, fastaFileName):
   if argsFlags['retain'] is not None:
-    retainTag = re.search(r'(locus=\S+)', sequenceID).group()
+    regex = r'(' + argsFlags['retain'] + '\S+)'
+    retainTag = re.search(regex, sequenceID).group()
     sequenceID = sequenceID.replace(retainTag, '')
 
   checkWhiteSpace(sequenceID)
