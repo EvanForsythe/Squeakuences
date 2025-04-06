@@ -3,6 +3,7 @@ import file_system
 import squeakify
 
 def generatePreview(file, argsDict):
+  previewCounter = 0
   fileNameWithExt = file_system.fileNameWithExt(file)
   fileNameOnly = file_system.fileNameOnly(file)
   print('Now generating preview of cleaned sequence ids from: ' + fileNameWithExt)
@@ -10,12 +11,19 @@ def generatePreview(file, argsDict):
 
   messyFastaHandle = file_system.loadMessyFile(file)
 
-  for linecount in range(30):
-    line = next(messyFastaHandle).strip()
-    if line.startswith('>'):
-      sequenceID = squeakify.stripSequenceID(line)
+  while previewCounter < 15:
+    try: 
+      line = next(messyFastaHandle)
+    
+    except:
+      break
 
-      cleanSequenceId = squeakify.squeakify(sequenceID, argsDict, fileNameOnly)
+    else:
+      line.strip()
+      if line.startswith('>'):
+        previewCounter += 1
+        sequenceID = squeakify.stripSequenceID(line)
 
-      print(cleanSequenceId)
-    linecount += 1
+        cleanSequenceId = squeakify.squeakify(sequenceID, argsDict, fileNameOnly)
+
+        print(cleanSequenceId)
