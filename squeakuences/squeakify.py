@@ -1,6 +1,11 @@
 import re
 
 def squeakify(sequenceID, argsFlags, fastaFileName):
+  if argsFlags['retain'] is not None:
+    regex = r'(' + argsFlags['retain'] + '\S+)'
+    retainTag = re.search(regex, sequenceID).group()
+    sequenceID = sequenceID.replace(retainTag, '')
+
   checkWhiteSpace(sequenceID)
 
   endID = camelCase(sequenceID)
@@ -14,6 +19,11 @@ def squeakify(sequenceID, argsFlags, fastaFileName):
     endID = checkLength(endID, argsFlags['chopMax'], argsFlags['chopMethod'])
 
   endID = removeSpaces(endID, argsFlags['underscore'])
+
+  if argsFlags['retain'] is not None:
+    info = retainTag.split('=')[1]
+    info = '_'+ info
+    endID = endID + info
 
   return endID
 

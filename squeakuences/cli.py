@@ -34,7 +34,7 @@ def runParser():
     help='When activated, Squeakuences will set the maximum character length of cleaned sequence ids to this integer.')
   
   parser.add_argument('-p', '--preview', action='store_true', default = False, required=False,
-    help='When activated, Squeakuences will generate a preview of 10 cleaned sequences from the top of each input file.')
+    help='When activated, Squeakuences will generate a preview of 15 cleaned sequences from the top of each input file.')
   
   parser.add_argument('-u', '--underscore', action='store_true', default = None, required=False,
     help='When activated, Squeakuences will replace whitespace (spaces and tabs) and non-alphanumeric characters with an underscore.')
@@ -43,6 +43,11 @@ def runParser():
     help='''When activated, Squeakuences will ignore the provided specifed characters during cleaning and leave them in any cleaned sequence ids. 
     Please provide the characters you would like to leave in sequence ids in single or double quotes such as "-,()". 
     If included, the underscore character must be at the front of your input string.''')
+  
+  parser.add_argument('-r', '--retain', action='store', default = None, required=False, metavar='tag',
+    help='''When activated, Squeakuences will retain tag information in the sequence id such as "locus=abc123". 
+    The information in this tag will not be cleaned and appended to the end of the cleaned sequence id. Pass in the tag name in the format of -r 'locus='. 
+    Cleaned sequence id may exceed character limit. Length check occurs before tag is appended.''')
   
   return parser.parse_args()
 
@@ -71,8 +76,11 @@ def setDefaults(argsDict):
   if argsDict['ignore'] is None:
     argsDict.update({'ignore': None})
 
+  if argsDict['retain'] is None:
+    argsDict.update({'retain': None})
+
 def messagesForArgs(argsDict):
-  if argsDict['chopMethod'] == argsDict['fileExt'] == argsDict['addFileName'] == argsDict['log'] == argsDict['chopMax'] == argsDict['underscore'] == argsDict['ignore'] == None  and argsDict['preview'] == False:
+  if argsDict['chopMethod'] == argsDict['fileExt'] == argsDict['addFileName'] == argsDict['log'] == argsDict['chopMax'] == argsDict['underscore'] == argsDict['ignore'] == argsDict['retain'] == None  and argsDict['preview'] == False:
     print('No flags detected in command.')
   else:
     if argsDict['chopMethod'] == 'words' or argsDict['chopMethod'] == 'chars':
@@ -93,6 +101,8 @@ def messagesForArgs(argsDict):
       print('You\'ve activated the -u flag.\nSqueakuences will replace whitespace (spaces and tabs) and nonalphanumeric characters with an underscore.')
     if argsDict['ignore'] != None:
       print('You\'ve activated the -x flag.\nSqueakuences will ignore ' + argsDict['ignore'] + ' characters during cleaning.')
+    if argsDict['retain'] != None:
+      print('You\'ve activated the -r flag.\nSqueakuences will retain the information in the ' + argsDict['retain'] + ' tag and append to the end after cleaning.')
 
 def printArgumentState(argsDict):
   print('Squeakuences will clean sequence ids will the following settings:\n')
@@ -101,6 +111,7 @@ def printArgumentState(argsDict):
   print('Prepend file name (-f): ' + str(argsDict['addFileName']))
   print('Underscores (-u): ' + str(argsDict['underscore']))
   print('Ignore characters (-x): ' + str(argsDict['ignore']))
+  print('Retain tag (-r): ' + str(argsDict['retain']))
   print('--------------------------------')
 
 def resolveInputType(userInput):
