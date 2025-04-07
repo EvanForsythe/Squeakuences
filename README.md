@@ -30,6 +30,7 @@ python3 squeakuences -h
 | -p         | --preview          | When activated, Squeakuences will generate a preview of 10 cleaned sequences from the top of each input file. | No | False |
 | -u         | --underscore          | When activated, Squeakuences will replace whitespace (spaces and tabs) and non-alphanumeric characters with an underscore. | No | False |
 | -x         | --ignore          | When activated, Squeakuences will ignore the provided specifed characters during cleaning and leave them in any cleaned sequence ids. Please provide the characters you would like to leave in sequence ids in single or double quotes such as "-,()". The underscore character must be at the front of your input string. | No | None |
+| -r         | --retain          | When activated, Squeakuences will retain tag information in the sequence id such as "locus=abc123". The information in this tag will not be cleaned and appended to the end of the cleaned sequence id. Pass in the tag name in the format of -r 'locus='. Cleaned sequence id may exceed character limit. Length check occurs before tag is appended. | No | None |
 
 ## <ins>**Examples**</ins> <a name="examples"></a>
 Single File:
