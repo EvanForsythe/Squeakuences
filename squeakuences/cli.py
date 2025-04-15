@@ -6,10 +6,13 @@ def runParser():
   parser = argparse.ArgumentParser()
 
   parser.add_argument('-s', '--stepbystep', action='store', default = False, required=False, metavar='sequence',
-    help='When activated, Squeakuences will generate a step by step preview of one cleaned sequence.')
+    help='''When activated, Squeakuences will print the result of each cleaning step for one sequence id provided after the -s flag. 
+    The sequence after the -s flag should not include the '>' character and be surrounded by single or double quotes. 
+    Any -i, -o, or -p flags included in the command when this mode is activated will be ignored.''')
   
   parser.add_argument('-p', '--preview', action='store_true', default = False, required=False,
-    help='When activated, Squeakuences will generate a preview of 15 cleaned sequences from the top of each input file.')
+    help='''When activated, Squeakuences will generate a preview of 10 cleaned sequences from the top of each 
+    input file without writing any ouput. Hence, the -i flag is required in this mode but not the -o flag.''')
 
   parser.add_argument('-i', '--input', default=None, required=False, metavar='file_or_dir_path',
     help='''Path to fasta file(s) to clean.
@@ -44,8 +47,9 @@ def runParser():
   
   parser.add_argument('-x', '--ignore', action='store', default = None, required=False, metavar='characters',
     help='''When activated, Squeakuences will ignore the provided specifed characters during cleaning and leave them in any cleaned sequence ids. 
-    Please provide the characters you would like to leave in sequence ids in single or double quotes such as "-,()". 
-    If included, the underscore character must be at the front of your input string.''')
+    Please provide the characters you would like to leave in sequence ids in single or double quotes such as '-,)('. 
+    The underscore character must be at the front of your input string, 
+    and paired characters such as '[]' and '()' should be passed facing out such as -x '][' and ')('.''')
   
   parser.add_argument('-r', '--retain', action='store', default = None, required=False, metavar='tag',
     help='''When activated, Squeakuences will retain tag information in the sequence id such as "locus=abc123". 
