@@ -2,28 +2,40 @@ import re
 
 def squeakify(sequenceID, argsFlags, fastaFileName):
   if argsFlags['retain'] is not None:
-    regex = r'(' + argsFlags['retain'] + '\S+)'
+    regex = re.compile('(' + argsFlags['retain'] + r'\S+)')
     retainTag = re.search(regex, sequenceID).group()
     sequenceID = sequenceID.replace(retainTag, '')
 
   checkWhiteSpace(sequenceID)
 
+  stepPrint(sequenceID, 'Starting string:', argsFlags['stepbystep'])
+
   endID = camelCase(sequenceID)
-  
+
+  stepPrint(endID, 'Camel case:', argsFlags['stepbystep'])
+
   endID = removeNonAlphanumeric(endID, argsFlags['ignore'], argsFlags['underscore'])
+
+  stepPrint(endID, 'Remove non-alphanumeric:', argsFlags['stepbystep'])
 
   if argsFlags['addFileName'] is True:
     endID = attachFileName(endID, fastaFileName, argsFlags)
+    stepPrint(endID, 'Prepend file name:', argsFlags['stepbystep'])
 
   if argsFlags['chopMethod'] != 'skip':
     endID = checkLength(endID, argsFlags['chopMax'], argsFlags['chopMethod'])
+    stepPrint(endID, 'Chop:', argsFlags['stepbystep'])
 
   endID = removeSpaces(endID, argsFlags['underscore'])
+  stepPrint(endID, 'Remove spaces:', argsFlags['stepbystep'])
 
   if argsFlags['retain'] is not None:
     info = retainTag.split('=')[1]
     info = '_'+ info
     endID = endID + info
+    stepPrint(endID, 'Retain characters:', argsFlags['stepbystep'])
+
+  stepPrint(endID, 'Final cleaned sequence:', argsFlags['stepbystep'])
 
   return endID
 
@@ -110,3 +122,8 @@ def chopChars(sequenceID, max):
   spliceIndexRight = middle + buffer
   choppedSeqID = sequenceID[:spliceIndexLeft] + '___' + sequenceID[spliceIndexRight:]
   return choppedSeqID
+
+def stepPrint(sequence, stepName, stepFlag):
+  if stepFlag != False:
+    print(stepName)
+    print(sequence)
