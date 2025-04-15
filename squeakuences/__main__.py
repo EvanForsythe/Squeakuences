@@ -25,7 +25,6 @@ if argsDict['stepbystep'] != False:
   print('Squeakuences will clean sequence id will the following settings:\n')
   cli.printArgumentState(argsDict)
   cleaned_seq = squeakify.squeakify(argsDict['stepbystep'], argsDict, 'myFile')
-  print(cleaned_seq)
   print('--------------------------------')
   print('Ta-da! Squeaky clean sequence id!')
 

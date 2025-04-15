@@ -127,3 +127,5 @@ def stepPrint(sequence, stepName, stepFlag):
   if stepFlag != False:
     print(stepName)
     print(sequence)
+    if stepName != 'Final cleaned sequence:':
+      print('\n')
