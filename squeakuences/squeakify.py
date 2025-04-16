@@ -23,7 +23,7 @@ def squeakify(sequenceID, argsFlags, fastaFileName):
     stepPrint(endID, 'Prepend file name:', argsFlags['stepbystep'])
 
   if argsFlags['chopMethod'] != 'skip':
-    endID = checkLength(endID, argsFlags['chopMax'], argsFlags['chopMethod'])
+    endID = checkLength(endID, argsFlags)
     stepPrint(endID, 'Chop:', argsFlags['stepbystep'])
 
   endID = removeSpaces(endID, argsFlags['underscore'])
@@ -90,31 +90,33 @@ def attachFileName(sequenceID, attachFileName, argsFlags):
     modifiedID = attachFileName + '_' + sequenceID
   return modifiedID
 
-def checkLength(sequenceID, max, method):
+def checkLength(sequenceID, argsDict):
   choppedSeqID = ''
-  if method == 'words':
-    choppedSeqID = chopWords(sequenceID, max)
-  if method == 'chars':
-    choppedSeqID = chopChars(sequenceID, max)
+  if argsDict['chopMethod'] == 'words':
+    choppedSeqID = chopWords(sequenceID, argsDict)
+  if argsDict['chopMethod'] == 'chars':
+    choppedSeqID = chopChars(sequenceID, argsDict)
   return choppedSeqID
 
-def chopWords(sequenceID, max):
+def chopWords(sequenceID, argsDict):
   length = len(sequenceID)
+  maxLength = argsDict['chopMax']
 
-  if length < max:
+  if length < maxLength:
     return sequenceID
   else:
     nameComponents = []
-    nameComponents = re.findall(r'[A-Za-z0-9_]+|[^\w\s]+', sequenceID)
+    nameComponents = re.findall(r'[A-Za-z0-9_]+|[^\w\s]+|\s', sequenceID)
     middle = len(nameComponents) // 2
     del nameComponents[middle:middle+2]
     nameComponents.insert(middle, '___')
     newName = ''.join(nameComponents)
-    return chopWords(newName, max)
+    #stepPrint(newName, 'Inside chop', argsDict['stepbystep'])
+    return chopWords(newName, argsDict)
   
-def chopChars(sequenceID, max):
+def chopChars(sequenceID, argsDict):
   length = len(sequenceID)
-  difference = length - max
+  difference = length - argsDict['chopMax']
   #sequenceID  = removeSpaces(sequenceID)
   middle = length // 2
   buffer = difference // 2
