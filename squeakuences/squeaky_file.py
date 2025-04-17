@@ -34,7 +34,7 @@ def generate(file, argsDict):
 
       if checkForDuplicates(cleanSequenceId, idDict):
         sequenceID, cleanSequenceId = resolveDuplicate(sequenceID, cleanSequenceId, idDuplicatesList)
-        cleanSequenceId = squeakify.checkLength(cleanSequenceId, argsDict['chopMax'], argsDict['chopMethod'])
+        cleanSequenceId = squeakify.checkLength(cleanSequenceId, argsDict)
 
       idDict.update({sequenceID: cleanSequenceId})
 
