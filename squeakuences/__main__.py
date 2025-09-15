@@ -13,7 +13,8 @@ args = cli.runParser()
 #Generate dictionary of flags parsed in cli.py
 argsDict = vars(args)
 
-#Check if -s flag is activated
+#Check if -s step by step flag is activated
+#-s mode is the only mode where the -i flag is not required
 if argsDict['stepbystep'] != False:
   print('Step by step print mode activated.')
   print('A step by step cleaning of the provided sequence will be output.')
@@ -29,6 +30,12 @@ if argsDict['stepbystep'] != False:
   print('Ta-da! Squeaky clean sequence id!')
 
 else:
+  #Check to make sure user provided all required args for Squeakuences run
+  print('Checking command line input for required arguments...')
+  cli.checkRequiredInputFlag(argsDict['input'])
+  cli.checkOutputFlagRequired(argsDict)
+  print('--------------------------------')
+
   #Print message confirming user arguments to command line
   cli.messagesForArgs(argsDict)
   print('--------------------------------')
