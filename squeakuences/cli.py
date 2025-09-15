@@ -123,11 +123,20 @@ def printArgumentState(argsDict):
   print('Retain tag (-r): ' + str(argsDict['retain']))
   print('--------------------------------')
 
-def resolveInputType(userInput):
+def checkRequiredInputFlag(userInput):
   if userInput == None:
-    print('Input was not provided to Squeakuences. Please include -i flag and try again.')
+    print('Input was not provided to Squeakuences. Please include the -i flag and try again.')
     sys.exit()
-  elif os.path.isfile(userInput):
+  else:
+    print('Input flag detected. Squeakuences will proceed.')
+
+def checkOutputFlagRequired(argsDict):
+  if (argsDict['preview'] == False) and (argsDict['output'] == None):
+    print('An output path is required for Squeakuences to proceed in this mode. Please include the -o flag in your command and try again.')
+    sys.exit()
+
+def resolveInputType(userInput):
+  if os.path.isfile(userInput):
     fileType = 'file'
   elif os.path.isdir(userInput):
     fileType = 'directory'
