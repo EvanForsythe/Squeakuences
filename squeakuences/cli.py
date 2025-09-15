@@ -125,7 +125,8 @@ def printArgumentState(argsDict):
 
 def resolveInputType(userInput):
   if userInput == None:
-    print('Input was not provided to Squeakuences. Please try again.')
+    print('Input was not provided to Squeakuences. Please include -i flag and try again.')
+    sys.exit()
   elif os.path.isfile(userInput):
     fileType = 'file'
   elif os.path.isdir(userInput):
