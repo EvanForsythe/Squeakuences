@@ -68,8 +68,8 @@ File Arguments
 Mode Flags Reference
 | Short flag | Long flag         | Description | Required? | Default value |
 |------------|-------------------|-------------|-----------|---------------|
-| -s         | --stepbystep          | When activated, Squeakuences will print the result of each cleaning step for one sequence ID provided after the -s flag. The sequence after the -s flag should not include the '>' character and be surrounded by single or double quotes. Any -i, -o, or -p flags included in the command when this mode is activated will be ignored. | No | False |
 | -p         | --preview          | When activated, Squeakuences will generate a preview of 15 cleaned sequences from the top of each input file without writing any output. Hence, the -i flag is required in this mode but not the -o flag. | No | False |
+| -s         | --stepbystep          | When activated, Squeakuences will print the result of each cleaning step for one sequence ID provided after the -s flag. The sequence after the -s flag should not include the '>' character and be surrounded by single or double quotes. Any -i, -o, or -p flags included in the command when this mode is activated will be ignored. | No | False |
 
 
 ## <ins>**Examples**</ins> <a name="examples"></a>
