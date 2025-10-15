@@ -25,15 +25,15 @@ Squeakuences utilizes a command line interface. It does not have any dependencie
 ## <ins>**Modes**</ins> <a name="modes"></a>
 Squeakuences has three modes to help you analyze and clean your sequences.
 
-<u>Standard Clean</u>
+<ins>Standard Clean</ins>
 This is the normal run mode where Squeakuences reads your input fasta file(s), cleans the sequence ids, and write new clean version of the input fasta file(s). To clean your fasta files, Squeakuences requires the -i and -o flags. The -e (file extension), -l (Squeakuences log file), and cleaning flags are optional. Please see the [Cleaning Modifiers](#cleaning) section below for more information.
 
-<u>Preview Mode</u>
+<ins>Preview Mode</ins>
 When activated, preview mode displays the cleaned version of the first 15 sequence ids in the provided fasta file(s) in the terminal. These cleaned sequence ids are not saved in an output file. 
 
 To run this mode, the -i and -p flags are required. Other arguments are optional to specify Squeakuences to the user's desired output id format. See the [Cleaning Modifiers](#cleaning) section below.
 
-<u>Step by step</u>
+<ins>Step by step</ins>
 Step by step mode takes one sequence and prints the result of each cleaning step. This mode is helpful for understanding Squeakuences' workflow and debugging. 
 
 This mode requires the -s flag followed by the desired sequence id in quotes without the > character. Any -i, -o, -l, -e, or -p flags included in the command when this mode is activated will be ignored. The output is not saved and is only displayed to the terminal. Other arguments are optional to specify Squeakuences to the user's desired output id format. See the [Cleaning Modifiers](#cleaning) section below. 
