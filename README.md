@@ -7,9 +7,9 @@
 4. [Examples](#examples)
 
 ## <ins>**Introduction**</ins> <a name="intro"></a>
-Squeakuences (squeaky-clean sequences) is a python program designed to preproccess DNA sequence datasets to identify and remove formatting issues that are prone to cause problems in common bioinformatics workflows. 
+Squeakuences (squeaky-clean sequences) is a python program designed to preprocess DNA sequence datasets to identify and remove formatting issues that are prone to cause problems in common bioinformatics workflows. 
 
-Squeakuences can process one or more fasta files at a time and generates two output files in its default mode for each fasta file processed. The first output file always produced is a tsv file which lists each sequence id before and after it was cleaned by Squeakuences. The second file is a new fasta file which contains the sequences of the original fasta file but with the cleaned sequence ids. 
+Squeakuences can process one or more FASTA files at a time and generates two output files in its default mode for each FASTA file processed. The first output file always produced is a tsv file which lists each sequence ID before and after it was cleaned by Squeakuences. The second file is a new FASTA file which contains the sequences of the original FASTA file but with the cleaned sequence IDs. 
 
 Additional features include: 
   - Log file generation to provide processing insight
@@ -19,7 +19,7 @@ Additional features include:
 
 
 ## <ins>**Running Squeakuences**</ins> <a name="running"></a>
-Squeakuences utilizes a command line interface. It does not have any dependencies outside of Python, so it can simply be run in your shell. See the next section for argument requirements and descriptions.
+Squeakuences utilizes a command-line interface. It does not have any dependencies outside of Python, so it can simply be run in your shell. See the next section for argument requirements and descriptions.
 
 
 ## <ins>**Modes**</ins> <a name="modes"></a>
@@ -27,19 +27,19 @@ Squeakuences has three modes to help you analyze and clean your sequences.
 
 <ins>Standard Clean</ins>
 
-This is the normal run mode where Squeakuences reads your input fasta file(s), cleans the sequence ids, and write new clean version of the input fasta file(s). To clean your fasta files, Squeakuences requires the -i and -o flags. The -e (file extension), -l (Squeakuences log file), and cleaning flags are optional. Please see the [Cleaning Modifiers](#cleaning) section below for more information.
+This is the normal run mode where Squeakuences reads your input FASTA file(s), cleans the sequence IDs, and writes a new cleaned version of the input FASTA file(s). To clean your FASTA files, Squeakuences requires the -i and -o flags. The -e (file extension), -l (Squeakuences log file), and cleaning flags are optional. Please see the [Cleaning Modifiers](#cleaning) section below for more information.
 
 <ins>Preview Mode</ins>
 
-When activated, preview mode displays the cleaned version of the first 15 sequence ids in the provided fasta file(s) in the terminal. These cleaned sequence ids are not saved in an output file. 
+When activated, preview mode displays the cleaned version of the first 15 sequence ids in the provided FASTA file(s) in the terminal. These cleaned sequence ids are not saved in an output file. 
 
-To run this mode, the -i and -p flags are required. Other arguments are optional to specify Squeakuences to the user's desired output id format. See the [Cleaning Modifiers](#cleaning) section below.
+To run this mode, the -i and -p flags are required. Other arguments are optional to specify Squeakuences to the user's desired output ID format. See the [Cleaning Modifiers](#cleaning) section below.
 
-<ins>Step by step</ins>
+<ins>Step-by-step</ins>
 
-Step by step mode takes one sequence and prints the result of each cleaning step. This mode is helpful for understanding Squeakuences' workflow and debugging. 
+Step-by-step mode takes one sequence and prints the result of each cleaning step. This mode is helpful for understanding Squeakuences' workflow and debugging. 
 
-This mode requires the -s flag followed by the desired sequence id in quotes without the > character. Any -i, -o, -l, -e, or -p flags included in the command when this mode is activated will be ignored. The output is not saved and is only displayed to the terminal. Other arguments are optional to specify Squeakuences to the user's desired output id format. See the [Cleaning Modifiers](#cleaning) section below. 
+This mode requires the -s flag followed by the desired sequence ID in quotes without the '>' character. Any -i, -o, -l, -e, or -p flags included in the command when this mode is activated will be ignored. The output is not saved and is only displayed to the terminal. Other arguments are optional to specify Squeakuences to the user's desired output ID format. See the [Cleaning Modifiers](#cleaning) section below. 
 
 
 ## <ins>**Arguments**</ins> <a name="arguments"></a>
@@ -50,10 +50,10 @@ python3 squeakuences -h
 File Arguments
 | Short flag | Long flag         | Description | Required? | Default value |
 |------------|-------------------|-------------|-----------|---------------|
-| -i         | --input           | Path to fasta file(s) to clean. You can provide the path to a single fasta file or a directory containing multiple fasta files. Squeakuences will not search subdirectories. This can be the full path or relative to the squeakuences.py file location. | Yes, execpt when the -s is activated | None |
+| -i         | --input           | Path to FASTA file(s) to clean. You can provide the path to a single FASTA file or a directory containing multiple FASTA files. Squeakuences will not search subdirectories. This can be the full path or relative to the squeakuences.py file location. | Yes, except when the -s is activated | None |
 | -o         | --output          | Path to output folder where files generated by Squeakuences will be written. This can be the full path or relative to the squeakuences.py file location. If this directory path does not exist at runtime, Squeakuences will create it for you. | Yes, except when -p or -s modes are activated | None |
 | -e         | --fileExt          | When activated, Squeakuences will collect files with the provided extension(s). To collect files with multiple extensions, simply list them behind each other such as ".fa .fna". Include the dot in your argument, such as ".fna" | No | ['.fa*'] |
-| -l         | --log          | When activated, Squeakuences will generate a log file with processing info from each fasta file cleaned. | No | NA |
+| -l         | --log          | When activated, Squeakuences will generate a log file with processing info from each FASTA file cleaned. | No | NA |
 
 <ins>Cleaning Modifiers</ins> <a name="cleaning"></a>
 | Short flag | Long flag         | Description | Required? | Default value |
@@ -62,14 +62,14 @@ File Arguments
 | -m         | --chopMax          | When activated, Squeakuences will set the maximum character length of cleaned sequence ids to this integer. | No | 70 |
 | -f         | --addFileName          | When activated, Squeakuences will add the file name to the beginning of all sequences cleaned. | No | NA |
 | -u         | --underscore          | When activated, Squeakuences will replace whitespace (spaces and tabs) and non-alphanumeric characters with an underscore. | No | False |
-| -x         | --ignore          | When activated, Squeakuences will ignore the provided specifed characters during cleaning and leave them in any cleaned sequence ids. Please provide the characters you would like to leave in sequence ids in single or double quotes such as '-,)('. The underscore character must be at the front of your input string, and paired characters such as '[]' and '()' should be passed facing out such as -x '][' and ')('. | No | None |
-| -r         | --retain          | When activated, Squeakuences will retain tag information in the sequence id such as "locus=abc123". The information in this tag will not be cleaned and appended to the end of the cleaned sequence id without the tag and equals sign. Pass in the tag name in the format of -r 'locus='. Cleaned sequence id may exceed character limit. Length check occurs before tag is appended. | No | None |
+| -x         | --ignore          | When activated, Squeakuences will ignore the provided specified characters during cleaning and leave them in any cleaned sequence ids. Please provide the characters you would like to leave in sequence ids in single or double quotes such as '-,)('. The underscore character must be at the front of your input string, and paired characters such as '[]' and '()' should be passed facing out such as -x '][' and ')('. | No | None |
+| -r         | --retain          | When activated, Squeakuences will retain tag information in the sequence ID such as "locus=abc123". The information in this tag will not be cleaned and appended to the end of the cleaned sequence ID without the tag and equals sign. Pass in the tag name in the format of -r 'locus='. Cleaned sequence ID may exceed character limit. The length check occurs before the tag is appended. | No | None |
 
 Mode Flags Reference
 | Short flag | Long flag         | Description | Required? | Default value |
 |------------|-------------------|-------------|-----------|---------------|
-| -s         | --stepbystep          | When activated, Squeakuences will print the result of each cleaning step for one sequence id provided after the -s flag. The sequence after the -s flag should not include the '>' character and be surrounded by single or double quotes. Any -i, -o, or -p flags included in the command when this mode is activated will be ignored. | No | False |
-| -p         | --preview          | When activated, Squeakuences will generate a preview of 10 cleaned sequences from the top of each input file without writing any ouput. Hence, the -i flag is required in this mode but not the -o flag. | No | False |
+| -s         | --stepbystep          | When activated, Squeakuences will print the result of each cleaning step for one sequence ID provided after the -s flag. The sequence after the -s flag should not include the '>' character and be surrounded by single or double quotes. Any -i, -o, or -p flags included in the command when this mode is activated will be ignored. | No | False |
+| -p         | --preview          | When activated, Squeakuences will generate a preview of 15 cleaned sequences from the top of each input file without writing any output. Hence, the -i flag is required in this mode but not the -o flag. | No | False |
 
 
 ## <ins>**Examples**</ins> <a name="examples"></a>
@@ -90,7 +90,7 @@ python3 squeakuences -i my_fastas -o squeakuences_OUT -e .fna .fasta
 
 Directory with preview mode, whitespace/character replacement with underscores, and ignore character flags activated:
 ```bash
-python3 squeakuences -i my_fastas -o squeakuences_OUT -p -u -x '.-[]'
+python3 squeakuences -i my_fastas -p -u -x '.-[]'
 ```
 
 [Back to Top](#top)
